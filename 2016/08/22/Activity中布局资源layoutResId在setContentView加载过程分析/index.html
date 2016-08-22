@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20160519185500770">
 <meta property="og:image" content="http://img.blog.csdn.net/20160519185522489">
 <meta property="og:image" content="http://img.blog.csdn.net/20160520094636172">
-<meta property="og:updated_time" content="2016-08-22T05:49:02.264Z">
+<meta property="og:updated_time" content="2016-08-22T05:53:01.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity中布局资源layoutResId在setContentView加载过程分析">
 <meta name="twitter:description" content="前言
@@ -243,7 +243,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:49:02+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:53:01+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -298,9 +298,9 @@
       
         <p>前言</p>
 <p>记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的Measure过程做一个铺垫。</p>
-<p>分析</p>
+<p>分析<br><a id="more"></a></p>
 <h2 id="1、寻找setContentView真正实现的地方"><a href="#1、寻找setContentView真正实现的地方" class="headerlink" title="1、寻找setContentView真正实现的地方"></a>1、寻找setContentView真正实现的地方</h2><p> 一般我们在新建的activity中传入布局的id就可以加载这个页面了，当然setContentView有几个重载的方法，就不细说了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码<br> <a id="more"></a></p>
+<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line"> * Set the activity content from a layout resource.  The resource will be</div><div class="line"> * inflated, adding all top-level views to the activity.</div><div class="line"> *</div><div class="line"> * @param layoutResID Resource ID to be inflated.</div><div class="line"> * 准备导入的布局资源的id</div><div class="line"> * @see #setContentView(android.view.View)</div><div class="line"> * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)</div><div class="line"> */</div><div class="line">public void setContentView(int layoutResID) &#123;</div><div class="line"> getWindow().setContentView(layoutResID);</div><div class="line"> //ActionBar的初始化，平时很少用ActionBar暂时忽略</div><div class="line">    initActionBar();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="2、mWindow实例化"><a href="#2、mWindow实例化" class="headerlink" title="2、mWindow实例化"></a>2、mWindow实例化</h2><p> getWindow返回的是mWindow，mWindow是窗口抽象类Window的一个实例，而setContentView(resId)是window中一个抽象方法，所以我们需要找到mWindow实例化的地方，然后看mWindow实现类的setContentView方法做了一些什么工作。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">final void attach(Context context, ActivityThread aThread,</div><div class="line">            Instrumentation instr, IBinder token, int ident,</div><div class="line">            Application application, Intent intent, ActivityInfo info,</div><div class="line">            CharSequence title, Activity parent, String id,</div><div class="line">            NonConfigurationInstances lastNonConfigurationInstances,</div><div class="line">            Configuration config) &#123;</div><div class="line">        attachBaseContext(context);</div><div class="line">	...</div><div class="line">         mWindow = PolicyManager.makeNewWindow(this);</div><div class="line">    ...</div></pre></td></tr></table></figure>
@@ -356,16 +356,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/Android中混淆的使用/" rel="next" title="Android混淆的使用">
-                <i class="fa fa-chevron-left"></i> Android混淆的使用
+              <a href="/2016/08/22/handler机制的深入理解/" rel="next" title="handler机制的深入理解">
+                <i class="fa fa-chevron-left"></i> handler机制的深入理解
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" rel="prev" title="事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析">
-                事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/08/22/Android中混淆的使用/" rel="prev" title="Android混淆的使用">
+                Android混淆的使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

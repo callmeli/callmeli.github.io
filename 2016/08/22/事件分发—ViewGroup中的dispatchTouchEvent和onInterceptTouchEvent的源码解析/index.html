@@ -73,7 +73,7 @@
 常用的事件Action
 
 1234567891011121314MotionEvent.ACTION_DOWN：在第一个点被按下时触发MotionEvent.ACTION">
-<meta property="og:updated_time" content="2016-08-22T05:10:39.113Z">
+<meta property="og:updated_time" content="2016-08-22T05:33:59.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析">
 <meta name="twitter:description" content="ViewGroup中的onTouchEvent方法是继承自View的onTouchEvent方法，因此这里只对分发和接受事件做源码分析。
@@ -251,7 +251,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:10:39+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:33:59+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -311,6 +311,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">MotionEvent.ACTION_DOWN：在第一个点被按下时触发</div><div class="line"></div><div class="line">MotionEvent.ACTION_UP：当屏幕上唯一的点被放开时触发</div><div class="line"></div><div class="line">MotionEvent.ACTION_MOVE：当有点在屏幕上移动时触发。值得注意的是，由于它的灵敏度很高，而我们的手指又不可能完全静止（即使我们感觉不到移动，但其实我们的手指也在不停地抖动），所以实际的情况是，基本上只要有点在屏幕上，此事件就会一直不停地被触发。</div><div class="line"></div><div class="line">ACTION_CANCEL：取消事件，一般由系统给出</div><div class="line"></div><div class="line">ACTION_OUTSIDE: 表示用户触碰超出了正常的UI边界.</div><div class="line"></div><div class="line">多点触控</div><div class="line">MotionEvent.ACTION_POINTER_DOWN：当屏幕上已经有一个点被按住，此时再按下其他点时触发。</div><div class="line"></div><div class="line">MotionEvent.ACTION_POINTER_UP：当屏幕上有多个点被按住，松开其中一个点时触发（即非最后一个点被放开时）。</div></pre></td></tr></table></figure>
 <hr>
+<a id="more"></a>
 <p>dispatchTouchEvent中出现频率高的关键词和方法。</p>
 <ul>
 <li>TouchTarget</li>
@@ -379,8 +380,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" rel="prev" title="Activity中布局资源layoutResId在setContentView加载过程分析">
-                Activity中布局资源layoutResId在setContentView加载过程分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/" rel="prev" title="基于httpclient网络框架库在android 6.0sdk找不到包解决方案">
+                基于httpclient网络框架库在android 6.0sdk找不到包解决方案 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

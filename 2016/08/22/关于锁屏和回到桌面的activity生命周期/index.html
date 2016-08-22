@@ -73,7 +73,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20150904153535391">
 <meta property="og:image" content="http://img.blog.csdn.net/20150904153809811">
 <meta property="og:image" content="http://img.blog.csdn.net/20150904153830870">
-<meta property="og:updated_time" content="2016-08-22T05:25:43.836Z">
+<meta property="og:updated_time" content="2016-08-22T05:34:21.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于锁屏和回到桌面的activity生命周期">
 <meta name="twitter:description" content="因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：
@@ -250,7 +250,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:25:43+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:34:21+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -306,7 +306,7 @@
         <p>因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：</p>
 <p><a href="http://www.th7.cn/Program/Android/201310/157073.shtml" target="_blank" rel="external">1、android锁屏和finish()后activity生命周期的变化</a></p>
 <p><a href="http://wbj05791467.blog.163.com/blog/static/120329697201356349428/" target="_blank" rel="external">2、关于Activity与SurfaceView的生命周期  </a></p>
-<p>下面是复制的里面的具体内容：<br>锁屏分为两个步骤，先是锁定屏幕，再是黑屏<br>onCreate(在该方法里锁屏)—&gt;onStart—&gt;onResume<br>黑屏后：onPause<br>点亮屏幕后：onResume</p>
+<p>下面是复制的里面的具体内容：<br>锁屏分为两个步骤，先是锁定屏幕，再是黑屏<br>onCreate(在该方法里锁屏)—&gt;onStart—&gt;onResume<br>黑屏后：onPause<br>点亮屏幕后：onResume<br><a id="more"></a></p>
 <h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>然而我发现这与我的猜想完全不一样，所以我决定自己写个demo验证一下。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity &#123;</div><div class="line">	private final String TAG = &quot;MainActivity&quot;;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		Log.d(TAG, &quot;onCreate&quot;);</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStart() &#123;</div><div class="line">		Log.d(TAG, &quot;onStart&quot;);</div><div class="line">		super.onStart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onNewIntent(Intent intent) &#123;</div><div class="line">		Log.d(TAG, &quot;onNewIntent&quot;);</div><div class="line">		super.onNewIntent(intent);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onRestart() &#123;</div><div class="line">		Log.d(TAG, &quot;onRestart&quot;);</div><div class="line">		super.onRestart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onResume() &#123;</div><div class="line">		Log.d(TAG, &quot;onResume&quot;);</div><div class="line">		super.onResume();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onPause() &#123;</div><div class="line">		Log.d(TAG, &quot;onPause&quot;);</div><div class="line">		super.onPause();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStop() &#123;</div><div class="line">		Log.d(TAG, &quot;onStop&quot;);</div><div class="line">		super.onStop();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onDestroy() &#123;</div><div class="line">		Log.d(TAG, &quot;onDestroy&quot;);</div><div class="line">		super.onDestroy();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>##结果##<br> 一、锁屏和解锁操作</p>
@@ -346,6 +346,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/TCPIP分层模型/" rel="prev" title="TCPIP分层模型">
+                TCPIP分层模型 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>

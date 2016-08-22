@@ -232,6 +232,175 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/22/http协议/" itemprop="url">
+                  http协议
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T18:09:26+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络协议/" itemprop="url" rel="index">
+                    <span itemprop="name">网络协议</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/http协议/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/http协议/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/22/http协议/" class="leancloud_visitors" data-flag-title="http协议">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>http协议是应用层的协议，也是现阶段我们常用的网络协议，基本上访问前后台交互都是使用的http协议。</p>
+<p>###http协议的特点###<br>无状态：请求一次返回一次，对请求事务没有记忆能力。<br>简单快速：协议结构简单，传输效率高效。<br>灵活多变：http也可以作为其他上层协议的载体。</p>
+<p>###http url格式###<br>http：//host:port/path<br>host 主机ip或域名<br>port 端口 默认为80<br>path 访问资源的路径</p>
+<hr>
+<p>###http请求###</p>
+<p>####http请求的报文格式####<br>请求行 （请求方法 请求的url 请求的http协议版本 ）<br>请求头 （请求头名称：请求头名称对应的值）<br>此处空行<br>请求体 （请求的附带数据 ）</p>
+<p><strong><em>如下图所示</em></strong><br><img src="http://img.blog.csdn.net/20160822175237449" alt="这里写图片描述"></p>
+<p>####http请求方法####<br>get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例<br><img src="http://img.blog.csdn.net/20160822175314479" alt="这里写图片描述"></p>
+<hr>
+<p>###http响应###</p>
+<p>####http响应报文的格式####<br>响应行 (协议版本 响应code 响应msg )<br>响应头 （响应头名称：响应头名称对应的数据 ）<br>此处空行<br>响应体 (响应数据 )<br><img src="http://img.blog.csdn.net/20160822175427653" alt="这里写图片描述"></p>
+<p><strong><em>下图是请求实例</em></strong><br><img src="http://img.blog.csdn.net/20160822175451012" alt="这里写图片描述"></p>
+<hr>
+<p>###http报文头###</p>
+<p>####1、通用报头 ####<br>既可以出现在请求报头，也可以出现在响应报头中</p>
+<pre><code>* Date：表示消息产生的日期和时间
+* Connection：允许发送指定连接的选项，例如指定连接是连续的，或者指定“close”选项，通知服务器，在响应完成后，关闭连接
+* Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制）
+</code></pre><p>####2、请求报头 ####<br> 请求报头通知服务器关于客户端求求的信息，典型的请求头有：</p>
+<pre><code>* Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
+* User-Agent：发送请求的浏览器类型、操作系统等信息
+* Accept：客户端可识别的内容类型列表，用于指定客户端接收那些类型的信息
+* Accept-Encoding：客户端可识别的数据编码
+* Accept-Language：表示浏览器所支持的语言类型
+* Connection：允许客户端和服务器指定与请求/响应连接有关的选项，例如这是为Keep-Alive则表示保持连接。
+* Transfer-Encoding：告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+</code></pre><h4 id="3、响应报头"><a href="#3、响应报头" class="headerlink" title="3、响应报头"></a>3、响应报头</h4><p>  用于服务器传递自身信息的响应，常见的响应报头：</p>
+<pre><code>* Location：用于重定向接受者到一个新的位置，常用在更换域名的时候
+* Server：包含可服务器用来处理请求的系统信息，与User-Agent请求报头是相对应的
+</code></pre><h4 id="4、实体报头"><a href="#4、实体报头" class="headerlink" title="4、实体报头"></a>4、实体报头</h4><p>实体报头用来定于被传送资源的信息，既可以用于请求也可用于响应。请求和响应消息都可以传送一个实体，常见的实体报头为：</p>
+<pre><code>* Content-Type：发送给接收者的实体正文的媒体类型
+* Content-Lenght：实体正文的长度
+* Content-Language：描述资源所用的自然语言，没有设置则该选项则认为实体内容将提供给所有的语言阅读
+* Content-Encoding：实体报头被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。
+* Last-Modified：实体报头用于指示资源的最后修改日期和时间
+* Expires：实体报头给出响应过期的日期和时间
+</code></pre><hr>
+<p>###<strong>特殊的请求格式mutilpart/form-data</strong> ###<br> 这种请求格式是基于post请求的，我们一般用为表单请求。<strong><em>如下图实例</em></strong><br> <img src="http://img.blog.csdn.net/20160822175748657" alt="这里写图片描述">    </p>
+<p>POST /t2/upload.do HTTP/1.1<br>User-Agent: SOHUWapRebot<br>Accept-Language: zh-cn,zh;q=0.5<br>Accept-Charset: GBK,utf-8;q=0.7,<em>;q=0.7<br>Connection: keep-alive<br>Content-Length: 60408<br>Content-Type:multipart/form-data; boundary=ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC       **</em>(这里指定content-type为multipart/form-data ，并且定义boundary)<strong><em><br>Host: w.sohu.com
+ </em></strong>空行<strong><em><br>–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC </em></strong>（–boundary 、空行 + –boundary分割传递的数据）<strong><em><br>Content-Disposition: form-data;name=”desc”<br>Content-Type: text/plain; charset=UTF-8<br>Content-Transfer-Encoding: 8bit
+</em></strong>空行<strong><em><br>this is a desc      (参数desc对应的值)<br>–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC<br>Content-Disposition: form-data;name=”pic”; filename=”photo.jpg” </em></strong>(传递文件时传递文件名)<strong><em><br>Content-Type: application/octet-stream<br>Content-Transfer-Encoding: binary
+</em></strong>空行<strong><em><br>[654dfasalk;af&amp;6…]     </em></strong>(此处是参数pic 对应的图片的二进制数据)<strong><em><br>–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC– </em></strong>（–boundary– 代表结束符 ）<em>*</em></p>
+<hr>
+<blockquote>
+<p>参考博客  <a href="http://blog.csdn.net/itachi85/article/details/50982995" target="_blank" rel="external">http://blog.csdn.net/itachi85/article/details/50982995</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/22/TCPIP分层模型/" itemprop="url">
                   TCPIP分层模型
                 </a>
@@ -1354,132 +1523,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="url">
-                  事件分发—View中的dispatchTouchEvent和onTouchEvent分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:00:29+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" class="leancloud_visitors" data-flag-title="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一、dispatchTouchEvent<br>话不多说直接上源码，从源码角度一句一句分析<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1525,7 +1568,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1542,7 +1585,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -57,30 +57,24 @@
 
 
 
-<meta name="description" content="##相关名词简介 ##
+<meta name="description" content="一、相关名词简介
 
-1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
+1、 MessageQueue 消息队列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="handler机制的深入理解">
 <meta property="og:url" content="http://yoursite.com/2016/08/22/handler机制的深入理解/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="##相关名词简介 ##
+<meta property="og:description" content="一、相关名词简介
 
-1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
+1、 MessageQueue 消息队列">
 <meta property="og:image" content="http://img.blog.csdn.net/20151109114044397">
 <meta property="og:image" content="http://img.blog.csdn.net/20151109125958481">
-<meta property="og:updated_time" content="2016-08-22T05:34:58.490Z">
+<meta property="og:updated_time" content="2016-08-22T05:44:44.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="handler机制的深入理解">
-<meta name="twitter:description" content="##相关名词简介 ##
+<meta name="twitter:description" content="一、相关名词简介
 
-1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
+1、 MessageQueue 消息队列">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20151109114044397">
 
 
@@ -251,7 +245,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:34:58+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:44:44+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -304,12 +298,9 @@
       
 
       
-        <p>##相关名词简介 ##</p>
+        <p>一、相关名词简介</p>
 <hr>
-<p>1、 MessageQueue 消息队列 </p>
-<pre><code>承载消息的容器         
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure>
-<a id="more"></a>
+<p>1、 MessageQueue 消息队列<br><a id="more"></a><br>       承载消息的容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure></p>
 <p> 2、 Message 消息</p>
 <pre><code>传递的实体内容
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> //消息标识符，类似id字段</div><div class="line">- public int what;</div><div class="line">//传递的int值，如果消息传递的内容仅仅是int值时，可以降低开销</div><div class="line">- public int arg1;    </div><div class="line">- public int arg2;</div><div class="line">//消息的内容对象</div><div class="line">- public Object obj;</div><div class="line">//消息内容</div><div class="line">- Bundle data;</div><div class="line">//时间</div><div class="line">- long when;</div><div class="line">//发送的目标处理者</div><div class="line">- Handler target;     </div><div class="line">//子线程</div><div class="line">- Runnable callback;   </div><div class="line">//消息池最大消息量</div><div class="line">- private static final int MAX_POOL_SIZE = 10;</div></pre></td></tr></table></figure>
@@ -320,11 +311,10 @@
 <pre><code>消息管理员，负责从消息队列取消息交给handler处理
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">//构建looper对象</div><div class="line">public static void prepare() &#123;</div><div class="line">        if (sThreadLocal.get() != null) &#123;</div><div class="line">            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</div><div class="line">        &#125;</div><div class="line">        //将looper写入thread缓存，myLooper() 中能够得到缓存的looper</div><div class="line">        sThreadLocal.set(new Looper());</div><div class="line">    &#125;</div><div class="line">//私有构造器，初始化队列</div><div class="line">private Looper() &#123;</div><div class="line">        mQueue = new MessageQueue();</div><div class="line">        mRun = true;</div><div class="line">        mThread = Thread.currentThread();</div><div class="line">    &#125;</div><div class="line">---------------------------------------------------------------</div><div class="line">//特别说明，此方法是取消息，交给handler处理</div><div class="line">public static void loop() &#123;</div><div class="line">		//获取looper对象</div><div class="line">        Looper me = myLooper();</div><div class="line">        if (me == null) &#123;</div><div class="line">            throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</div><div class="line">        &#125;</div><div class="line">        //获取消息队列</div><div class="line">        MessageQueue queue = me.mQueue;</div><div class="line">        ...</div><div class="line">        //不停的取消息</div><div class="line">        while (true) &#123;</div><div class="line">            //获取消息</div><div class="line">            Message msg = queue.next();</div><div class="line">            if (msg != null) &#123;</div><div class="line">                if (msg.target == null) &#123;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                ...</div><div class="line">				//发送给handler处理</div><div class="line">                msg.target.dispatchMessage(msg);</div><div class="line">                ...</div><div class="line">				//回收消息</div><div class="line">                msg.recycle();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <hr>
-<p>将handler机制比喻为流水线，更生动的分析其机制</p>
+<p>二、将handler机制比喻为流水线，更生动的分析其机制</p>
 <p><img src="http://img.blog.csdn.net/20151109114044397" alt="这里写图片描述"></p>
 <hr>
-<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><hr>
-<p><img src="http://img.blog.csdn.net/20151109125958481" alt="这里写图片描述"></p>
+<h2 id="三、-流程分析"><a href="#三、-流程分析" class="headerlink" title="三、 流程分析"></a>三、 流程分析</h2><p><img src="http://img.blog.csdn.net/20151109125958481" alt="这里写图片描述"></p>
 <hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">你可能会想，为什么handler所在的主线程不自己去直接处理请求，而需要通过handler、message和looper来实现，其实这是为了线程安全来考虑。都知道非UI线程是不允许直接更新ui，但是如果你直接去在UI线程里面取网络数据，或者做一些耗时操作的时候，将会阻塞UI绘制，导致ANR，所以需要需要这套机制，如果有耗时任务的话通过runnable的异步任务来执行，得到结果后再通知handler更新UI</div></pre></td></tr></table></figure>
 
@@ -549,7 +539,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#流程分析"><span class="nav-number">1.</span> <span class="nav-text">流程分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-流程分析"><span class="nav-number">1.</span> <span class="nav-text">三、 流程分析</span></a></li></ol></div>
             
           </div>
         </section>

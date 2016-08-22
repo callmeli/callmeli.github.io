@@ -57,24 +57,18 @@
 
 
 
-<meta name="description" content="一、相关名词简介1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages">
+<meta name="description" content="一、相关名词简介1、 MessageQueue 消息队列       承载消息的容器123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages(Hand">
 <meta property="og:type" content="article">
 <meta property="og:title" content="handler机制的深入理解">
 <meta property="og:url" content="http://yoursite.com/2016/08/22/handler机制的深入理解/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="一、相关名词简介1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages">
+<meta property="og:description" content="一、相关名词简介1、 MessageQueue 消息队列       承载消息的容器123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages(Hand">
 <meta property="og:image" content="http://img.blog.csdn.net/20151109114044397">
 <meta property="og:image" content="http://img.blog.csdn.net/20151109125958481">
-<meta property="og:updated_time" content="2016-08-22T05:50:30.632Z">
+<meta property="og:updated_time" content="2016-08-22T06:05:09.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="handler机制的深入理解">
-<meta name="twitter:description" content="一、相关名词简介1、 MessageQueue 消息队列 
-承载消息的容器         
-123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages">
+<meta name="twitter:description" content="一、相关名词简介1、 MessageQueue 消息队列       承载消息的容器123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMessages(Hand">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20151109114044397">
 
 
@@ -245,7 +239,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:50:30+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T14:05:09+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -298,9 +292,7 @@
       
 
       
-        <p>一、相关名词简介<br>1、 MessageQueue 消息队列 </p>
-<pre><code>承载消息的容器         
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure>
+        <p>一、相关名词简介<br>1、 MessageQueue 消息队列<br>       承载消息的容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p> 2、 Message 消息</p>
 <pre><code>传递的实体内容
@@ -341,16 +333,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/adpter中的观察者模式/" rel="next" title="adapter中的观察者模式">
-                <i class="fa fa-chevron-left"></i> adapter中的观察者模式
+              <a href="/2016/08/22/NanoHttpd/" rel="next" title="NanoHttpd">
+                <i class="fa fa-chevron-left"></i> NanoHttpd
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" rel="prev" title="Activity中布局资源layoutResId在setContentView加载过程分析">
-                Activity中布局资源layoutResId在setContentView加载过程分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/08/22/Android中混淆的使用/" rel="prev" title="Android混淆的使用">
+                Android混淆的使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -442,7 +434,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -450,7 +442,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -459,7 +451,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

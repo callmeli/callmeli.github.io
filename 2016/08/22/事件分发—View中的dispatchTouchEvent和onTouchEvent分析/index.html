@@ -57,17 +57,17 @@
 
 
 
-<meta name="description" content="dispatchTouchEvent话不多说直接上源码">
+<meta name="description" content="dispatchTouchEvent话不多说直接上源码123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if it">
 <meta property="og:type" content="article">
 <meta property="og:title" content="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
 <meta property="og:url" content="http://yoursite.com/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="dispatchTouchEvent话不多说直接上源码">
+<meta property="og:description" content="dispatchTouchEvent话不多说直接上源码123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if it">
 <meta property="og:image" content="http://www.linuxidc.com/upload/2012_08/120812092995921.png">
-<meta property="og:updated_time" content="2016-08-22T05:46:02.504Z">
+<meta property="og:updated_time" content="2016-08-22T05:51:17.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
-<meta name="twitter:description" content="dispatchTouchEvent话不多说直接上源码">
+<meta name="twitter:description" content="dispatchTouchEvent话不多说直接上源码123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if it">
 <meta name="twitter:image" content="http://www.linuxidc.com/upload/2012_08/120812092995921.png">
 
 
@@ -238,7 +238,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:46:02+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:51:17+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -291,7 +291,8 @@
       
 
       
-        <h2 id="dispatchTouchEvent"><a href="#dispatchTouchEvent" class="headerlink" title="dispatchTouchEvent"></a>dispatchTouchEvent</h2><p>话不多说直接上源码<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line">   * Pass the touch screen motion event down to the target view, or this</div><div class="line">   * view if it is the target.</div><div class="line">   * 将屏幕的按压事件传递给目标view，或者当前view即目标view</div><div class="line">   * </div><div class="line">   * @param event The motion event to be dispatched.</div><div class="line">   * 需要分发的事件</div><div class="line">   * </div><div class="line">   * @return True if the event was handled by the view, false otherwise.</div><div class="line">   * 如果返回true表示这个事件被这个view处理了，否则反</div><div class="line">   */</div><div class="line">  public boolean dispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">  </div><div class="line">   //系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onTouchEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">//过滤是不是能够传递这个touch事件</div><div class="line">      if (onFilterTouchEventForSecurity(event)) &#123;</div><div class="line">      </div><div class="line">          //首先判断我们在使用该view的时候是否有实现OnTouchListener，如果有实现就判断当前的view</div><div class="line">           //状态是不是ENABLED,如果实现的OnTouchListener的onTouch中返回true，并处理事件，则</div><div class="line">           //返回true，这个事件在此处理了。</div><div class="line">          if (mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp;</div><div class="line">                  mOnTouchListener.onTouch(this, event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">	//如果没有在代码里面setOnTouchListener的话，就判断View自身的onTouchEvent方法有没有</div><div class="line">	//处理，没有处理最后返回false，处理了返回true；</div><div class="line">          if (onTouchEvent(event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">      &#125;</div><div class="line">//系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      //如果即没有setOnTouchListener，也没有在onTouchEvent中处理，就返回false</div><div class="line">      return false;</div><div class="line">      </div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+        <p>dispatchTouchEvent<br>话不多说直接上源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line">   * Pass the touch screen motion event down to the target view, or this</div><div class="line">   * view if it is the target.</div><div class="line">   * 将屏幕的按压事件传递给目标view，或者当前view即目标view</div><div class="line">   * </div><div class="line">   * @param event The motion event to be dispatched.</div><div class="line">   * 需要分发的事件</div><div class="line">   * </div><div class="line">   * @return True if the event was handled by the view, false otherwise.</div><div class="line">   * 如果返回true表示这个事件被这个view处理了，否则反</div><div class="line">   */</div><div class="line">  public boolean dispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">  </div><div class="line">   //系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onTouchEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">//过滤是不是能够传递这个touch事件</div><div class="line">      if (onFilterTouchEventForSecurity(event)) &#123;</div><div class="line">      </div><div class="line">          //首先判断我们在使用该view的时候是否有实现OnTouchListener，如果有实现就判断当前的view</div><div class="line">           //状态是不是ENABLED,如果实现的OnTouchListener的onTouch中返回true，并处理事件，则</div><div class="line">           //返回true，这个事件在此处理了。</div><div class="line">          if (mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp;</div><div class="line">                  mOnTouchListener.onTouch(this, event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">	//如果没有在代码里面setOnTouchListener的话，就判断View自身的onTouchEvent方法有没有</div><div class="line">	//处理，没有处理最后返回false，处理了返回true；</div><div class="line">          if (onTouchEvent(event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">      &#125;</div><div class="line">//系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      //如果即没有setOnTouchListener，也没有在onTouchEvent中处理，就返回false</div><div class="line">      return false;</div><div class="line">      </div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>从上面的源码可以看出：在View的分发事件方法dispatchTouchEvent中，处理分发的顺序是实现OnTouchListener的onTouch()，之后是当前View的onTouchEvent(event)方法。</p>
 <h2 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a>onTouchEvent</h2><p>onTouchEvent的源码有点长，所以要沉下心来仔细阅读。事件消耗和事件处理都是返回true，事件消耗就相当于占坑不拉屎，虽然有点恶心哈，事件处理当然就是占坑拉屎。</p>
 <blockquote>
@@ -344,17 +345,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/Android中混淆的使用/" rel="next" title="Android混淆的使用">
-                <i class="fa fa-chevron-left"></i> Android混淆的使用
+              <a href="/2016/08/22/handler机制的深入理解/" rel="next" title="handler机制的深入理解">
+                <i class="fa fa-chevron-left"></i> handler机制的深入理解
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/adpter中的观察者模式/" rel="prev" title="adapter中的观察者模式">
-                adapter中的观察者模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -543,7 +540,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchTouchEvent"><span class="nav-number">1.</span> <span class="nav-text">dispatchTouchEvent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onTouchEvent"><span class="nav-number">2.</span> <span class="nav-text">onTouchEvent</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#onTouchEvent"><span class="nav-number">1.</span> <span class="nav-text">onTouchEvent</span></a></li></ol></div>
             
           </div>
         </section>

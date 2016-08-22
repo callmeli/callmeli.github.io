@@ -223,123 +223,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/08/22/adpter中的观察者模式/" itemprop="url">
-                  adapter中的观察者模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:46:10+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/adpter中的观察者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/adpter中的观察者模式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p>观察者模式也通常称为 <strong>发布/订阅模式</strong>，是一种常见的软件开发模式。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/adpter中的观察者模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="url">
                   事件分发—View中的dispatchTouchEvent和onTouchEvent分析
                 </a>
@@ -354,7 +237,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:46:02+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:51:17+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -408,9 +291,485 @@
 
       
         
-          <h2 id="dispatchTouchEvent"><a href="#dispatchTouchEvent" class="headerlink" title="dispatchTouchEvent"></a>dispatchTouchEvent</h2><p>话不多说直接上源码<br>
+          <p>dispatchTouchEvent<br>话不多说直接上源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line">   * Pass the touch screen motion event down to the target view, or this</div><div class="line">   * view if it is the target.</div><div class="line">   * 将屏幕的按压事件传递给目标view，或者当前view即目标view</div><div class="line">   * </div><div class="line">   * @param event The motion event to be dispatched.</div><div class="line">   * 需要分发的事件</div><div class="line">   * </div><div class="line">   * @return True if the event was handled by the view, false otherwise.</div><div class="line">   * 如果返回true表示这个事件被这个view处理了，否则反</div><div class="line">   */</div><div class="line">  public boolean dispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">  </div><div class="line">   //系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onTouchEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">//过滤是不是能够传递这个touch事件</div><div class="line">      if (onFilterTouchEventForSecurity(event)) &#123;</div><div class="line">      </div><div class="line">          //首先判断我们在使用该view的时候是否有实现OnTouchListener，如果有实现就判断当前的view</div><div class="line">           //状态是不是ENABLED,如果实现的OnTouchListener的onTouch中返回true，并处理事件，则</div><div class="line">           //返回true，这个事件在此处理了。</div><div class="line">          if (mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp;</div><div class="line">                  mOnTouchListener.onTouch(this, event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">	//如果没有在代码里面setOnTouchListener的话，就判断View自身的onTouchEvent方法有没有</div><div class="line">	//处理，没有处理最后返回false，处理了返回true；</div><div class="line">          if (onTouchEvent(event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">      &#125;</div><div class="line">//系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      //如果即没有setOnTouchListener，也没有在onTouchEvent中处理，就返回false</div><div class="line">      return false;</div><div class="line">      </div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/handler机制的深入理解/" itemprop="url">
+                  handler机制的深入理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:50:30+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/handler机制的深入理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/handler机制的深入理解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>一、相关名词简介<br>1、 MessageQueue 消息队列 </p>
+<pre><code>承载消息的容器         
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/22/handler机制的深入理解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/adpter中的观察者模式/" itemprop="url">
+                  adapter中的观察者模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:49:58+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/adpter中的观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/adpter中的观察者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>观察者模式</p>
+<p>观察者模式也通常称为 <strong>发布/订阅模式</strong>，是一种常见的软件开发模式。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/22/adpter中的观察者模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="url">
+                  事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:49:16+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>ViewGroup中的onTouchEvent方法是继承自View的onTouchEvent方法，因此这里只对分发和接受事件做源码分析。</p>
+<p>分析前铺垫<br>首先事件流中常用的一些事件相关的细节点必须要有所了解这样才能把整个流程搞透彻。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="url">
+                  Activity中布局资源layoutResId在setContentView加载过程分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:49:02+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>前言</p>
+<p>记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的Measure过程做一个铺垫。</p>
+<p>分析</p>
+<h2 id="1、寻找setContentView真正实现的地方"><a href="#1、寻找setContentView真正实现的地方" class="headerlink" title="1、寻找setContentView真正实现的地方"></a>1、寻找setContentView真正实现的地方</h2><p> 一般我们在新建的activity中传入布局的id就可以加载这个页面了，当然setContentView有几个重载的方法，就不细说了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -528,125 +887,6 @@
           <p>一、前言<br>一个apk从开始到发布一般过程：<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/08/22/Android中混淆的使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/22/handler机制的深入理解/" itemprop="url">
-                  handler机制的深入理解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:44:44+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/handler机制的深入理解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/handler机制的深入理解/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一、相关名词简介</p>
-<hr>
-<p>1、 MessageQueue 消息队列<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/handler机制的深入理解/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1122,243 +1362,6 @@
           <p>一、 基于httpclient网络框架库在android 6.0sdk问题的直接解决方案<br>在android 6.0（API 23）中，Google已经移除了移除了Apache HttpClient相关的类 推荐使用HttpUrlConnection，因此基于httpclient设计的开源框架asynchttpclient 受到直接影响。为了兼容高版本的sdk，那我们应该怎么办呢？<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="url">
-                  事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:40:49+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>ViewGroup中的onTouchEvent方法是继承自View的onTouchEvent方法，因此这里只对分发和接受事件做源码分析。</p>
-<h2 id="分析前铺垫"><a href="#分析前铺垫" class="headerlink" title="分析前铺垫"></a>分析前铺垫</h2><p>首先事件流中常用的一些事件相关的细节点必须要有所了解这样才能把整个流程搞透彻。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="url">
-                  Activity中布局资源layoutResId在setContentView加载过程分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:33:27+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的Measure过程做一个铺垫。</p>
-<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="1、寻找setContentView真正实现的地方"><a href="#1、寻找setContentView真正实现的地方" class="headerlink" title="1、寻找setContentView真正实现的地方"></a>1、寻找setContentView真正实现的地方</h2><p> 一般我们在新建的activity中传入布局的id就可以加载这个页面了，当然setContentView有几个重载的方法，就不细说了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

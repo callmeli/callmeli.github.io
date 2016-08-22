@@ -58,23 +58,23 @@
 
 
 <meta name="description" content="http协议是应用层的协议，也是现阶段我们常用的网络协议，基本上访问前后台交互都是使用的http协议。
-###http协议的特点###无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
+http协议的特点无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="http协议">
 <meta property="og:url" content="http://yoursite.com/2016/08/22/http协议/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
 <meta property="og:description" content="http协议是应用层的协议，也是现阶段我们常用的网络协议，基本上访问前后台交互都是使用的http协议。
-###http协议的特点###无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
+http协议的特点无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
 <meta property="og:image" content="http://img.blog.csdn.net/20160822175237449">
 <meta property="og:image" content="http://img.blog.csdn.net/20160822175314479">
 <meta property="og:image" content="http://img.blog.csdn.net/20160822175427653">
 <meta property="og:image" content="http://img.blog.csdn.net/20160822175451012">
 <meta property="og:image" content="http://img.blog.csdn.net/20160822175748657">
-<meta property="og:updated_time" content="2016-08-22T10:13:51.054Z">
+<meta property="og:updated_time" content="2016-08-22T10:21:18.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http协议">
 <meta name="twitter:description" content="http协议是应用层的协议，也是现阶段我们常用的网络协议，基本上访问前后台交互都是使用的http协议。
-###http协议的特点###无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
+http协议的特点无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160822175237449">
 
 
@@ -251,7 +251,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T18:13:51+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T18:21:18+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -314,11 +314,11 @@
 
       
         <p>http协议是应用层的协议，也是现阶段我们常用的网络协议，基本上访问前后台交互都是使用的http协议。</p>
-<p>###http协议的特点###<br>无状态：请求一次返回一次，对请求事务没有记忆能力。<br>简单快速：协议结构简单，传输效率高效。<br>灵活多变：http也可以作为其他上层协议的载体。<br><a id="more"></a></p>
-<p>###http url格式###<br>http：//host:port/path<br>host 主机ip或域名<br>port 端口 默认为80<br>path 访问资源的路径</p>
+<p></p><h3>http协议的特点<br>无状态：请求一次返回一次，对请求事务没有记忆能力。<br>简单快速：协议结构简单，传输效率高效。<br>灵活多变：http也可以作为其他上层协议的载体。<br><a id="more"></a><p></p>
+<p></p><h3>http url格式<br>http：//host:port/path<br>host 主机ip或域名<br>port 端口 默认为80<br>path 访问资源的路径<p></p>
 <hr>
-<p>###http请求###</p>
-<p>####http请求的报文格式####<br>请求行 （请求方法 请求的url 请求的http协议版本 ）<br>请求头 （请求头名称：请求头名称对应的值）<br>此处空行<br>请求体 （请求的附带数据 ）</p>
+<p></p><h3>http请求<p></p>
+<p></p><h4>http请求的报文格式<br>请求行 （请求方法 请求的url 请求的http协议版本 ）<br>请求头 （请求头名称：请求头名称对应的值）<br>此处空行<br>请求体 （请求的附带数据 ）<p></p>
 <p><strong><em>如下图所示</em></strong><br><img src="http://img.blog.csdn.net/20160822175237449" alt="这里写图片描述"></p>
 <p>####http请求方法####<br>get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例<br><img src="http://img.blog.csdn.net/20160822175314479" alt="这里写图片描述"></p>
 <hr>
@@ -359,7 +359,7 @@
 <blockquote>
 <p>参考博客  <a href="http://blog.csdn.net/itachi85/article/details/50982995" target="_blank" rel="external">http://blog.csdn.net/itachi85/article/details/50982995</a></p>
 </blockquote>
-
+</h4></h3></h3></h3>
       
     </div>
 
@@ -382,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/TCPIP分层模型/" rel="next" title="TCPIP分层模型">
-                <i class="fa fa-chevron-left"></i> TCPIP分层模型
+              <a href="/2016/08/22/tcpip分层模型/" rel="next" title="tcp/ip分层模型">
+                <i class="fa fa-chevron-left"></i> tcp/ip分层模型
               </a>
             
           </div>
@@ -577,7 +577,179 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#3、响应报头"><span class="nav-number">1.</span> <span class="nav-text">3、响应报头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、实体报头"><span class="nav-number">2.</span> <span class="nav-text">4、实体报头</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">http协议的特点无状态：请求一次返回一次，对请求事务没有记忆能力。简单快速：协议结构简单，传输效率高效。灵活多变：http也可以作为其他上层协议的载体。
+http url格式http：//host:port/pathhost 主机ip或域名port 端口 默认为80path 访问资源的路径
+
+http请求
+http请求的报文格式请求行 （请求方法 请求的url 请求的http协议版本 ）请求头 （请求头名称：请求头名称对应的值）此处空行请求体 （请求的附带数据 ）
+如下图所示
+####http请求方法####get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例
+
+###http响应###
+####http响应报文的格式####响应行 (协议版本 响应code 响应msg )响应头 （响应头名称：响应头名称对应的数据 ）此处空行响应体 (响应数据 )
+下图是请求实例
+
+###http报文头###
+####1、通用报头 ####既可以出现在请求报头，也可以出现在响应报头中
+* Date：表示消息产生的日期和时间
+* Connection：允许发送指定连接的选项，例如指定连接是连续的，或者指定“close”选项，通知服务器，在响应完成后，关闭连接
+* Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制）
+####2、请求报头 #### 请求报头通知服务器关于客户端求求的信息，典型的请求头有：
+* Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
+* User-Agent：发送请求的浏览器类型、操作系统等信息
+* Accept：客户端可识别的内容类型列表，用于指定客户端接收那些类型的信息
+* Accept-Encoding：客户端可识别的数据编码
+* Accept-Language：表示浏览器所支持的语言类型
+* Connection：允许客户端和服务器指定与请求/响应连接有关的选项，例如这是为Keep-Alive则表示保持连接。
+* Transfer-Encoding：告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+3、响应报头  用于服务器传递自身信息的响应，常见的响应报头：
+* Location：用于重定向接受者到一个新的位置，常用在更换域名的时候
+* Server：包含可服务器用来处理请求的系统信息，与User-Agent请求报头是相对应的
+4、实体报头实体报头用来定于被传送资源的信息，既可以用于请求也可用于响应。请求和响应消息都可以传送一个实体，常见的实体报头为：
+* Content-Type：发送给接收者的实体正文的媒体类型
+* Content-Lenght：实体正文的长度
+* Content-Language：描述资源所用的自然语言，没有设置则该选项则认为实体内容将提供给所有的语言阅读
+* Content-Encoding：实体报头被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。
+* Last-Modified：实体报头用于指示资源的最后修改日期和时间
+* Expires：实体报头给出响应过期的日期和时间
+
+###特殊的请求格式mutilpart/form-data ### 这种请求格式是基于post请求的，我们一般用为表单请求。如下图实例     
+POST /t2/upload.do HTTP/1.1User-Agent: SOHUWapRebotAccept-Language: zh-cn,zh;q=0.5Accept-Charset: GBK,utf-8;q=0.7,;q=0.7Connection: keep-aliveContent-Length: 60408Content-Type:multipart/form-data; boundary=ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC       **(这里指定content-type为multipart/form-data ，并且定义boundary)Host: w.sohu.com
+ 空行–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC （–boundary 、空行 + –boundary分割传递的数据）Content-Disposition: form-data;name=”desc”Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bit
+空行this is a desc      (参数desc对应的值)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXCContent-Disposition: form-data;name=”pic”; filename=”photo.jpg” (传递文件时传递文件名)Content-Type: application/octet-streamContent-Transfer-Encoding: binary
+空行[654dfasalk;af&6…]     (此处是参数pic 对应的图片的二进制数据)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC– （–boundary– 代表结束符 ）*
+
+
+参考博客  http://blog.csdn.net/itachi85/article/details/50982995
+
+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">http url格式http：//host:port/pathhost 主机ip或域名port 端口 默认为80path 访问资源的路径
+
+http请求
+http请求的报文格式请求行 （请求方法 请求的url 请求的http协议版本 ）请求头 （请求头名称：请求头名称对应的值）此处空行请求体 （请求的附带数据 ）
+如下图所示
+####http请求方法####get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例
+
+###http响应###
+####http响应报文的格式####响应行 (协议版本 响应code 响应msg )响应头 （响应头名称：响应头名称对应的数据 ）此处空行响应体 (响应数据 )
+下图是请求实例
+
+###http报文头###
+####1、通用报头 ####既可以出现在请求报头，也可以出现在响应报头中
+* Date：表示消息产生的日期和时间
+* Connection：允许发送指定连接的选项，例如指定连接是连续的，或者指定“close”选项，通知服务器，在响应完成后，关闭连接
+* Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制）
+####2、请求报头 #### 请求报头通知服务器关于客户端求求的信息，典型的请求头有：
+* Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
+* User-Agent：发送请求的浏览器类型、操作系统等信息
+* Accept：客户端可识别的内容类型列表，用于指定客户端接收那些类型的信息
+* Accept-Encoding：客户端可识别的数据编码
+* Accept-Language：表示浏览器所支持的语言类型
+* Connection：允许客户端和服务器指定与请求/响应连接有关的选项，例如这是为Keep-Alive则表示保持连接。
+* Transfer-Encoding：告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+3、响应报头  用于服务器传递自身信息的响应，常见的响应报头：
+* Location：用于重定向接受者到一个新的位置，常用在更换域名的时候
+* Server：包含可服务器用来处理请求的系统信息，与User-Agent请求报头是相对应的
+4、实体报头实体报头用来定于被传送资源的信息，既可以用于请求也可用于响应。请求和响应消息都可以传送一个实体，常见的实体报头为：
+* Content-Type：发送给接收者的实体正文的媒体类型
+* Content-Lenght：实体正文的长度
+* Content-Language：描述资源所用的自然语言，没有设置则该选项则认为实体内容将提供给所有的语言阅读
+* Content-Encoding：实体报头被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。
+* Last-Modified：实体报头用于指示资源的最后修改日期和时间
+* Expires：实体报头给出响应过期的日期和时间
+
+###特殊的请求格式mutilpart/form-data ### 这种请求格式是基于post请求的，我们一般用为表单请求。如下图实例     
+POST /t2/upload.do HTTP/1.1User-Agent: SOHUWapRebotAccept-Language: zh-cn,zh;q=0.5Accept-Charset: GBK,utf-8;q=0.7,;q=0.7Connection: keep-aliveContent-Length: 60408Content-Type:multipart/form-data; boundary=ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC       **(这里指定content-type为multipart/form-data ，并且定义boundary)Host: w.sohu.com
+ 空行–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC （–boundary 、空行 + –boundary分割传递的数据）Content-Disposition: form-data;name=”desc”Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bit
+空行this is a desc      (参数desc对应的值)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXCContent-Disposition: form-data;name=”pic”; filename=”photo.jpg” (传递文件时传递文件名)Content-Type: application/octet-streamContent-Transfer-Encoding: binary
+空行[654dfasalk;af&6…]     (此处是参数pic 对应的图片的二进制数据)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC– （–boundary– 代表结束符 ）*
+
+
+参考博客  http://blog.csdn.net/itachi85/article/details/50982995
+
+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">http请求
+http请求的报文格式请求行 （请求方法 请求的url 请求的http协议版本 ）请求头 （请求头名称：请求头名称对应的值）此处空行请求体 （请求的附带数据 ）
+如下图所示
+####http请求方法####get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例
+
+###http响应###
+####http响应报文的格式####响应行 (协议版本 响应code 响应msg )响应头 （响应头名称：响应头名称对应的数据 ）此处空行响应体 (响应数据 )
+下图是请求实例
+
+###http报文头###
+####1、通用报头 ####既可以出现在请求报头，也可以出现在响应报头中
+* Date：表示消息产生的日期和时间
+* Connection：允许发送指定连接的选项，例如指定连接是连续的，或者指定“close”选项，通知服务器，在响应完成后，关闭连接
+* Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制）
+####2、请求报头 #### 请求报头通知服务器关于客户端求求的信息，典型的请求头有：
+* Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
+* User-Agent：发送请求的浏览器类型、操作系统等信息
+* Accept：客户端可识别的内容类型列表，用于指定客户端接收那些类型的信息
+* Accept-Encoding：客户端可识别的数据编码
+* Accept-Language：表示浏览器所支持的语言类型
+* Connection：允许客户端和服务器指定与请求/响应连接有关的选项，例如这是为Keep-Alive则表示保持连接。
+* Transfer-Encoding：告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+3、响应报头  用于服务器传递自身信息的响应，常见的响应报头：
+* Location：用于重定向接受者到一个新的位置，常用在更换域名的时候
+* Server：包含可服务器用来处理请求的系统信息，与User-Agent请求报头是相对应的
+4、实体报头实体报头用来定于被传送资源的信息，既可以用于请求也可用于响应。请求和响应消息都可以传送一个实体，常见的实体报头为：
+* Content-Type：发送给接收者的实体正文的媒体类型
+* Content-Lenght：实体正文的长度
+* Content-Language：描述资源所用的自然语言，没有设置则该选项则认为实体内容将提供给所有的语言阅读
+* Content-Encoding：实体报头被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。
+* Last-Modified：实体报头用于指示资源的最后修改日期和时间
+* Expires：实体报头给出响应过期的日期和时间
+
+###特殊的请求格式mutilpart/form-data ### 这种请求格式是基于post请求的，我们一般用为表单请求。如下图实例     
+POST /t2/upload.do HTTP/1.1User-Agent: SOHUWapRebotAccept-Language: zh-cn,zh;q=0.5Accept-Charset: GBK,utf-8;q=0.7,;q=0.7Connection: keep-aliveContent-Length: 60408Content-Type:multipart/form-data; boundary=ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC       **(这里指定content-type为multipart/form-data ，并且定义boundary)Host: w.sohu.com
+ 空行–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC （–boundary 、空行 + –boundary分割传递的数据）Content-Disposition: form-data;name=”desc”Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bit
+空行this is a desc      (参数desc对应的值)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXCContent-Disposition: form-data;name=”pic”; filename=”photo.jpg” (传递文件时传递文件名)Content-Type: application/octet-streamContent-Transfer-Encoding: binary
+空行[654dfasalk;af&6…]     (此处是参数pic 对应的图片的二进制数据)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC– （–boundary– 代表结束符 ）*
+
+
+参考博客  http://blog.csdn.net/itachi85/article/details/50982995
+
+</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">http请求的报文格式请求行 （请求方法 请求的url 请求的http协议版本 ）请求头 （请求头名称：请求头名称对应的值）此处空行请求体 （请求的附带数据 ）
+如下图所示
+####http请求方法####get、post、head（获取请求资源响应消息报文头）、delete（删除指定资源）、put（存储资源）、options（询问支持的方法）、trace（发送出去的请求时如何加工修改）、connect（要求用隧道协议（tls、ssl）来连接代理）。一般常用的是get和post、get请求参数直接附带在url中，而post请求一般需要将请求参数放在请求体，也就是上图中的请求数据中。下图是请求实例
+
+###http响应###
+####http响应报文的格式####响应行 (协议版本 响应code 响应msg )响应头 （响应头名称：响应头名称对应的数据 ）此处空行响应体 (响应数据 )
+下图是请求实例
+
+###http报文头###
+####1、通用报头 ####既可以出现在请求报头，也可以出现在响应报头中
+* Date：表示消息产生的日期和时间
+* Connection：允许发送指定连接的选项，例如指定连接是连续的，或者指定“close”选项，通知服务器，在响应完成后，关闭连接
+* Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制）
+####2、请求报头 #### 请求报头通知服务器关于客户端求求的信息，典型的请求头有：
+* Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
+* User-Agent：发送请求的浏览器类型、操作系统等信息
+* Accept：客户端可识别的内容类型列表，用于指定客户端接收那些类型的信息
+* Accept-Encoding：客户端可识别的数据编码
+* Accept-Language：表示浏览器所支持的语言类型
+* Connection：允许客户端和服务器指定与请求/响应连接有关的选项，例如这是为Keep-Alive则表示保持连接。
+* Transfer-Encoding：告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+3、响应报头  用于服务器传递自身信息的响应，常见的响应报头：
+* Location：用于重定向接受者到一个新的位置，常用在更换域名的时候
+* Server：包含可服务器用来处理请求的系统信息，与User-Agent请求报头是相对应的
+4、实体报头实体报头用来定于被传送资源的信息，既可以用于请求也可用于响应。请求和响应消息都可以传送一个实体，常见的实体报头为：
+* Content-Type：发送给接收者的实体正文的媒体类型
+* Content-Lenght：实体正文的长度
+* Content-Language：描述资源所用的自然语言，没有设置则该选项则认为实体内容将提供给所有的语言阅读
+* Content-Encoding：实体报头被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。
+* Last-Modified：实体报头用于指示资源的最后修改日期和时间
+* Expires：实体报头给出响应过期的日期和时间
+
+###特殊的请求格式mutilpart/form-data ### 这种请求格式是基于post请求的，我们一般用为表单请求。如下图实例     
+POST /t2/upload.do HTTP/1.1User-Agent: SOHUWapRebotAccept-Language: zh-cn,zh;q=0.5Accept-Charset: GBK,utf-8;q=0.7,;q=0.7Connection: keep-aliveContent-Length: 60408Content-Type:multipart/form-data; boundary=ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC       **(这里指定content-type为multipart/form-data ，并且定义boundary)Host: w.sohu.com
+ 空行–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC （–boundary 、空行 + –boundary分割传递的数据）Content-Disposition: form-data;name=”desc”Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bit
+空行this is a desc      (参数desc对应的值)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXCContent-Disposition: form-data;name=”pic”; filename=”photo.jpg” (传递文件时传递文件名)Content-Type: application/octet-streamContent-Transfer-Encoding: binary
+空行[654dfasalk;af&6…]     (此处是参数pic 对应的图片的二进制数据)–ZnGpDtePMx0KrHh_G0X99Yef9r8JZsRJSXC– （–boundary– 代表结束符 ）*
+
+
+参考博客  http://blog.csdn.net/itachi85/article/details/50982995
+
+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、响应报头"><span class="nav-number">3.2.</span> <span class="nav-text">3、响应报头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、实体报头"><span class="nav-number">3.3.</span> <span class="nav-text">4、实体报头</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

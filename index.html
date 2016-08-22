@@ -232,7 +232,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/08/22/hello-world - 副本/" itemprop="url">
+                <a class="post-title-link" href="/2016/08/22/jvm的垃圾回收机制/" itemprop="url">
                   JVM中的垃圾回收机制
                 </a>
               
@@ -246,7 +246,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:36:32+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T16:42:18+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -276,8 +276,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/hello-world - 副本/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/hello-world - 副本/" itemprop="commentsCount"></span>
+                <a href="/2016/08/22/jvm的垃圾回收机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/jvm的垃圾回收机制/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -300,9 +300,10 @@
 
       
         
-          <p>一、前言<br>     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。<br>
+          <p>一、前言<br>     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。</p>
+<p>二、先来看看垃圾的检测<br>     再说垃圾检测之前我们先看回顾下jvm的结构：栈、堆、程序计数器、方法区、本地方法栈。这几块内存区域中栈、本地方法栈、程序计数器属于线程，线程结束就结束，线程新建就生成，所以这里不用考虑垃圾的回收，然后是方法区，方法区里面保存的是类的基本信息等，所以这里也不用考虑，而堆，堆是类实例对象生成存储的地方，而对象存在无引用的对象，所以堆是需要垃圾回收的。<br>     搞清楚了垃圾回收的区域，然后就需要垃圾检测，一般有这几种垃圾检测的算法：
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/22/hello-world - 副本/#more" rel="contents">
+            <a class="btn" href="/2016/08/22/jvm的垃圾回收机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="混淆," />
+  <meta name="keywords" content="JVM," />
 
 
 
@@ -57,34 +57,23 @@
 
 
 
-<meta name="description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="description" content="一、前言     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。
+二、先来看看垃圾的检测     再说垃圾检测之前我们先看回顾下jvm的结构：栈、堆、程序计数器、方法区、本地方法栈。这几块内存区域中栈、本地方法栈、程序计数器属于线程，线程结束就结束，线程新建就生成，所以这里不用考虑垃圾的回收，然后是方法区，方法区里面保存的是类的基本信">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android混淆的使用">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/Android中混淆的使用/index.html">
+<meta property="og:title" content="JVM中的垃圾回收机制">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/jvm的垃圾回收机制/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
-<meta property="og:updated_time" content="2016-08-22T06:21:17.699Z">
+<meta property="og:description" content="一、前言     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。
+二、先来看看垃圾的检测     再说垃圾检测之前我们先看回顾下jvm的结构：栈、堆、程序计数器、方法区、本地方法栈。这几块内存区域中栈、本地方法栈、程序计数器属于线程，线程结束就结束，线程新建就生成，所以这里不用考虑垃圾的回收，然后是方法区，方法区里面保存的是类的基本信">
+<meta property="og:image" content="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/c1344717-93f6-4706-b51b-3efd138a492e.png?resizeSmall&width=832">
+<meta property="og:image" content="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/350fd4d4-eeca-4191-a038-a66ac86fbcd0.png?resizeSmall&width=832">
+<meta property="og:image" content="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/8bef5e17-223a-4b8c-bc0c-20550cfeddaa.png?resizeSmall&width=832">
+<meta property="og:updated_time" content="2016-08-22T08:42:18.814Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android混淆的使用">
-<meta name="twitter:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="twitter:title" content="JVM中的垃圾回收机制">
+<meta name="twitter:description" content="一、前言     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。
+二、先来看看垃圾的检测     再说垃圾检测之前我们先看回顾下jvm的结构：栈、堆、程序计数器、方法区、本地方法栈。这几块内存区域中栈、本地方法栈、程序计数器属于线程，线程结束就结束，线程新建就生成，所以这里不用考虑垃圾的回收，然后是方法区，方法区里面保存的是类的基本信">
+<meta name="twitter:image" content="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/c1344717-93f6-4706-b51b-3efd138a492e.png?resizeSmall&width=832">
 
 
 
@@ -102,7 +91,7 @@
   };
 </script>
 
-  <title> Android混淆的使用 | Ervin's Blog </title>
+  <title> JVM中的垃圾回收机制 | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -248,7 +237,7 @@
             
             
               
-                Android混淆的使用
+                JVM中的垃圾回收机制
               
             
           </h1>
@@ -260,7 +249,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:21:17+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T16:42:18+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -274,8 +263,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -290,8 +279,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/Android中混淆的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Android中混淆的使用/" itemprop="commentsCount"></span>
+                <a href="/2016/08/22/jvm的垃圾回收机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/jvm的垃圾回收机制/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -313,43 +302,13 @@
       
 
       
-        <p>一、前言<br>一个apk从开始到发布一般过程：</p>
-<ul>
-<li>搭建框架（选择使用的框架，分配包名）</li>
-<li>开始编码（编写布局，逻辑，自测）</li>
-<li>编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）</li>
-<li>测试优化（测试crash和优化性能）</li>
-<li>上线发布<a id="more"></a>
-从蜻蜓fm没有加混淆，导致宙斯和普罗米修斯的代码泄露，就可以看出一个应用混淆的重要性。因此我们为了保证自己的开发成果不会被别人窃取，添加混淆必须的。 所以下面记录一些常用的混淆。<br>二、 使用混淆<br>混淆一般是在项目工程的project.properties中来配置混淆文件的路径，默认的路径是<br>\${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt，${sdk.dir}代表的是sdk所在路径。但是默认混淆是被注销的，如果需要启用默认的混淆就需要把#号去掉。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># This file is automatically generated by Android Tools.</div><div class="line"># Do not modify this file -- YOUR CHANGES WILL BE ERASED!</div><div class="line">#</div><div class="line"># This file must be checked in Version Control Systems.</div><div class="line">#</div><div class="line"># To customize properties used by the Ant build system edit</div><div class="line"># &quot;ant.properties&quot;, and override values to adapt the script to your</div><div class="line"># project structure.</div><div class="line">#</div><div class="line"># To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):</div><div class="line">//也就是这里如果需要启用默认的混淆文件就需要去掉行首的#号</div><div class="line">#proguard.config=$&#123;sdk.dir&#125;/tools/proguard/proguard-android.txt:proguard-project.txt</div><div class="line"># Project target.</div><div class="line">target=android-20</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>三、 自定义混淆文件<br>一般我们在开发中，可能会添加或引用到第三方的开发包或库，所以有些文件是不需要混淆的，这时候可能就需要自定义混淆文件，添加我们自己开发中不需要混淆的部分。一般的做法是使用项目目录中的proguard-project.txt文件</p>
-<p>1、修改项目工程的project.properties中混淆文件配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proguard.config = proguard-project.txt</div></pre></td></tr></table></figure>
-<p>2、在proguard-project.txt中编写混淆</p>
-<h2 id="常用混淆指令"><a href="#常用混淆指令" class="headerlink" title="常用混淆指令"></a>常用混淆指令</h2><p>如果需要自己定义混淆文件，那么常用的一些混淆指令就需要有所了解。</p>
-<ul>
-<li>基本配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 是否使用大小写混合 </div><div class="line">-dontusemixedcaseclassnames  </div><div class="line"></div><div class="line">#如果应用程序引入的有jar包,并且混淆jar包里面的类dont skip nonpublic library classes </div><div class="line">-dontskipnonpubliclibraryclasses class </div><div class="line"></div><div class="line">#混淆时不做预校验  dont preverify </div><div class="line">-dontpreverify </div><div class="line"></div><div class="line">#混淆采用的算法.</div><div class="line">-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* </div><div class="line"></div><div class="line"># 屏蔽警告 ignore warnings </div><div class="line">-ignorewarnings </div><div class="line"></div><div class="line">#设置混淆的压缩比率 0 ~ 7 optimization passes </div><div class="line">-optimizationpasses 5 </div><div class="line"></div><div class="line">#混淆后生产映射文件 map 类名-&gt;转化后类名的映射</div><div class="line">-verbose</div></pre></td></tr></table></figure>
-<ul>
-<li>可选配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#应用的依赖包，如android-support-v4</div><div class="line">-libraryjars class_path </div><div class="line"></div><div class="line">#不混淆某些类</div><div class="line">-keep [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类的成员</div><div class="line">-keepclassmembers [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类及其成员</div><div class="line">-keepclasseswithmembers [,modifier,...]</div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepnames class_specification </div><div class="line"></div><div class="line">#不混淆类的成员名</div><div class="line">-keepclassmembernames class_specification </div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepclasseswithmembernames class_specification </div><div class="line"></div><div class="line">#假设调用不产生任何影响，在proguard代码优化时会将该调用remove掉。如system.out.println#和Log.v等等</div><div class="line">-assumenosideeffects class_specification </div><div class="line"></div><div class="line">#不提示warnning</div><div class="line">-dontwarn [class_filter]</div></pre></td></tr></table></figure>
-<blockquote>
-<p>详细的可选内容：<a href="http://blog.isming.me/2014/05/31/use-proguard/" target="_blank" rel="external">http://blog.isming.me/2014/05/31/use-proguard/</a></p>
-</blockquote>
-<p>四、混淆产生的文件<br>一旦混淆生成，打包发布，可能会遇到一些混淆过的代码报出的异常，那么可能代码报错分析可能就需要用到下面的文件。</p>
-<ol>
-<li><p>mapping.txt<br>表示混淆前后代码的对照表，这个文件非常重要。如果你的代码混淆后会产生bug的话，log提示中是混淆后的代码，希望定位到源代码的话就可以根据mapping.txt反推。<br>每次发布都要保留它方便该版本出现问题时调出日志进行排查，它可以根据版本号或是发布时间命名来保存或是放进代码版本控制中。</p>
-</li>
-<li><p>dump.txt<br>描述apk内所有class文件的内部结构。</p>
-</li>
-<li><p>seeds.txt<br>列出了没有被混淆的类和成员。</p>
-</li>
-<li><p>usage.txt<br>列出了源代码中被删除在apk中不存在的代码。</p>
-</li>
-</ol>
+        <p>一、前言<br>     垃圾回收机制，首先你必须先要确定jvm中那个地方会产生垃圾，然后如何检测那些东西是垃圾，最后才能回收这些垃圾。</p>
+<p>二、先来看看垃圾的检测<br>     再说垃圾检测之前我们先看回顾下jvm的结构：栈、堆、程序计数器、方法区、本地方法栈。这几块内存区域中栈、本地方法栈、程序计数器属于线程，线程结束就结束，线程新建就生成，所以这里不用考虑垃圾的回收，然后是方法区，方法区里面保存的是类的基本信息等，所以这里也不用考虑，而堆，堆是类实例对象生成存储的地方，而对象存在无引用的对象，所以堆是需要垃圾回收的。<br>     搞清楚了垃圾回收的区域，然后就需要垃圾检测，一般有这几种垃圾检测的算法： <a id="more"></a><br>     a.引用计数法<br>     引用计数法就是给对象一个引用计数器，有地方对他进行引用就+1，引用消失就-1，如果一个对象没有引用值，那么这个对象就是垃圾，需要回收。但是这里会有个问题，如果a、b两个对象相互引用，并没有其他的引用。那么他们的计数器即不为0，也属于需要回收的垃圾，所以这种时候就会出现问题。<br>     b.可达性分析法<br>     以根集对象为起始点进行搜索，如果有对象不可达的话，即是垃圾对象。这里的根集一般包括java栈中引用的对象、方法区常良池中引用的对象本地方法中引用的对象等。</p>
+<p>三、回收垃圾<br>    既然检测出来垃圾的存在，所以就需要来回收，回收算法一般有这几类<br>   1.标记-清除（Mark-sweep）（标记垃圾对象，统一回收）<br>        优点：基础算法，简单实现 缺点：效率低，产生大量碎片<br>    <img src="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/c1344717-93f6-4706-b51b-3efd138a492e.png?resizeSmall&amp;width=832" alt="这里写图片描述"></p>
+<p>   2.复制（Copying）（内存分为平等2分，复制使用对象到另外一块）<br>        优点:复制成本小、解决了碎片的问题 缺点：内存需求更多</p>
+<p>   3.标记-整理（Mark-Compact）（标记存活对象，清除为标记对象，并压缩存活对象）<br>    <img src="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/350fd4d4-eeca-4191-a038-a66ac86fbcd0.png?resizeSmall&amp;width=832" alt="这里写图片描述"></p>
+<p>   4.分代收集算法（ 分代的垃圾回收策略）<br>        分代收集涉及了前面的算法。年轻代：涉及了复制算法；年老代：涉及了“标记-整理（Mark-Sweep）”的算法.<br>    年轻代：是所有新对象产生的地方。年轻代被分为3个部分——Enden区和两个Survivor区（From和to）当Eden区被对象填满时，就会执行Minor GC。并把所有存活下来的对象转移到其中一个survivor区（假设为from区）。Minor GC同样会检查存活下来的对象，并把它们转移到另一个survivor区（假设为to区）。这样在一段时间内，总会有一个空的survivor区。经过多次GC周期后，仍然存活下来的对象会被转移到年老代内存空间。通常这是在年轻代有资格提升到年老代前通过设定年龄阈值来完成的。需要注意，Survivor的两个区是对称的，没先后关系，from和to是相对的。<br>    年老代：在年轻代中经历了N次回收后仍然没有被清除的对象，就会被放到年老代中，可以说他们都是久经沙场而不亡的一代，都是生命周期较长的对象。对于年老代和永久代，就不能再采用像年轻代中那样搬移腾挪的回收算法，因为那些对于这些回收战场上的老兵来说是小儿科。通常会在老年代内存被占满时将会触发Full GC,回收整个堆内存。<br>    持久代：用于存放静态文件，比如java类、方法等。持久代对垃圾回收没有显著的影响。<br>    <img src="https://app.yinxiang.com/shard/s36/nl/7545581/85d5d7d9-6be8-447c-a38d-92aa409310c2//res/8bef5e17-223a-4b8c-bc0c-20550cfeddaa.png?resizeSmall&amp;width=832" alt="这里写图片描述"></p>
+<p>参考链接： <a href="http://blog.csdn.net/tonytfjing" target="_blank" rel="external">http://blog.csdn.net/tonytfjing</a></p>
 
       
     </div>
@@ -364,7 +323,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/混淆/" rel="tag">#混淆</a>
+            <a href="/tags/JVM/" rel="tag">#JVM</a>
           
         </div>
       
@@ -373,17 +332,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/Java虚拟机/" rel="next" title="Java虚拟机简介">
-                <i class="fa fa-chevron-left"></i> Java虚拟机简介
+              <a href="/2016/08/22/Android中混淆的使用/" rel="next" title="Android混淆的使用">
+                <i class="fa fa-chevron-left"></i> Android混淆的使用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/jvm的垃圾回收机制/" rel="prev" title="JVM中的垃圾回收机制">
-                JVM中的垃圾回收机制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -398,10 +353,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/Android中混淆的使用/"
-     data-title="Android混淆的使用"
+        <div class="ds-share flat" data-thread-key="2016/08/22/jvm的垃圾回收机制/"
+     data-title="JVM中的垃圾回收机制"
      data-content=""
-     data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+     data-url="http://yoursite.com/2016/08/22/jvm的垃圾回收机制/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -428,8 +383,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/Android中混淆的使用/"
-           data-title="Android混淆的使用" data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+      <div class="ds-thread" data-thread-key="2016/08/22/jvm的垃圾回收机制/"
+           data-title="JVM中的垃圾回收机制" data-url="http://yoursite.com/2016/08/22/jvm的垃圾回收机制/">
       </div>
     
   </div>
@@ -572,7 +527,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用混淆指令"><span class="nav-number">1.</span> <span class="nav-text">常用混淆指令</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>

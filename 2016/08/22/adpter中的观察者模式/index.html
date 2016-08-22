@@ -1,0 +1,748 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="观察者模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="观察者模式观察者模式也通常称为 发布/订阅模式，是一种常见的软件开发模式。
+
+
+在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。
+
+
+举个类似的栗子：
+天气更新，气象局一般都有一个气象信息采集的部门，一个和外界合作的运营部门，气象信息采集部门负责数据的采集，和运营部门主动沟通。合作运营部门这是负责把最新的气象信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="adapter中的观察者模式">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/adpter中的观察者模式/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="观察者模式观察者模式也通常称为 发布/订阅模式，是一种常见的软件开发模式。
+
+
+在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。
+
+
+举个类似的栗子：
+天气更新，气象局一般都有一个气象信息采集的部门，一个和外界合作的运营部门，气象信息采集部门负责数据的采集，和运营部门主动沟通。合作运营部门这是负责把最新的气象信">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126152414432">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126152504649">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126161403252">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126153556085">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126153733577">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126163244272">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126152627023">
+<meta property="og:updated_time" content="2016-08-22T05:16:42.367Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="adapter中的观察者模式">
+<meta name="twitter:description" content="观察者模式观察者模式也通常称为 发布/订阅模式，是一种常见的软件开发模式。
+
+
+在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。
+
+
+举个类似的栗子：
+天气更新，气象局一般都有一个气象信息采集的部门，一个和外界合作的运营部门，气象信息采集部门负责数据的采集，和运营部门主动沟通。合作运营部门这是负责把最新的气象信">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151126152414432">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> adapter中的观察者模式 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                adapter中的观察者模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:16:42+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/adpter中的观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/adpter中的观察者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p>观察者模式也通常称为 <strong>发布/订阅模式</strong>，是一种常见的软件开发模式。</p>
+<hr>
+<blockquote>
+<p>在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。</p>
+</blockquote>
+<hr>
+<p>举个类似的栗子：</p>
+<p>天气更新，气象局一般都有一个<strong>气象信息采集的部门</strong>，一个和外界合作的<strong>运营部门</strong>，气象信息采集部门负责数据的采集，和运营部门主动沟通。合作运营部门这是负责把最新的气象信息发给和气象局合作的<strong>电视台，网站</strong>等等。</p>
+<p>运营部门充当的角色就是管理观察者的管理员</p>
+<pre><code>他们的主要任务就是添加新的合作单位，或者是终止某个单位或者所有单位的合作，还有当气象采集部门发送新的
+气象报告的时候需要把这些新的气象信息发给那些合作单位。
+</code></pre><p>而和气象局合作的电视台，网站等等他们的角色就是观察者</p>
+<pre><code>他们需要在接受到最新的气象报告后,通知给其他群众,或者做一些其它的工作。
+</code></pre><p>在这个过程中，运营部门和跟他们合作的电视台、网站直接就是一种订阅-发布的关系。</p>
+<p>如果还是不明白推荐一篇详解的博客：</p>
+<blockquote>
+<p><a href="http://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html" target="_blank" rel="external">http://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html</a></p>
+</blockquote>
+<hr>
+<h1 id="android-适配器中的观察者模式"><a href="#android-适配器中的观察者模式" class="headerlink" title="android 适配器中的观察者模式"></a>android 适配器中的观察者模式</h1><p>还记得一次面试中，被问道，为什么存在适配器这个东西，而不是数据直接的绘制ui呢？当时只知道感觉这么做就是简单，就是好，可就是说不出个所以然来。其实适配器其实也是一种设计模式的产物，这种设计模式就被称为适配器模式。现在看来采用适配器模式能够很好的降低耦合，如果直接绘制就降低了拓展性，而且也就没有listview item回收复用节省内存。</p>
+<p>如果需要详细了解适配器模式的话也推荐一篇很不错的帖子：</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/zhangjg_blog/article/details/18735243" target="_blank" rel="external">http://blog.csdn.net/zhangjg_blog/article/details/18735243</a></p>
+</blockquote>
+<p>还记得基本是listview的用法么？</p>
+<ol>
+<li>需要获取listview的实例</li>
+<li>通过List数据集合构建listview需要的适配器adapter</li>
+<li>将listview和适配器绑定</li>
+</ol>
+<p>所以这里面的三个主要对象抽象来看就是数据、适配器、UI</p>
+<h2 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h2><p><strong>数据</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126152414432" alt="这里写图片描述"></p>
+<hr>
+<p><strong>适配器</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126152504649" alt="这里写图片描述"></p>
+<hr>
+<p><strong>UI</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126161403252" alt="这里写图片描述"></p>
+<hr>
+<p><strong>可能这几张图看上去有点吃力，那么结合图做下分析解释：</strong></p>
+<blockquote>
+<p>Observable&lt; T &gt;就是类似前面的那个运营部门，它是一个抽象类，它的作用就是管理观察者，包括添加，删除等等。下面是源码片段：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126153556085" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>DataSetObserve则是一个Observable&lt; T &gt;的子类，它在继承父类的基础上添加了新的公共方法，源码片段如下：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126153733577" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>DataSetObserver就类似前面的那个电视台，网站，它也是一个抽象类，他就是观察者，源码片段如下：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126163244272" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>AdapterDataSetObserver是一个DataSetObserver在AdapterView里面的子类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">781  class AdapterDataSetObserver extends DataSetObserver &#123;</div><div class="line">782 </div><div class="line">783         private Parcelable mInstanceState = null;</div><div class="line">784 </div><div class="line">785         @Override</div><div class="line">786         public void onChanged() &#123;</div><div class="line">787             mDataChanged = true;</div><div class="line">788             mOldItemCount = mItemCount;</div><div class="line">789             mItemCount = getAdapter().getCount();</div><div class="line">790 </div><div class="line">791             // Detect the case where a cursor that was previously invalidated has</div><div class="line">792             // been repopulated with new data.</div><div class="line">793             if (AdapterView.this.getAdapter().hasStableIds() &amp;&amp; mInstanceState != null</div><div class="line">794                     &amp;&amp; mOldItemCount == 0 &amp;&amp; mItemCount &gt; 0) &#123;</div><div class="line">795                 AdapterView.this.onRestoreInstanceState(mInstanceState);</div><div class="line">796                 mInstanceState = null;</div><div class="line">797             &#125; else &#123;</div><div class="line">798                 rememberSyncState();</div><div class="line">799             &#125;//刷新UI</div><div class="line">800             checkFocus();</div><div class="line">801             requestLayout();	</div><div class="line">802         &#125;</div><div class="line">803 </div><div class="line">804         @Override</div><div class="line">805         public void onInvalidated() &#123;</div><div class="line">806             mDataChanged = true;</div><div class="line">807 </div><div class="line">808             if (AdapterView.this.getAdapter().hasStableIds()) &#123;</div><div class="line">809                 // Remember the current state for the case where our hosting activity is being</div><div class="line">810                 // stopped and later restarted</div><div class="line">811                 mInstanceState = AdapterView.this.onSaveInstanceState();</div><div class="line">812             &#125;</div><div class="line">813 </div><div class="line">814             // Data is invalid so we should reset our state</div><div class="line">815             mOldItemCount = mItemCount;</div><div class="line">816             mItemCount = 0;</div><div class="line">817             mSelectedPosition = INVALID_POSITION;</div><div class="line">818             mSelectedRowId = INVALID_ROW_ID;</div><div class="line">819             mNextSelectedPosition = INVALID_POSITION;</div><div class="line">820             mNextSelectedRowId = INVALID_ROW_ID;</div><div class="line">821             mNeedSync = false;</div><div class="line">822 			//刷新UI</div><div class="line">823             checkFocus();</div><div class="line">824             requestLayout();</div><div class="line">825         &#125;</div><div class="line">826 </div><div class="line">827         public void clearSavedState() &#123;</div><div class="line">828             mInstanceState = null;</div><div class="line">829         &#125;</div><div class="line">830     &#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程中，UI是最关心数据变化的，因为数据变化，UI也就要跟着刷新。因此UI就派了<strong>观察者（T observer）</strong>去查看数据变化，这个派过去的观察者被<strong>适配器的观察者管理员(Observe(T))</strong>管理分配调用，当适配器收到数据更新的消息适配器观察者管理员逐个的通知观察者数据发生改变，要他们去通知自己的UI更新。</p>
+<p>也就是在当我们调用ListView中的SetAdapter时，会将一个mDataSetObeserver（AdapterDataSetObserver 类）的观察者对象实例化，然后绑定在BaseAdapter的观察者管理员mDataSetObeserve（DataSetObserve类）中。</p>
+<p>当我们数据改变的时候，我们一般要调用了BaseAdapter的notifyXXX（如：notifydatasetchanged）的方法，其实实际上这个方法也就是通过观察者管理员mDataSetObeserve发送这个notify通知给每一个观察者(即调用了DataSetObeserve的notifyXXX)。</p>
+<p>最后ui派去的观察者收到了数据更新，接着就刷新页面(AdapterDataSetObserver 类中的onXXX 如：onChanged)。</p>
+<hr>
+<p>他们之间的关系我用一个window画图工具花了张图</p>
+<p><img src="http://img.blog.csdn.net/20151126152627023" alt="这里写图片描述"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/观察者模式/" rel="tag">#观察者模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/22/handler机制的深入理解/" rel="next" title="handler机制的深入理解">
+                <i class="fa fa-chevron-left"></i> handler机制的深入理解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/NanoHttpd/" rel="prev" title="NanoHttpd">
+                NanoHttpd <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/22/adpter中的观察者模式/"
+     data-title="adapter中的观察者模式"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/22/adpter中的观察者模式/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/22/adpter中的观察者模式/"
+           data-title="adapter中的观察者模式" data-url="http://yoursite.com/2016/08/22/adpter中的观察者模式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://qlogo2.store.qq.com/qzone/735266765/735266765/100?1422807745"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式"><span class="nav-number">1.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#android-适配器中的观察者模式"><span class="nav-number">2.</span> <span class="nav-text">android 适配器中的观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#详细分析"><span class="nav-number">2.1.</span> <span class="nav-text">详细分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

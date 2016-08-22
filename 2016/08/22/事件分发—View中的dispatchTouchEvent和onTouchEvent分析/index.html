@@ -1,0 +1,686 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="事件分发," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="dispatchTouchEvent话不多说直接上源码
+123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="dispatchTouchEvent话不多说直接上源码
+123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if i">
+<meta property="og:image" content="http://www.linuxidc.com/upload/2012_08/120812092995921.png">
+<meta property="og:updated_time" content="2016-08-22T05:09:09.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
+<meta name="twitter:description" content="dispatchTouchEvent话不多说直接上源码
+123456789101112131415161718192021222324252627282930313233343536373839404142434445  /**   * Pass the touch screen motion event down to the target view, or this   * view if i">
+<meta name="twitter:image" content="http://www.linuxidc.com/upload/2012_08/120812092995921.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 事件分发—View中的dispatchTouchEvent和onTouchEvent分析 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                事件分发—View中的dispatchTouchEvent和onTouchEvent分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:09:09+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="dispatchTouchEvent"><a href="#dispatchTouchEvent" class="headerlink" title="dispatchTouchEvent"></a>dispatchTouchEvent</h2><p>话不多说直接上源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line">   * Pass the touch screen motion event down to the target view, or this</div><div class="line">   * view if it is the target.</div><div class="line">   * 将屏幕的按压事件传递给目标view，或者当前view即目标view</div><div class="line">   * </div><div class="line">   * @param event The motion event to be dispatched.</div><div class="line">   * 需要分发的事件</div><div class="line">   * </div><div class="line">   * @return True if the event was handled by the view, false otherwise.</div><div class="line">   * 如果返回true表示这个事件被这个view处理了，否则反</div><div class="line">   */</div><div class="line">  public boolean dispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">  </div><div class="line">   //系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onTouchEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">//过滤是不是能够传递这个touch事件</div><div class="line">      if (onFilterTouchEventForSecurity(event)) &#123;</div><div class="line">      </div><div class="line">          //首先判断我们在使用该view的时候是否有实现OnTouchListener，如果有实现就判断当前的view</div><div class="line">           //状态是不是ENABLED,如果实现的OnTouchListener的onTouch中返回true，并处理事件，则</div><div class="line">           //返回true，这个事件在此处理了。</div><div class="line">          if (mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp;</div><div class="line">                  mOnTouchListener.onTouch(this, event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">	//如果没有在代码里面setOnTouchListener的话，就判断View自身的onTouchEvent方法有没有</div><div class="line">	//处理，没有处理最后返回false，处理了返回true；</div><div class="line">          if (onTouchEvent(event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">      &#125;</div><div class="line">//系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      //如果即没有setOnTouchListener，也没有在onTouchEvent中处理，就返回false</div><div class="line">      return false;</div><div class="line">      </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>从上面的源码可以看出：在View的分发事件方法dispatchTouchEvent中，处理分发的顺序是实现OnTouchListener的onTouch()，之后是当前View的onTouchEvent(event)方法。</p>
+<h2 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a>onTouchEvent</h2><p>onTouchEvent的源码有点长，所以要沉下心来仔细阅读。事件消耗和事件处理都是返回true，事件消耗就相当于占坑不拉屎，虽然有点恶心哈，事件处理当然就是占坑拉屎。</p>
+<blockquote>
+<p>在Android的触摸消息中，已经实现了三种监测，它们分别是<br>1）pre-pressed：对应的语义是用户轻触(tap)了屏幕<br>2）pressed:对应的语义是用户点击(press)了屏幕<br>3）long pressed：对应的语义是用户长按(long press)了屏幕<br>下图是触摸消息随时间变化的时间轴示意图：<br><img src="http://www.linuxidc.com/upload/2012_08/120812092995921.png" alt="这里写图片描述"><br>相关引用来自&gt; <a href="http://www.linuxidc.com/Linux/2012-08/67979.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-08/67979.htm</a></p>
+</blockquote>
+<hr>
+<p>了解onTouchEvent就现需要了解的方法和类</p>
+<ul>
+<li>CheckForTap类<br>该类实现了Runnable接口，在run函数中设置触摸标识，并刷新Drawable的状态，同时用于发送一个检测长按事件的异步延迟消息，代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private final class CheckForTap implements Runnable &#123;  </div><div class="line">    public void run() &#123;  </div><div class="line">        // 进入该函数，说明已经过了ViewConfiguration.getTapTimeout()时间，   </div><div class="line">        // 即pre-pressed状态结束，宣告触摸进入pressed状态   </div><div class="line">        mPrivateFlags &amp;= ~PREPRESSED;   </div><div class="line">        mPrivateFlags |= PRESSED;  </div><div class="line">        refreshDrawableState(); // 刷新控件的背景Drawable   </div><div class="line">        // 如果长按检测没有被去使能，则发送一个检测长按事件的异步延迟消息   </div><div class="line">        if ((mViewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) &#123;  </div><div class="line">            postCheckForLongClick(ViewConfiguration.getTapTimeout());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line">private void postCheckForLongClick(int delayOffset) &#123;  </div><div class="line">    mHasPerformedLongPress = false;  </div><div class="line">  </div><div class="line">    // 实例化CheckForLongPress对象   </div><div class="line">    if (mPendingCheckForLongPress == null) &#123;  </div><div class="line">        mPendingCheckForLongPress = new CheckForLongPress();  </div><div class="line">    &#125;  </div><div class="line">    mPendingCheckForLongPress.rememberWindowAttachCount();  </div><div class="line">    // 调用PostDelayed函数发送长按事件的异步延迟消息   </div><div class="line">    postDelayed(mPendingCheckForLongPress,  </div><div class="line">            ViewConfiguration.getLongPressTimeout() - delayOffset);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>CheckForLongPress类<br>该类定义了长按操作发生时的响应处理，同样实现了Runnable接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">class CheckForLongPress implements Runnable &#123;  </div><div class="line">  </div><div class="line">    private int mOriginalWindowAttachCount;  </div><div class="line">  </div><div class="line">    public void run() &#123;  </div><div class="line">        // 进入该函数，说明检测到了长按操作   </div><div class="line">        if (isPressed() &amp;&amp; (mParent != null)  </div><div class="line">                &amp;&amp; mOriginalWindowAttachCount == mWindowAttachCount) &#123;  </div><div class="line">            if (performLongClick()) &#123;   </div><div class="line">                mHasPerformedLongPress = true;  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    public void rememberWindowAttachCount() &#123;  </div><div class="line">        mOriginalWindowAttachCount = mWindowAttachCount;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">public boolean performLongClick() &#123;  </div><div class="line">    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);  </div><div class="line">  </div><div class="line">    boolean handled = false;  </div><div class="line">    if (mOnLongClickListener != null) &#123;  </div><div class="line">        // 回调用户实现的长按操作监听函数（OnLongClickListener）   </div><div class="line">        handled = mOnLongClickListener.onLongClick(View.this);  </div><div class="line">    &#125;  </div><div class="line">    if (!handled) &#123;  </div><div class="line">        // 如果OnLongClickListener的onLongClick返回false   </div><div class="line">        // 则需要继续处理该长按事件，这里是显示上下文菜单   </div><div class="line">        handled = showContextMenu();  </div><div class="line">    &#125;  </div><div class="line">    if (handled) &#123;  </div><div class="line">        // 长按操作事件被处理了，此时应该给用户触觉上的反馈   </div><div class="line">        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);  </div><div class="line">    &#125;  </div><div class="line">    return handled;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>了解完，我们来看看onTouchEvent的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div></pre></td><td class="code"><pre><div class="line">   /**</div><div class="line">     * Implement this method to handle touch screen motion events.</div><div class="line">     * 如果需要处理屏幕产生的事件流需要实现这个方法</div><div class="line">     * </div><div class="line">     * @param event The motion event.</div><div class="line">     * </div><div class="line">     * @return True if the event was handled, false otherwise.</div><div class="line">     * 如果返回true表示这个处理了这个事件，false则反</div><div class="line">     */</div><div class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</div><div class="line">    </div><div class="line">	    //viewFLags用来记录当前View的状态</div><div class="line">        final int viewFlags = mViewFlags;</div><div class="line">        </div><div class="line">		//如果当前View状态为DISABLED，如果不清楚DISABLED是一种什么状态那你应该用过</div><div class="line">		//setEnabled(boolean enabled)这个方法，DISABLED就是ENABLED相反的状态。</div><div class="line">		//DISABLED = 0x00000020 ,ENABLED_MASK = 0x00000020</div><div class="line">        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) &#123;</div><div class="line">	        if (event.getAction() == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PRESSED) != 0) &#123;</div><div class="line">               //如果View的状态是被按压过，且当抬起事件产生，重置View状态为未按压，刷新Drawable的状态</div><div class="line">                mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                refreshDrawableState();</div><div class="line">            &#125;</div><div class="line">            //如果当前View是一个DISABLED状态，且当前View是一个可点击或者是可长按的状态则当前事件在</div><div class="line">            //此消耗不做处理，返回true。</div><div class="line">            return (((viewFlags &amp; CLICKABLE) == CLICKABLE ||</div><div class="line">                    (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE));</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line"></div><div class="line">		//TouchDelegate是一个事件处理逻辑封装的一个类，也就是说Touch事件处理被委托了，那么就交由</div><div class="line">		//mTouchDelegate.onTouchEvent处理，如果返回true，则事件被处理了，则不会向下传递</div><div class="line">        if (mTouchDelegate != null) &#123;</div><div class="line">            if (mTouchDelegate.onTouchEvent(event)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line">		//如果当前View的状态是可点击或者是可长按的，就对事件流进行细节处理</div><div class="line">        if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||</div><div class="line">                (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)) &#123;</div><div class="line">            switch (event.getAction()) &#123;</div><div class="line">                case MotionEvent.ACTION_UP:</div><div class="line">	                //PREPRESSED = 0x02000000</div><div class="line">                    boolean prepressed = (mPrivateFlags &amp; PREPRESSED) != 0;</div><div class="line">                    //如果是pressed状态或者是prepressed状态，才进行处理   </div><div class="line">                    if ((mPrivateFlags &amp; PRESSED) != 0 || prepressed) &#123;</div><div class="line">                        // take focus if we don&apos;t have it already and we should in</div><div class="line">                        // touch mode.</div><div class="line">                        //如果设定了获取焦点，那么调用requestFocus获得焦点</div><div class="line">                        boolean focusTaken = false;</div><div class="line">                        if (isFocusable() &amp;&amp; isFocusableInTouchMode() &amp;&amp; !isFocused()) &#123;</div><div class="line">                            focusTaken = requestFocus();</div><div class="line">                        &#125;</div><div class="line">						</div><div class="line">                        if (prepressed) &#123;</div><div class="line">                            // The button is being released before we actually</div><div class="line">                            // showed it as pressed.  Make it show the pressed</div><div class="line">                            // state now (before scheduling the click) to ensure</div><div class="line">                            // the user sees it.</div><div class="line">                            //在释放之前给用户显示View的prepressed的状态，状态需要改变为</div><div class="line">                            //PRESSED，并且需要将背景变为按下的状态为了让用户感知到</div><div class="line">                            mPrivateFlags |= PRESSED;</div><div class="line">                            refreshDrawableState();</div><div class="line">                       &#125;</div><div class="line">						// 是否处理过长按操作了，如果是，则直接返回   </div><div class="line">                        if (!mHasPerformedLongPress) &#123;</div><div class="line">                            //如果不是长按的话，仅仅是一个Tap，所以移除长按的回调</div><div class="line">                            removeLongPressCallback();</div><div class="line"></div><div class="line">                            // Only perform take click actions if we were in the pressed state</div><div class="line">                            if (!focusTaken) &#123;</div><div class="line">                                // Use a Runnable and post this rather than calling</div><div class="line">                                // performClick directly. This lets other visual state</div><div class="line">                                // of the view update before click actions start.</div><div class="line">                                //UI子线程去执行click，为了让click事件开始的时候其他视觉发</div><div class="line">                                //生变化不影响。</div><div class="line">                                if (mPerformClick == null) &#123;</div><div class="line">                                    mPerformClick = new PerformClick();</div><div class="line">                                &#125;</div><div class="line">                                //如果post消息失败，直接调用处理click事件</div><div class="line">                                if (!post(mPerformClick)) &#123;</div><div class="line">                                    performClick();</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line"></div><div class="line">                        if (mUnsetPressedState == null) &#123;</div><div class="line">                            mUnsetPressedState = new UnsetPressedState();</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        if (prepressed) &#123;</div><div class="line">	                        //ViewConfiguration.getPressedStateDuration() 获得的是按下效 </div><div class="line">                            //果显示的时间,由PRESSED_STATE_DURATION常量指定,在2.2中为125</div><div class="line">                            //毫秒,也就是隔了125毫秒按钮的状态重置为未点击之前的状态。目的是让用户</div><div class="line">                            //感知到click的效果</div><div class="line">                            postDelayed(mUnsetPressedState,</div><div class="line">                                    ViewConfiguration.getPressedStateDuration());</div><div class="line">                        &#125; else if (!post(mUnsetPressedState)) &#123;</div><div class="line">                            //如果通过post(Runnable runnable)方式调用失败，则直接调用</div><div class="line">                            mUnsetPressedState.run();</div><div class="line">                        &#125;</div><div class="line">                        //移除Tap的回调 重置View的状态</div><div class="line">                        removeTapCallback();</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line"></div><div class="line">                case MotionEvent.ACTION_DOWN:</div><div class="line">                    mHasPerformedLongPress = false;</div><div class="line">					//在触摸事件中执行按钮相关的动作,如果返回true则表示已经消耗了down</div><div class="line">                    if (performButtonActionOnTouchDown(event)) &#123;</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    // Walk up the hierarchy to determine if we&apos;re inside a scrolling container.</div><div class="line">                    //判断是否在一个滚动的容器内</div><div class="line">                    boolean isInScrollingContainer = isInScrollingContainer();</div><div class="line"></div><div class="line">                    // 如果父容器是一个可滚动的容器</div><div class="line">                    if (isInScrollingContainer) &#123;</div><div class="line">                        mPrivateFlags |= PREPRESSED;</div><div class="line">                        //将view的状态变为PREPRESSED，检测是Tap还是长按事件</div><div class="line">                        if (mPendingCheckForTap == null) &#123;</div><div class="line">                            mPendingCheckForTap = new CheckForTap();</div><div class="line">                        &#125;</div><div class="line">                        postDelayed(mPendingCheckForTap, ViewConfiguration.getTapTimeout());</div><div class="line">                    &#125; else &#123;</div><div class="line">                        // Not inside a scrolling container, so show the feedback right away</div><div class="line">                        //直接将view状态转化为PRESSED，更新Drawable</div><div class="line">                        mPrivateFlags |= PRESSED;</div><div class="line">                        refreshDrawableState();</div><div class="line">                        //是否是长按事件的判断</div><div class="line">                        checkForLongClick(0);</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">				//接收到系统发出的ACTION_CANCLE事件时，重置状态</div><div class="line">                case MotionEvent.ACTION_CANCEL:</div><div class="line">                    mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                    refreshDrawableState();</div><div class="line">                    removeTapCallback();</div><div class="line">                    break;</div><div class="line"></div><div class="line">                case MotionEvent.ACTION_MOVE:</div><div class="line">                    final int x = (int) event.getX();</div><div class="line">                    final int y = (int) event.getY();</div><div class="line"></div><div class="line">                    // 如果移动超出了按钮的范围</div><div class="line">                    if (!pointInView(x, y, mTouchSlop)) &#123;</div><div class="line">                        // Outside button</div><div class="line">                        removeTapCallback();</div><div class="line">                        if ((mPrivateFlags &amp; PRESSED) != 0) &#123;</div><div class="line">                            // Remove any future long press/tap checks</div><div class="line">                            //移除长按的回调</div><div class="line">                            removeLongPressCallback();</div><div class="line"></div><div class="line">                            // Need to switch from pressed to not pressed</div><div class="line">                            mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                            refreshDrawableState();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return false;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>对于onTouchEvent总的来说，首先受到事件首先判断当前View的状态是否为DISABLED，如果是则只需要简单的做一些状态的重置，不对事件做细节处理。如果不是DISABLED，就需要对事件细节进行处理，这时候又半路来个程咬金TouchDelegate，如果mTouchDelegate不为空，且返回了true，就表示该事件流有人给你代劳处理了，后面的分析View自己也不用做了。最后如果没人拦截处理，那就得View自己来。</p>
+<p>下面开始是View自己处理事件流的逻辑过程描叙，即switch判断事件分支的处理：</p>
+<ul>
+<li><p>ACTION_DOWN<br>  判断是否在触摸事件中执行按钮相关的动作，如果是，直接跳出，不是则继续判断当前View是否在一个可滑动的容器中，如果是则判断是否是一个点击tab事件，还是长按事件的检查，如果不是则直接转化状态为PRESSED并判断是否为长按事件。</p>
+</li>
+<li><p>ACTION_MOVE<br> 判断移动的点是否在当前View中，如果不在其中且当前状态为PRESSED则重置非PRESSED，且移除长按的回调。</p>
+</li>
+<li><p>ACTION_UP<br> 当抬起事件产生，首先判断View的状态是pressed状态或者是prepressed状态（也就是按过），才进行处理，如果是prepressed状态则变为pressed，并更新Drawable，然后判断在Down中的mHasPerformedLongPress标志，有没有变为true，也就是有没有产生执行长按事件，如果没有，则把这个事件流当做一个click事件做处理，也就是执行performClick中的代码，执行完click中的代码，最后重置View的状态和刷新Drawable。</p>
+</li>
+<li><p>ACTION_CANCLE<br> 当系统发送一个action_cancle的事件，则重置View的状态为非PRESSED，刷新Drawable的状态，且移除Tab的回调。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/事件分发/" rel="tag">#事件分发</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/22/TCPIP分层模型/" rel="next" title="TCPIP分层模型">
+                <i class="fa fa-chevron-left"></i> TCPIP分层模型
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" rel="prev" title="事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析">
+                事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/"
+     data-title="事件分发—View中的dispatchTouchEvent和onTouchEvent分析"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/"
+           data-title="事件分发—View中的dispatchTouchEvent和onTouchEvent分析" data-url="http://yoursite.com/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://qlogo2.store.qq.com/qzone/735266765/735266765/100?1422807745"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchTouchEvent"><span class="nav-number">1.</span> <span class="nav-text">dispatchTouchEvent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onTouchEvent"><span class="nav-number">2.</span> <span class="nav-text">onTouchEvent</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

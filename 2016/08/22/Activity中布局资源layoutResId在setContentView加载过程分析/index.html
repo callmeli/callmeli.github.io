@@ -1,0 +1,689 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="setContentView," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity中布局资源layoutResId在setContentView加载过程分析">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="前言记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的">
+<meta property="og:image" content="http://img.blog.csdn.net/20160519185500770">
+<meta property="og:image" content="http://img.blog.csdn.net/20160519185522489">
+<meta property="og:image" content="http://img.blog.csdn.net/20160520094636172">
+<meta property="og:updated_time" content="2016-08-22T05:12:03.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Activity中布局资源layoutResId在setContentView加载过程分析">
+<meta name="twitter:description" content="前言记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160519185500770">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Activity中布局资源layoutResId在setContentView加载过程分析 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Activity中布局资源layoutResId在setContentView加载过程分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:12:03+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的Measure过程做一个铺垫。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="1、寻找setContentView真正实现的地方"><a href="#1、寻找setContentView真正实现的地方" class="headerlink" title="1、寻找setContentView真正实现的地方"></a>1、寻找setContentView真正实现的地方</h2><p> 一般我们在新建的activity中传入布局的id就可以加载这个页面了，当然setContentView有几个重载的方法，就不细说了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line"> * Set the activity content from a layout resource.  The resource will be</div><div class="line"> * inflated, adding all top-level views to the activity.</div><div class="line"> *</div><div class="line"> * @param layoutResID Resource ID to be inflated.</div><div class="line"> * 准备导入的布局资源的id</div><div class="line"> * @see #setContentView(android.view.View)</div><div class="line"> * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)</div><div class="line"> */</div><div class="line">public void setContentView(int layoutResID) &#123;</div><div class="line"> getWindow().setContentView(layoutResID);</div><div class="line"> //ActionBar的初始化，平时很少用ActionBar暂时忽略</div><div class="line">    initActionBar();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2、mWindow实例化"><a href="#2、mWindow实例化" class="headerlink" title="2、mWindow实例化"></a>2、mWindow实例化</h2><p> getWindow返回的是mWindow，mWindow是窗口抽象类Window的一个实例，而setContentView(resId)是window中一个抽象方法，所以我们需要找到mWindow实例化的地方，然后看mWindow实现类的setContentView方法做了一些什么工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">final void attach(Context context, ActivityThread aThread,</div><div class="line">            Instrumentation instr, IBinder token, int ident,</div><div class="line">            Application application, Intent intent, ActivityInfo info,</div><div class="line">            CharSequence title, Activity parent, String id,</div><div class="line">            NonConfigurationInstances lastNonConfigurationInstances,</div><div class="line">            Configuration config) &#123;</div><div class="line">        attachBaseContext(context);</div><div class="line">	...</div><div class="line">         mWindow = PolicyManager.makeNewWindow(this);</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>最后在activity的attach方法中找到了mWindow实例化的地方，接着需要找PolicyManager.makeNewWindow返回的对象，也就是Window实现子类，PolicyManager的代码不多，所以这里就直接贴出来了看看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 隐藏的api，难怪sdk中找不到。T—T</div><div class="line"> * &#123;@hide&#125;</div><div class="line"> */</div><div class="line">public final class PolicyManager &#123;</div><div class="line">    private static final String POLICY_IMPL_CLASS_NAME =</div><div class="line">        &quot;com.android.internal.policy.impl.Policy&quot;;</div><div class="line">    private static final IPolicy sPolicy;</div><div class="line">    static &#123;</div><div class="line">        // Pull in the actual implementation of the policy at run-time</div><div class="line">        try &#123;</div><div class="line">            Class policyClass = Class.forName(POLICY_IMPL_CLASS_NAME);</div><div class="line">            sPolicy = (IPolicy)policyClass.newInstance();</div><div class="line">        &#125; catch (ClassNotFoundException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be loaded&quot;, ex);</div><div class="line">        &#125; catch (InstantiationException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be instantiated&quot;, ex);</div><div class="line">        &#125; catch (IllegalAccessException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be instantiated&quot;, ex);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    // Cannot instantiate this class</div><div class="line">    private PolicyManager() &#123;&#125;</div><div class="line">    </div><div class="line">    //mWindow其实也是在这里实例化的</div><div class="line">    public static Window makeNewWindow(Context context) &#123;</div><div class="line">        return sPolicy.makeNewWindow(context);</div><div class="line">    &#125;</div><div class="line">    public static LayoutInflater makeNewLayoutInflater(Context context) &#123;</div><div class="line">        return sPolicy.makeNewLayoutInflater(context);</div><div class="line">    &#125;</div><div class="line">    public static WindowManagerPolicy makeNewWindowManager() &#123;</div><div class="line">        return sPolicy.makeNewWindowManager();</div><div class="line">    &#125;</div><div class="line">    public static FallbackEventHandler makeNewFallbackEventHandler(Context context) &#123;</div><div class="line">        return sPolicy.makeNewFallbackEventHandler(context);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>PolicyManager的makeNewWindow找到了，可惜这里还不是真正实例化mWindow的地方，从上面的代码可以看出，通过反射实例化com.android.internal.policy.impl.Policy这个类，IPolicy 目测应该是一个接口，这个sPolicy实例化是通过反射构造方法来创建的，而且在static代码块中，可见这个类是在被虚拟机加载的时候就实例化了sPolicy。所以我们需要继续寻找。最后功夫不负有心人，总算是找到了Policy 这个类，这个类的实现了IPolicy 接口，代码也不算多，那么就直接贴出来吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public class Policy implements IPolicy &#123;</div><div class="line">    private static final String TAG = &quot;PhonePolicy&quot;;</div><div class="line"></div><div class="line">    private static final String[] preload_classes = &#123;</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneLayoutInflater&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$1&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$ContextMenuCallback&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$DecorView&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$PanelFeatureState&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$PanelFeatureState$SavedState&quot;,</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    static &#123;</div><div class="line">        // For performance reasons, preload some policy specific classes when</div><div class="line">        // the policy gets loaded.</div><div class="line">        for (String s : preload_classes) &#123;</div><div class="line">            try &#123;</div><div class="line">                Class.forName(s);</div><div class="line">            &#125; catch (ClassNotFoundException ex) &#123;</div><div class="line">                Log.e(TAG, &quot;Could not preload class for phone policy: &quot; + s);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">	//终于算是找到你了Activity中的mWindow也就是在这里被实例化的</div><div class="line">    public PhoneWindow makeNewWindow(Context context) &#123;</div><div class="line">        return new PhoneWindow(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public PhoneLayoutInflater makeNewLayoutInflater(Context context) &#123;</div><div class="line">        return new PhoneLayoutInflater(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public PhoneWindowManager makeNewWindowManager() &#123;</div><div class="line">        return new PhoneWindowManager();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的makeNewWindow方法中可以很清楚的看到，我们activity的mWindow也就是PhoneWindow的实例，所以我们也就回到了我们最初目的，打开PhoneWindow看看它的setContentView(resId)方法都做了些什么。</p>
+<h2 id="3、分析setContentView的实现"><a href="#3、分析setContentView的实现" class="headerlink" title="3、分析setContentView的实现"></a>3、分析setContentView的实现</h2><p>同样PhoneWindow的源码在sdk中没有找到，这里就不贴了，为啥不贴，因为源码太多了。我在网上找了一个源码的链接地址，如果需要翻墙推荐一个nydus的翻墙工具，实惠好用</p>
+<blockquote>
+<p>PhoneWindow：<br><a href="https://android.googlesource.com/platform/frameworks/base/+/696cba573e651b0e4f" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/base/+/696cba573e651b0e4f</a><br>18a4718627c8ccecb3bda0/policy/src/com/android/internal/policy/impl/PhoneWindow.java</p>
+</blockquote>
+<p>下面就将PhoneWindow的setContentView的代码贴出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public void setContentView(int layoutResID) &#123;</div><div class="line">       if (mContentParent == null) &#123;</div><div class="line">       //如果mContentParent 为null就调用installDecor初始化</div><div class="line">           installDecor();</div><div class="line">       &#125; else &#123;</div><div class="line">       //否则就情况所有的子View</div><div class="line">           mContentParent.removeAllViews();</div><div class="line">       &#125;</div><div class="line">       //然后将layoutResID加载到mContentParent中</div><div class="line">       mLayoutInflater.inflate(layoutResID, mContentParent);</div><div class="line">       //如果PhoneWindow没有被销毁，且回调cb不为null，那么就调用cb.onContentChanged()</div><div class="line">       final Callback cb = getCallback();</div><div class="line">       if (cb != null &amp;&amp; !isDestroyed()) &#123;</div><div class="line">           cb.onContentChanged();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>setContentView中调用的相关方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 将layoutResId资源加载到View树中</div><div class="line">  * </div><div class="line">  * @param 需要加载的layoutResId (e.g.,</div><div class="line">  *        &lt;code&gt;R.layout.main_page&lt;/code&gt;)</div><div class="line">  * @param 需要加载布局的父布局</div><div class="line">  * @return 返回根View，如果参数root不为空，那么root就是根View，否则导入的resource</div><div class="line">  * 解析的View就是根View</div><div class="line">  */</div><div class="line"> public View inflate(int resource, ViewGroup root) &#123;</div><div class="line">     return inflate(resource, root, root != null);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这里需要重点分析一下installDecor方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private void installDecor() &#123;</div><div class="line">		//mDecor是Window中的根View</div><div class="line">        if (mDecor == null) &#123;</div><div class="line">	       //mDecor是DecorView的实例，而DecorView是PhoneWindow中的一个内部类，</div><div class="line">	       //private final class DecorView extends **FrameLayout** implements </div><div class="line">	       //RootViewSurfaceTaker &#123;...&#125;，这里很明显DecorView是FrameLayout的子类</div><div class="line">		   //generateDecor方法很直接new DecorView(getContext(), -1)，即构建一个DecorView</div><div class="line">            mDecor = generateDecor();     </div><div class="line">            mDecor.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);</div><div class="line">            mDecor.setIsRootNamespace(true);</div><div class="line">        &#125;</div><div class="line">        if (mContentParent == null) &#123;</div><div class="line">        </div><div class="line">            mContentParent = generateLayout(mDecor);</div><div class="line">            </div><div class="line">            //这里特意留下了这句代码，就是要讲下这个findViewById()方法，这个方法是Window中</div><div class="line">            //继承过来的，它的实现是getDecorView().findViewById(id);也就是说通过</div><div class="line">            //mDecor来获取相关的子控件            </div><div class="line">            mTitleView = (TextView)findViewById(com.android.internal.R.id.title);</div><div class="line">           ...</div><div class="line">           &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>看到这里上面也就剩下   mContentParent = generateLayout(mDecor);需要深入了解了，所以这里就深入了解下generateLayout方法。一般我们新建一个activity默认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">protected ViewGroup generateLayout(DecorView decor) &#123;</div><div class="line">        // 根据主题和相关的设定配置layoutResource，有兴趣的同学自己可以阅读PhoneWindow在此省略</div><div class="line">        ...</div><div class="line">        mDecor.startChanging();</div><div class="line">        View in = mLayoutInflater.inflate(layoutResource, null);</div><div class="line">        decor.addView(in, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));</div><div class="line">        // window中的常量ID_ANDROID_CONTENT = com.android.internal.R.id.content;</div><div class="line">        ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);</div><div class="line">        if (contentParent == null) &#123;</div><div class="line">            throw new RuntimeException(&quot;Window couldn&apos;t find content container view&quot;);</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">        mDecor.finishChanging();</div><div class="line">        return contentParent;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>为了更进一步理解，使用了新建activity自动生成的一种布局screen_title.xml，开始是在sdk下面找到然后解压出来的，后面发现找不到编码格式，只能google了一把，找到了相关资源。</p>
+<blockquote>
+<p>screen_title.xml</p>
+<p><a href="https://android.googlesource.com/platform/frameworks/base/+/c80f952/core/res/res/l" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/base/+/c80f952/core/res/res/l</a><br>ayout/screen_title.xml</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:orientation=&quot;vertical&quot;</div><div class="line">    android:fitsSystemWindows=&quot;true&quot;&gt;</div><div class="line">    &lt;!-- Popout bar for action modes --&gt;</div><div class="line">    &lt;ViewStub android:id=&quot;@+id/action_mode_bar_stub&quot;</div><div class="line">              android:inflatedId=&quot;@+id/action_mode_bar&quot;</div><div class="line">              android:layout=&quot;@layout/action_mode_bar&quot;</div><div class="line">              android:layout_width=&quot;match_parent&quot;</div><div class="line">              android:layout_height=&quot;wrap_content&quot; /&gt;</div><div class="line">     &lt;FrameLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot; </div><div class="line">        android:layout_height=&quot;?android:attr/windowTitleSize&quot;</div><div class="line">        style=&quot;?android:attr/windowTitleBackgroundStyle&quot;&gt;</div><div class="line">        &lt;!--这里也就是mTitleView--&gt;</div><div class="line">        &lt;TextView android:id=&quot;@android:id/title&quot; </div><div class="line">            style=&quot;?android:attr/windowTitleStyle&quot;</div><div class="line">            android:background=&quot;@null&quot;</div><div class="line">            android:fadingEdge=&quot;horizontal&quot;</div><div class="line">            android:gravity=&quot;center_vertical&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line">    &lt;/FrameLayout&gt;</div><div class="line">    &lt;!--这里也就是mContentParent--&gt;</div><div class="line">    &lt;FrameLayout android:id=&quot;@android:id/content&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot; </div><div class="line">        android:layout_height=&quot;0dip&quot;</div><div class="line">        android:layout_weight=&quot;1&quot;</div><div class="line">        android:foregroundGravity=&quot;fill_horizontal|top&quot;</div><div class="line">        android:foreground=&quot;?android:attr/windowContentOverlay&quot; /&gt;</div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure>
+<p>光看代码可能有点伤，所以我特意准备了3张图</p>
+<p> 1.mTitleView</p>
+<p><img src="http://img.blog.csdn.net/20160519185500770" alt="mTitleView"></p>
+<p> 2.mContentParent</p>
+<p><img src="http://img.blog.csdn.net/20160519185522489" alt="mContentParent"></p>
+<p> 3.view树</p>
+<p> <img src="http://img.blog.csdn.net/20160520094636172" alt="view树"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后来总结下这个过程<br>Activity层面：<br>MainActivity（setContentView(resId);）—&gt;Activity（getWindow().setContentView(layoutResID);）</p>
+<p>PhoneWindow中的setContentView方法首先判断mContentParent是否为null，如果不为null则通过LayoutInflater来将resId解析后添加到mContentParent中，当然如果为null则通过installDecor方法初始化mContentParent，通过mDecor加载系统预定的主题布局文件，根据主题的不同，判断是否需要标题栏，actionbar，加载的进度条等等，然后通过固定的id（@android:id/content）初始化mContentParent。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/setContentView/" rel="tag">#setContentView</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" rel="next" title="事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析">
+                <i class="fa fa-chevron-left"></i> 事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/handler机制的深入理解/" rel="prev" title="handler机制的深入理解">
+                handler机制的深入理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/"
+     data-title="Activity中布局资源layoutResId在setContentView加载过程分析"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/"
+           data-title="Activity中布局资源layoutResId在setContentView加载过程分析" data-url="http://yoursite.com/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://qlogo2.store.qq.com/qzone/735266765/735266765/100?1422807745"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、寻找setContentView真正实现的地方"><span class="nav-number">2.1.</span> <span class="nav-text">1、寻找setContentView真正实现的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、mWindow实例化"><span class="nav-number">2.2.</span> <span class="nav-text">2、mWindow实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、分析setContentView的实现"><span class="nav-number">2.3.</span> <span class="nav-text">3、分析setContentView的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -223,6 +223,1315 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/22/关于锁屏和回到桌面的activity生命周期/" itemprop="url">
+                  关于锁屏和回到桌面的activity生命周期
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:25:43+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/关于锁屏和回到桌面的activity生命周期/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/关于锁屏和回到桌面的activity生命周期/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：</p>
+<p><a href="http://www.th7.cn/Program/Android/201310/157073.shtml" target="_blank" rel="external">1、android锁屏和finish()后activity生命周期的变化</a></p>
+<p><a href="http://wbj05791467.blog.163.com/blog/static/120329697201356349428/" target="_blank" rel="external">2、关于Activity与SurfaceView的生命周期  </a></p>
+<p>下面是复制的里面的具体内容：<br>锁屏分为两个步骤，先是锁定屏幕，再是黑屏<br>onCreate(在该方法里锁屏)—&gt;onStart—&gt;onResume<br>黑屏后：onPause<br>点亮屏幕后：onResume</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>然而我发现这与我的猜想完全不一样，所以我决定自己写个demo验证一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity &#123;</div><div class="line">	private final String TAG = &quot;MainActivity&quot;;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		Log.d(TAG, &quot;onCreate&quot;);</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStart() &#123;</div><div class="line">		Log.d(TAG, &quot;onStart&quot;);</div><div class="line">		super.onStart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onNewIntent(Intent intent) &#123;</div><div class="line">		Log.d(TAG, &quot;onNewIntent&quot;);</div><div class="line">		super.onNewIntent(intent);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onRestart() &#123;</div><div class="line">		Log.d(TAG, &quot;onRestart&quot;);</div><div class="line">		super.onRestart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onResume() &#123;</div><div class="line">		Log.d(TAG, &quot;onResume&quot;);</div><div class="line">		super.onResume();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onPause() &#123;</div><div class="line">		Log.d(TAG, &quot;onPause&quot;);</div><div class="line">		super.onPause();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStop() &#123;</div><div class="line">		Log.d(TAG, &quot;onStop&quot;);</div><div class="line">		super.onStop();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onDestroy() &#123;</div><div class="line">		Log.d(TAG, &quot;onDestroy&quot;);</div><div class="line">		super.onDestroy();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##结果##<br> 一、锁屏和解锁操作</p>
+<p>1、按下锁屏：<br><img src="http://img.blog.csdn.net/20150904153508899" alt="这里写图片描述"></p>
+<p>2、打开屏幕<br><img src="http://img.blog.csdn.net/20150904153535391" alt="这里写图片描述"></p>
+<hr>
+<p> 二、桌面和再次回到应用操作</p>
+<p>1、回到桌面<br><img src="http://img.blog.csdn.net/20150904153809811" alt="这里写图片描述"><br>2、再次回到应用<br><img src="http://img.blog.csdn.net/20150904153830870" alt="这里写图片描述"></p>
+<p>不难发现：这两个操作走的生命周期是一样的，而上面的帖子说不会锁屏只会走onpause，我把项目的sdk，从5.1切换到2.3，也没有发现这种情况。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/" itemprop="url">
+                  基于httpclient网络框架库在android 6.0sdk找不到包解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:23:51+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="基于httpclient网络框架库在android-6-0sdk问题的直接解决方案"><a href="#基于httpclient网络框架库在android-6-0sdk问题的直接解决方案" class="headerlink" title="基于httpclient网络框架库在android 6.0sdk问题的直接解决方案"></a>基于httpclient网络框架库在android 6.0sdk问题的直接解决方案</h1><p>在android 6.0（API 23）中，Google已经移除了移除了Apache HttpClient相关的类 推荐使用HttpUrlConnection，因此基于httpclient设计的开源框架asynchttpclient 受到直接影响。为了兼容高版本的sdk，那我们应该怎么办呢？</p>
+<p>##解决办法  ##</p>
+<ul>
+<li><p><strong>1、用httpclient相关类以jar包的形势替换原有对androidsdk提供的httpclient相关类的引用</strong></p>
+<p>  以前是用asynchttpclient、基于httpclient构架的网络数据获取框架，就需要将Apache HttpClient相关的类直接导入到你的项目中，然后将原有引用安卓系统包含的Apache HttpClient的路径修改，自己项目中的httpclient.jar包中的类。</p>
+<p>  这里我已经上传了一个集成了httpclient相关类jar包的asynchttpclient库有需要可以直接下载引用。</p>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/callmeli/AsyncHttpClientLib" target="_blank" rel="external">https://github.com/callmeli/AsyncHttpClientLib</a></p>
+</blockquote>
+<ul>
+<li><strong>2、用urlconnetion网络方式替换，当然你也不能继续使用httpclient，所以可能需要改动的地方会很大。推荐使用google开源的volley，地址如下：</strong></li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/callmeli/android-volley" target="_blank" rel="external">https://github.com/callmeli/android-volley</a></p>
+<p><a href="https://android.googlesource.com/platform/frameworks/volley/+/master（源地址，需要翻墙）" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/volley/+/master（源地址，需要翻墙）</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/Android中混淆的使用/" itemprop="url">
+                  Android混淆的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:20:20+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/Android中混淆的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Android中混淆的使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个apk从开始到发布一般过程：</p>
+<ul>
+<li>搭建框架（选择使用的框架，分配包名）</li>
+<li>开始编码（编写布局，逻辑，自测）</li>
+<li>编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）</li>
+<li>测试优化（测试crash和优化性能）</li>
+<li>上线发布</li>
+</ul>
+<p>从蜻蜓fm没有加混淆，导致宙斯和普罗米修斯的代码泄露，就可以看出一个应用混淆的重要性。因此我们为了保证自己的开发成果不会被别人窃取，添加混淆必须的。 所以下面记录一些常用的混淆。</p>
+<h2 id="使用混淆"><a href="#使用混淆" class="headerlink" title="使用混淆"></a>使用混淆</h2><p>混淆一般是在项目工程的project.properties中来配置混淆文件的路径，默认的路径是<br>\${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt，${sdk.dir}代表的是sdk所在路径。但是默认混淆是被注销的，如果需要启用默认的混淆就需要把#号去掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># This file is automatically generated by Android Tools.</div><div class="line"># Do not modify this file -- YOUR CHANGES WILL BE ERASED!</div><div class="line">#</div><div class="line"># This file must be checked in Version Control Systems.</div><div class="line">#</div><div class="line"># To customize properties used by the Ant build system edit</div><div class="line"># &quot;ant.properties&quot;, and override values to adapt the script to your</div><div class="line"># project structure.</div><div class="line">#</div><div class="line"># To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):</div><div class="line">//也就是这里如果需要启用默认的混淆文件就需要去掉行首的#号</div><div class="line">#proguard.config=$&#123;sdk.dir&#125;/tools/proguard/proguard-android.txt:proguard-project.txt</div><div class="line"># Project target.</div><div class="line">target=android-20</div></pre></td></tr></table></figure></p>
+<h2 id="自定义混淆文件"><a href="#自定义混淆文件" class="headerlink" title="自定义混淆文件"></a>自定义混淆文件</h2><p>一般我们在开发中，可能会添加或引用到第三方的开发包或库，所以有些文件是不需要混淆的，这时候可能就需要自定义混淆文件，添加我们自己开发中不需要混淆的部分。一般的做法是使用项目目录中的proguard-project.txt文件</p>
+<p>1、修改项目工程的project.properties中混淆文件配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proguard.config = proguard-project.txt</div></pre></td></tr></table></figure>
+<p>2、在proguard-project.txt中编写混淆</p>
+<h2 id="常用混淆指令"><a href="#常用混淆指令" class="headerlink" title="常用混淆指令"></a>常用混淆指令</h2><p>如果需要自己定义混淆文件，那么常用的一些混淆指令就需要有所了解。</p>
+<ul>
+<li>基本配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 是否使用大小写混合 </div><div class="line">-dontusemixedcaseclassnames  </div><div class="line"></div><div class="line">#如果应用程序引入的有jar包,并且混淆jar包里面的类dont skip nonpublic library classes </div><div class="line">-dontskipnonpubliclibraryclasses class </div><div class="line"></div><div class="line">#混淆时不做预校验  dont preverify </div><div class="line">-dontpreverify </div><div class="line"></div><div class="line">#混淆采用的算法.</div><div class="line">-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* </div><div class="line"></div><div class="line"># 屏蔽警告 ignore warnings </div><div class="line">-ignorewarnings </div><div class="line"></div><div class="line">#设置混淆的压缩比率 0 ~ 7 optimization passes </div><div class="line">-optimizationpasses 5 </div><div class="line"></div><div class="line">#混淆后生产映射文件 map 类名-&gt;转化后类名的映射</div><div class="line">-verbose</div></pre></td></tr></table></figure>
+<ul>
+<li>可选配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#应用的依赖包，如android-support-v4</div><div class="line">-libraryjars class_path </div><div class="line"></div><div class="line">#不混淆某些类</div><div class="line">-keep [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类的成员</div><div class="line">-keepclassmembers [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类及其成员</div><div class="line">-keepclasseswithmembers [,modifier,...]</div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepnames class_specification </div><div class="line"></div><div class="line">#不混淆类的成员名</div><div class="line">-keepclassmembernames class_specification </div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepclasseswithmembernames class_specification </div><div class="line"></div><div class="line">#假设调用不产生任何影响，在proguard代码优化时会将该调用remove掉。如system.out.println#和Log.v等等</div><div class="line">-assumenosideeffects class_specification </div><div class="line"></div><div class="line">#不提示warnning</div><div class="line">-dontwarn [class_filter]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>详细的可选内容：<a href="http://blog.isming.me/2014/05/31/use-proguard/" target="_blank" rel="external">http://blog.isming.me/2014/05/31/use-proguard/</a></p>
+</blockquote>
+<p>#混淆产生的文件#<br>一旦混淆生成，打包发布，可能会遇到一些混淆过的代码报出的异常，那么可能代码报错分析可能就需要用到下面的文件。</p>
+<ol>
+<li><p>mapping.txt<br>表示混淆前后代码的对照表，这个文件非常重要。如果你的代码混淆后会产生bug的话，log提示中是混淆后的代码，希望定位到源代码的话就可以根据mapping.txt反推。<br>每次发布都要保留它方便该版本出现问题时调出日志进行排查，它可以根据版本号或是发布时间命名来保存或是放进代码版本控制中。</p>
+</li>
+<li><p>dump.txt<br>描述apk内所有class文件的内部结构。</p>
+</li>
+<li><p>seeds.txt<br>列出了没有被混淆的类和成员。</p>
+</li>
+<li><p>usage.txt<br>列出了源代码中被删除在apk中不存在的代码。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/NanoHttpd/" itemprop="url">
+                  NanoHttpd
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:18:38+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/NanoHttpd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/NanoHttpd/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>很荣幸在工作之中能够接触到这么强大的开源工具，不得不说nanohttpd十分强大的一个开源项目，理解这
+个类让我对http、socket、server都有了新的认知。
+</code></pre><h1 id="1、nanohttpd-轻量的httpserver"><a href="#1、nanohttpd-轻量的httpserver" class="headerlink" title="1、nanohttpd 轻量的httpserver"></a>1、nanohttpd 轻量的httpserver</h1><p> nanohttpd 开源地址</p>
+<blockquote>
+<p><a href="https://github.com/NanoHttpd/nanohttpd" target="_blank" rel="external">https://github.com/NanoHttpd/nanohttpd</a></p>
+</blockquote>
+<hr>
+<h1 id="2、nanohttpd中HttpServer"><a href="#2、nanohttpd中HttpServer" class="headerlink" title="2、nanohttpd中HttpServer"></a>2、nanohttpd中HttpServer</h1><p> 由于我只用到了nanohttpd中的HttpServer类，HttpServer这个类就能够建立一个简单的httpserver，但如果需要其他处理就需要在这个类的基础上添加其他的功能。而我也是在httpserver基础上改进的所以也就只粗略的讲讲它的内容</p>
+<p>关键字：HTTPSession、ServerSocket、Thread、Response、File</p>
+<pre><code>HttpServer通过端口号创建ServerSocket，然后开启线程去ServerSocket中不停的去获取客户端soket传递的socket。
+
+最后通过访问的报文返回相对的Response，Response即http的访问响应，通过socket的outputstream以io流的形式把response的报文返回给客户端。
+
+ 当然其中也包含对文件的报文的处理，和异常处理的情况我也就不展开了。如果有兴趣可以自己去看看这个类。
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/adpter中的观察者模式/" itemprop="url">
+                  adapter中的观察者模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:16:42+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/adpter中的观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/adpter中的观察者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p>观察者模式也通常称为 <strong>发布/订阅模式</strong>，是一种常见的软件开发模式。</p>
+<hr>
+<blockquote>
+<p>在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。</p>
+</blockquote>
+<hr>
+<p>举个类似的栗子：</p>
+<p>天气更新，气象局一般都有一个<strong>气象信息采集的部门</strong>，一个和外界合作的<strong>运营部门</strong>，气象信息采集部门负责数据的采集，和运营部门主动沟通。合作运营部门这是负责把最新的气象信息发给和气象局合作的<strong>电视台，网站</strong>等等。</p>
+<p>运营部门充当的角色就是管理观察者的管理员</p>
+<pre><code>他们的主要任务就是添加新的合作单位，或者是终止某个单位或者所有单位的合作，还有当气象采集部门发送新的
+气象报告的时候需要把这些新的气象信息发给那些合作单位。
+</code></pre><p>而和气象局合作的电视台，网站等等他们的角色就是观察者</p>
+<pre><code>他们需要在接受到最新的气象报告后,通知给其他群众,或者做一些其它的工作。
+</code></pre><p>在这个过程中，运营部门和跟他们合作的电视台、网站直接就是一种订阅-发布的关系。</p>
+<p>如果还是不明白推荐一篇详解的博客：</p>
+<blockquote>
+<p><a href="http://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html" target="_blank" rel="external">http://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html</a></p>
+</blockquote>
+<hr>
+<h1 id="android-适配器中的观察者模式"><a href="#android-适配器中的观察者模式" class="headerlink" title="android 适配器中的观察者模式"></a>android 适配器中的观察者模式</h1><p>还记得一次面试中，被问道，为什么存在适配器这个东西，而不是数据直接的绘制ui呢？当时只知道感觉这么做就是简单，就是好，可就是说不出个所以然来。其实适配器其实也是一种设计模式的产物，这种设计模式就被称为适配器模式。现在看来采用适配器模式能够很好的降低耦合，如果直接绘制就降低了拓展性，而且也就没有listview item回收复用节省内存。</p>
+<p>如果需要详细了解适配器模式的话也推荐一篇很不错的帖子：</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/zhangjg_blog/article/details/18735243" target="_blank" rel="external">http://blog.csdn.net/zhangjg_blog/article/details/18735243</a></p>
+</blockquote>
+<p>还记得基本是listview的用法么？</p>
+<ol>
+<li>需要获取listview的实例</li>
+<li>通过List数据集合构建listview需要的适配器adapter</li>
+<li>将listview和适配器绑定</li>
+</ol>
+<p>所以这里面的三个主要对象抽象来看就是数据、适配器、UI</p>
+<h2 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h2><p><strong>数据</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126152414432" alt="这里写图片描述"></p>
+<hr>
+<p><strong>适配器</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126152504649" alt="这里写图片描述"></p>
+<hr>
+<p><strong>UI</strong></p>
+<p><img src="http://img.blog.csdn.net/20151126161403252" alt="这里写图片描述"></p>
+<hr>
+<p><strong>可能这几张图看上去有点吃力，那么结合图做下分析解释：</strong></p>
+<blockquote>
+<p>Observable&lt; T &gt;就是类似前面的那个运营部门，它是一个抽象类，它的作用就是管理观察者，包括添加，删除等等。下面是源码片段：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126153556085" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>DataSetObserve则是一个Observable&lt; T &gt;的子类，它在继承父类的基础上添加了新的公共方法，源码片段如下：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126153733577" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>DataSetObserver就类似前面的那个电视台，网站，它也是一个抽象类，他就是观察者，源码片段如下：</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20151126163244272" alt="这里写图片描述"></p>
+<hr>
+<hr>
+<blockquote>
+<p>AdapterDataSetObserver是一个DataSetObserver在AdapterView里面的子类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">781  class AdapterDataSetObserver extends DataSetObserver &#123;</div><div class="line">782 </div><div class="line">783         private Parcelable mInstanceState = null;</div><div class="line">784 </div><div class="line">785         @Override</div><div class="line">786         public void onChanged() &#123;</div><div class="line">787             mDataChanged = true;</div><div class="line">788             mOldItemCount = mItemCount;</div><div class="line">789             mItemCount = getAdapter().getCount();</div><div class="line">790 </div><div class="line">791             // Detect the case where a cursor that was previously invalidated has</div><div class="line">792             // been repopulated with new data.</div><div class="line">793             if (AdapterView.this.getAdapter().hasStableIds() &amp;&amp; mInstanceState != null</div><div class="line">794                     &amp;&amp; mOldItemCount == 0 &amp;&amp; mItemCount &gt; 0) &#123;</div><div class="line">795                 AdapterView.this.onRestoreInstanceState(mInstanceState);</div><div class="line">796                 mInstanceState = null;</div><div class="line">797             &#125; else &#123;</div><div class="line">798                 rememberSyncState();</div><div class="line">799             &#125;//刷新UI</div><div class="line">800             checkFocus();</div><div class="line">801             requestLayout();	</div><div class="line">802         &#125;</div><div class="line">803 </div><div class="line">804         @Override</div><div class="line">805         public void onInvalidated() &#123;</div><div class="line">806             mDataChanged = true;</div><div class="line">807 </div><div class="line">808             if (AdapterView.this.getAdapter().hasStableIds()) &#123;</div><div class="line">809                 // Remember the current state for the case where our hosting activity is being</div><div class="line">810                 // stopped and later restarted</div><div class="line">811                 mInstanceState = AdapterView.this.onSaveInstanceState();</div><div class="line">812             &#125;</div><div class="line">813 </div><div class="line">814             // Data is invalid so we should reset our state</div><div class="line">815             mOldItemCount = mItemCount;</div><div class="line">816             mItemCount = 0;</div><div class="line">817             mSelectedPosition = INVALID_POSITION;</div><div class="line">818             mSelectedRowId = INVALID_ROW_ID;</div><div class="line">819             mNextSelectedPosition = INVALID_POSITION;</div><div class="line">820             mNextSelectedRowId = INVALID_ROW_ID;</div><div class="line">821             mNeedSync = false;</div><div class="line">822 			//刷新UI</div><div class="line">823             checkFocus();</div><div class="line">824             requestLayout();</div><div class="line">825         &#125;</div><div class="line">826 </div><div class="line">827         public void clearSavedState() &#123;</div><div class="line">828             mInstanceState = null;</div><div class="line">829         &#125;</div><div class="line">830     &#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程中，UI是最关心数据变化的，因为数据变化，UI也就要跟着刷新。因此UI就派了<strong>观察者（T observer）</strong>去查看数据变化，这个派过去的观察者被<strong>适配器的观察者管理员(Observe(T))</strong>管理分配调用，当适配器收到数据更新的消息适配器观察者管理员逐个的通知观察者数据发生改变，要他们去通知自己的UI更新。</p>
+<p>也就是在当我们调用ListView中的SetAdapter时，会将一个mDataSetObeserver（AdapterDataSetObserver 类）的观察者对象实例化，然后绑定在BaseAdapter的观察者管理员mDataSetObeserve（DataSetObserve类）中。</p>
+<p>当我们数据改变的时候，我们一般要调用了BaseAdapter的notifyXXX（如：notifydatasetchanged）的方法，其实实际上这个方法也就是通过观察者管理员mDataSetObeserve发送这个notify通知给每一个观察者(即调用了DataSetObeserve的notifyXXX)。</p>
+<p>最后ui派去的观察者收到了数据更新，接着就刷新页面(AdapterDataSetObserver 类中的onXXX 如：onChanged)。</p>
+<hr>
+<p>他们之间的关系我用一个window画图工具花了张图</p>
+<p><img src="http://img.blog.csdn.net/20151126152627023" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/handler机制的深入理解/" itemprop="url">
+                  handler机制的深入理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:14:19+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/handler机制的深入理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/handler机制的深入理解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##相关名词简介 ##</p>
+<hr>
+<p>1、 MessageQueue 消息队列 </p>
+<pre><code>承载消息的容器         
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure>
+<p> 2、 Message 消息</p>
+<pre><code>传递的实体内容
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> //消息标识符，类似id字段</div><div class="line">- public int what;</div><div class="line">//传递的int值，如果消息传递的内容仅仅是int值时，可以降低开销</div><div class="line">- public int arg1;    </div><div class="line">- public int arg2;</div><div class="line">//消息的内容对象</div><div class="line">- public Object obj;</div><div class="line">//消息内容</div><div class="line">- Bundle data;</div><div class="line">//时间</div><div class="line">- long when;</div><div class="line">//发送的目标处理者</div><div class="line">- Handler target;     </div><div class="line">//子线程</div><div class="line">- Runnable callback;   </div><div class="line">//消息池最大消息量</div><div class="line">- private static final int MAX_POOL_SIZE = 10;</div></pre></td></tr></table></figure>
+<p> 3、Handler 处理机</p>
+<pre><code>消息的上传和处理者
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//消息队列</div><div class="line">- final MessageQueue mQueue;</div><div class="line">//消息队列的管理员</div><div class="line">- final Looper mLooper;</div><div class="line">//消息处理的回调接口</div><div class="line">- final Callback mCallback;</div><div class="line">//消息处理，一种runnable的消息，直接执行，一种就需要目标handler去处理</div><div class="line">- public void dispatchMessage(Message msg)</div><div class="line">//发送runnable消息，还有其他重载方法</div><div class="line">- public final boolean post(Runnable r)</div><div class="line">//发送消息，还有其他重载方法</div><div class="line">- public boolean sendMessageAtTime(Message msg, long uptimeMillis)</div></pre></td></tr></table></figure>
+<p> 4、Looper 管理员</p>
+<pre><code>消息管理员，负责从消息队列取消息交给handler处理
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">//构建looper对象</div><div class="line">public static void prepare() &#123;</div><div class="line">        if (sThreadLocal.get() != null) &#123;</div><div class="line">            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</div><div class="line">        &#125;</div><div class="line">        //将looper写入thread缓存，myLooper() 中能够得到缓存的looper</div><div class="line">        sThreadLocal.set(new Looper());</div><div class="line">    &#125;</div><div class="line">//私有构造器，初始化队列</div><div class="line">private Looper() &#123;</div><div class="line">        mQueue = new MessageQueue();</div><div class="line">        mRun = true;</div><div class="line">        mThread = Thread.currentThread();</div><div class="line">    &#125;</div><div class="line">---------------------------------------------------------------</div><div class="line">//特别说明，此方法是取消息，交给handler处理</div><div class="line">public static void loop() &#123;</div><div class="line">		//获取looper对象</div><div class="line">        Looper me = myLooper();</div><div class="line">        if (me == null) &#123;</div><div class="line">            throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</div><div class="line">        &#125;</div><div class="line">        //获取消息队列</div><div class="line">        MessageQueue queue = me.mQueue;</div><div class="line">        ...</div><div class="line">        //不停的取消息</div><div class="line">        while (true) &#123;</div><div class="line">            //获取消息</div><div class="line">            Message msg = queue.next();</div><div class="line">            if (msg != null) &#123;</div><div class="line">                if (msg.target == null) &#123;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                ...</div><div class="line">				//发送给handler处理</div><div class="line">                msg.target.dispatchMessage(msg);</div><div class="line">                ...</div><div class="line">				//回收消息</div><div class="line">                msg.recycle();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>将handler机制比喻为流水线，更生动的分析其机制</p>
+<p><img src="http://img.blog.csdn.net/20151109114044397" alt="这里写图片描述"></p>
+<hr>
+<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><hr>
+<p><img src="http://img.blog.csdn.net/20151109125958481" alt="这里写图片描述"></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">你可能会想，为什么handler所在的主线程不自己去直接处理请求，而需要通过handler、message和looper来实现，其实这是为了线程安全来考虑。都知道非UI线程是不允许直接更新ui，但是如果你直接去在UI线程里面取网络数据，或者做一些耗时操作的时候，将会阻塞UI绘制，导致ANR，所以需要需要这套机制，如果有耗时任务的话通过runnable的异步任务来执行，得到结果后再通知handler更新UI</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="url">
+                  Activity中布局资源layoutResId在setContentView加载过程分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:12:03+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记得刚开始学习安卓那会，感觉安卓真的很简单，用xml写一个布局，然后再写一个activity，接着调用一下在onCreate中调用下setContentView（resId）一个页面就可以看到了，现在回想也才知道Android的牛逼，它降低了开发者的门槛 ，但是一旦你跨过门槛，越往里走就发现越神奇，下面就分析下setContentView（resId）中到底做了什么，也是为了后面分析view的Measure过程做一个铺垫。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="1、寻找setContentView真正实现的地方"><a href="#1、寻找setContentView真正实现的地方" class="headerlink" title="1、寻找setContentView真正实现的地方"></a>1、寻找setContentView真正实现的地方</h2><p> 一般我们在新建的activity中传入布局的id就可以加载这个页面了，当然setContentView有几个重载的方法，就不细说了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p> 上面讲到了activity的onCreate方法，很明显onCreate方法中我们常用的就是调用setContentView来给activity给定一个显示的布局id，就是我们常继承的Activity中的setContentView(resId)的源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line"> * Set the activity content from a layout resource.  The resource will be</div><div class="line"> * inflated, adding all top-level views to the activity.</div><div class="line"> *</div><div class="line"> * @param layoutResID Resource ID to be inflated.</div><div class="line"> * 准备导入的布局资源的id</div><div class="line"> * @see #setContentView(android.view.View)</div><div class="line"> * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)</div><div class="line"> */</div><div class="line">public void setContentView(int layoutResID) &#123;</div><div class="line"> getWindow().setContentView(layoutResID);</div><div class="line"> //ActionBar的初始化，平时很少用ActionBar暂时忽略</div><div class="line">    initActionBar();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2、mWindow实例化"><a href="#2、mWindow实例化" class="headerlink" title="2、mWindow实例化"></a>2、mWindow实例化</h2><p> getWindow返回的是mWindow，mWindow是窗口抽象类Window的一个实例，而setContentView(resId)是window中一个抽象方法，所以我们需要找到mWindow实例化的地方，然后看mWindow实现类的setContentView方法做了一些什么工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">final void attach(Context context, ActivityThread aThread,</div><div class="line">            Instrumentation instr, IBinder token, int ident,</div><div class="line">            Application application, Intent intent, ActivityInfo info,</div><div class="line">            CharSequence title, Activity parent, String id,</div><div class="line">            NonConfigurationInstances lastNonConfigurationInstances,</div><div class="line">            Configuration config) &#123;</div><div class="line">        attachBaseContext(context);</div><div class="line">	...</div><div class="line">         mWindow = PolicyManager.makeNewWindow(this);</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>最后在activity的attach方法中找到了mWindow实例化的地方，接着需要找PolicyManager.makeNewWindow返回的对象，也就是Window实现子类，PolicyManager的代码不多，所以这里就直接贴出来了看看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 隐藏的api，难怪sdk中找不到。T—T</div><div class="line"> * &#123;@hide&#125;</div><div class="line"> */</div><div class="line">public final class PolicyManager &#123;</div><div class="line">    private static final String POLICY_IMPL_CLASS_NAME =</div><div class="line">        &quot;com.android.internal.policy.impl.Policy&quot;;</div><div class="line">    private static final IPolicy sPolicy;</div><div class="line">    static &#123;</div><div class="line">        // Pull in the actual implementation of the policy at run-time</div><div class="line">        try &#123;</div><div class="line">            Class policyClass = Class.forName(POLICY_IMPL_CLASS_NAME);</div><div class="line">            sPolicy = (IPolicy)policyClass.newInstance();</div><div class="line">        &#125; catch (ClassNotFoundException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be loaded&quot;, ex);</div><div class="line">        &#125; catch (InstantiationException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be instantiated&quot;, ex);</div><div class="line">        &#125; catch (IllegalAccessException ex) &#123;</div><div class="line">            throw new RuntimeException(</div><div class="line">                    POLICY_IMPL_CLASS_NAME + &quot; could not be instantiated&quot;, ex);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    // Cannot instantiate this class</div><div class="line">    private PolicyManager() &#123;&#125;</div><div class="line">    </div><div class="line">    //mWindow其实也是在这里实例化的</div><div class="line">    public static Window makeNewWindow(Context context) &#123;</div><div class="line">        return sPolicy.makeNewWindow(context);</div><div class="line">    &#125;</div><div class="line">    public static LayoutInflater makeNewLayoutInflater(Context context) &#123;</div><div class="line">        return sPolicy.makeNewLayoutInflater(context);</div><div class="line">    &#125;</div><div class="line">    public static WindowManagerPolicy makeNewWindowManager() &#123;</div><div class="line">        return sPolicy.makeNewWindowManager();</div><div class="line">    &#125;</div><div class="line">    public static FallbackEventHandler makeNewFallbackEventHandler(Context context) &#123;</div><div class="line">        return sPolicy.makeNewFallbackEventHandler(context);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>PolicyManager的makeNewWindow找到了，可惜这里还不是真正实例化mWindow的地方，从上面的代码可以看出，通过反射实例化com.android.internal.policy.impl.Policy这个类，IPolicy 目测应该是一个接口，这个sPolicy实例化是通过反射构造方法来创建的，而且在static代码块中，可见这个类是在被虚拟机加载的时候就实例化了sPolicy。所以我们需要继续寻找。最后功夫不负有心人，总算是找到了Policy 这个类，这个类的实现了IPolicy 接口，代码也不算多，那么就直接贴出来吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public class Policy implements IPolicy &#123;</div><div class="line">    private static final String TAG = &quot;PhonePolicy&quot;;</div><div class="line"></div><div class="line">    private static final String[] preload_classes = &#123;</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneLayoutInflater&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$1&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$ContextMenuCallback&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$DecorView&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$PanelFeatureState&quot;,</div><div class="line">        &quot;com.android.internal.policy.impl.PhoneWindow$PanelFeatureState$SavedState&quot;,</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    static &#123;</div><div class="line">        // For performance reasons, preload some policy specific classes when</div><div class="line">        // the policy gets loaded.</div><div class="line">        for (String s : preload_classes) &#123;</div><div class="line">            try &#123;</div><div class="line">                Class.forName(s);</div><div class="line">            &#125; catch (ClassNotFoundException ex) &#123;</div><div class="line">                Log.e(TAG, &quot;Could not preload class for phone policy: &quot; + s);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">	//终于算是找到你了Activity中的mWindow也就是在这里被实例化的</div><div class="line">    public PhoneWindow makeNewWindow(Context context) &#123;</div><div class="line">        return new PhoneWindow(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public PhoneLayoutInflater makeNewLayoutInflater(Context context) &#123;</div><div class="line">        return new PhoneLayoutInflater(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public PhoneWindowManager makeNewWindowManager() &#123;</div><div class="line">        return new PhoneWindowManager();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的makeNewWindow方法中可以很清楚的看到，我们activity的mWindow也就是PhoneWindow的实例，所以我们也就回到了我们最初目的，打开PhoneWindow看看它的setContentView(resId)方法都做了些什么。</p>
+<h2 id="3、分析setContentView的实现"><a href="#3、分析setContentView的实现" class="headerlink" title="3、分析setContentView的实现"></a>3、分析setContentView的实现</h2><p>同样PhoneWindow的源码在sdk中没有找到，这里就不贴了，为啥不贴，因为源码太多了。我在网上找了一个源码的链接地址，如果需要翻墙推荐一个nydus的翻墙工具，实惠好用</p>
+<blockquote>
+<p>PhoneWindow：<br><a href="https://android.googlesource.com/platform/frameworks/base/+/696cba573e651b0e4f" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/base/+/696cba573e651b0e4f</a><br>18a4718627c8ccecb3bda0/policy/src/com/android/internal/policy/impl/PhoneWindow.java</p>
+</blockquote>
+<p>下面就将PhoneWindow的setContentView的代码贴出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public void setContentView(int layoutResID) &#123;</div><div class="line">       if (mContentParent == null) &#123;</div><div class="line">       //如果mContentParent 为null就调用installDecor初始化</div><div class="line">           installDecor();</div><div class="line">       &#125; else &#123;</div><div class="line">       //否则就情况所有的子View</div><div class="line">           mContentParent.removeAllViews();</div><div class="line">       &#125;</div><div class="line">       //然后将layoutResID加载到mContentParent中</div><div class="line">       mLayoutInflater.inflate(layoutResID, mContentParent);</div><div class="line">       //如果PhoneWindow没有被销毁，且回调cb不为null，那么就调用cb.onContentChanged()</div><div class="line">       final Callback cb = getCallback();</div><div class="line">       if (cb != null &amp;&amp; !isDestroyed()) &#123;</div><div class="line">           cb.onContentChanged();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>setContentView中调用的相关方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 将layoutResId资源加载到View树中</div><div class="line">  * </div><div class="line">  * @param 需要加载的layoutResId (e.g.,</div><div class="line">  *        &lt;code&gt;R.layout.main_page&lt;/code&gt;)</div><div class="line">  * @param 需要加载布局的父布局</div><div class="line">  * @return 返回根View，如果参数root不为空，那么root就是根View，否则导入的resource</div><div class="line">  * 解析的View就是根View</div><div class="line">  */</div><div class="line"> public View inflate(int resource, ViewGroup root) &#123;</div><div class="line">     return inflate(resource, root, root != null);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这里需要重点分析一下installDecor方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private void installDecor() &#123;</div><div class="line">		//mDecor是Window中的根View</div><div class="line">        if (mDecor == null) &#123;</div><div class="line">	       //mDecor是DecorView的实例，而DecorView是PhoneWindow中的一个内部类，</div><div class="line">	       //private final class DecorView extends **FrameLayout** implements </div><div class="line">	       //RootViewSurfaceTaker &#123;...&#125;，这里很明显DecorView是FrameLayout的子类</div><div class="line">		   //generateDecor方法很直接new DecorView(getContext(), -1)，即构建一个DecorView</div><div class="line">            mDecor = generateDecor();     </div><div class="line">            mDecor.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);</div><div class="line">            mDecor.setIsRootNamespace(true);</div><div class="line">        &#125;</div><div class="line">        if (mContentParent == null) &#123;</div><div class="line">        </div><div class="line">            mContentParent = generateLayout(mDecor);</div><div class="line">            </div><div class="line">            //这里特意留下了这句代码，就是要讲下这个findViewById()方法，这个方法是Window中</div><div class="line">            //继承过来的，它的实现是getDecorView().findViewById(id);也就是说通过</div><div class="line">            //mDecor来获取相关的子控件            </div><div class="line">            mTitleView = (TextView)findViewById(com.android.internal.R.id.title);</div><div class="line">           ...</div><div class="line">           &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>看到这里上面也就剩下   mContentParent = generateLayout(mDecor);需要深入了解了，所以这里就深入了解下generateLayout方法。一般我们新建一个activity默认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">protected ViewGroup generateLayout(DecorView decor) &#123;</div><div class="line">        // 根据主题和相关的设定配置layoutResource，有兴趣的同学自己可以阅读PhoneWindow在此省略</div><div class="line">        ...</div><div class="line">        mDecor.startChanging();</div><div class="line">        View in = mLayoutInflater.inflate(layoutResource, null);</div><div class="line">        decor.addView(in, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));</div><div class="line">        // window中的常量ID_ANDROID_CONTENT = com.android.internal.R.id.content;</div><div class="line">        ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);</div><div class="line">        if (contentParent == null) &#123;</div><div class="line">            throw new RuntimeException(&quot;Window couldn&apos;t find content container view&quot;);</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">        mDecor.finishChanging();</div><div class="line">        return contentParent;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>为了更进一步理解，使用了新建activity自动生成的一种布局screen_title.xml，开始是在sdk下面找到然后解压出来的，后面发现找不到编码格式，只能google了一把，找到了相关资源。</p>
+<blockquote>
+<p>screen_title.xml</p>
+<p><a href="https://android.googlesource.com/platform/frameworks/base/+/c80f952/core/res/res/l" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/base/+/c80f952/core/res/res/l</a><br>ayout/screen_title.xml</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:orientation=&quot;vertical&quot;</div><div class="line">    android:fitsSystemWindows=&quot;true&quot;&gt;</div><div class="line">    &lt;!-- Popout bar for action modes --&gt;</div><div class="line">    &lt;ViewStub android:id=&quot;@+id/action_mode_bar_stub&quot;</div><div class="line">              android:inflatedId=&quot;@+id/action_mode_bar&quot;</div><div class="line">              android:layout=&quot;@layout/action_mode_bar&quot;</div><div class="line">              android:layout_width=&quot;match_parent&quot;</div><div class="line">              android:layout_height=&quot;wrap_content&quot; /&gt;</div><div class="line">     &lt;FrameLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot; </div><div class="line">        android:layout_height=&quot;?android:attr/windowTitleSize&quot;</div><div class="line">        style=&quot;?android:attr/windowTitleBackgroundStyle&quot;&gt;</div><div class="line">        &lt;!--这里也就是mTitleView--&gt;</div><div class="line">        &lt;TextView android:id=&quot;@android:id/title&quot; </div><div class="line">            style=&quot;?android:attr/windowTitleStyle&quot;</div><div class="line">            android:background=&quot;@null&quot;</div><div class="line">            android:fadingEdge=&quot;horizontal&quot;</div><div class="line">            android:gravity=&quot;center_vertical&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line">    &lt;/FrameLayout&gt;</div><div class="line">    &lt;!--这里也就是mContentParent--&gt;</div><div class="line">    &lt;FrameLayout android:id=&quot;@android:id/content&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot; </div><div class="line">        android:layout_height=&quot;0dip&quot;</div><div class="line">        android:layout_weight=&quot;1&quot;</div><div class="line">        android:foregroundGravity=&quot;fill_horizontal|top&quot;</div><div class="line">        android:foreground=&quot;?android:attr/windowContentOverlay&quot; /&gt;</div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure>
+<p>光看代码可能有点伤，所以我特意准备了3张图</p>
+<p> 1.mTitleView</p>
+<p><img src="http://img.blog.csdn.net/20160519185500770" alt="mTitleView"></p>
+<p> 2.mContentParent</p>
+<p><img src="http://img.blog.csdn.net/20160519185522489" alt="mContentParent"></p>
+<p> 3.view树</p>
+<p> <img src="http://img.blog.csdn.net/20160520094636172" alt="view树"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后来总结下这个过程<br>Activity层面：<br>MainActivity（setContentView(resId);）—&gt;Activity（getWindow().setContentView(layoutResID);）</p>
+<p>PhoneWindow中的setContentView方法首先判断mContentParent是否为null，如果不为null则通过LayoutInflater来将resId解析后添加到mContentParent中，当然如果为null则通过installDecor方法初始化mContentParent，通过mDecor加载系统预定的主题布局文件，根据主题的不同，判断是否需要标题栏，actionbar，加载的进度条等等，然后通过固定的id（@android:id/content）初始化mContentParent。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="url">
+                  事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:10:39+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hello-World/" itemprop="url" rel="index">
+                    <span itemprop="name">Hello World</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—ViewGroup中的dispatchTouchEvent和onInterceptTouchEvent的源码解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ViewGroup中的onTouchEvent方法是继承自View的onTouchEvent方法，因此这里只对分发和接受事件做源码分析。</p>
+<h2 id="分析前铺垫"><a href="#分析前铺垫" class="headerlink" title="分析前铺垫"></a>分析前铺垫</h2><p>首先事件流中常用的一些事件相关的细节点必须要有所了解这样才能把整个流程搞透彻。</p>
+<ul>
+<li>常用的事件Action</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">MotionEvent.ACTION_DOWN：在第一个点被按下时触发</div><div class="line"></div><div class="line">MotionEvent.ACTION_UP：当屏幕上唯一的点被放开时触发</div><div class="line"></div><div class="line">MotionEvent.ACTION_MOVE：当有点在屏幕上移动时触发。值得注意的是，由于它的灵敏度很高，而我们的手指又不可能完全静止（即使我们感觉不到移动，但其实我们的手指也在不停地抖动），所以实际的情况是，基本上只要有点在屏幕上，此事件就会一直不停地被触发。</div><div class="line"></div><div class="line">ACTION_CANCEL：取消事件，一般由系统给出</div><div class="line"></div><div class="line">ACTION_OUTSIDE: 表示用户触碰超出了正常的UI边界.</div><div class="line"></div><div class="line">多点触控</div><div class="line">MotionEvent.ACTION_POINTER_DOWN：当屏幕上已经有一个点被按住，此时再按下其他点时触发。</div><div class="line"></div><div class="line">MotionEvent.ACTION_POINTER_UP：当屏幕上有多个点被按住，松开其中一个点时触发（即非最后一个点被放开时）。</div></pre></td></tr></table></figure>
+<hr>
+<p>dispatchTouchEvent中出现频率高的关键词和方法。</p>
+<ul>
+<li>TouchTarget</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">  /*</div><div class="line">   *描述一个接受事件的View和它捕捉到的触摸点，暂称触摸目标，触摸点范围在0-31，也就是32位，最多支持32</div><div class="line">   *个触点，能通过1位来表示当前触摸的点</div><div class="line">   */</div><div class="line">  private static final class TouchTarget &#123;</div><div class="line">      private static final int MAX_RECYCLED = 32;</div><div class="line">      private static final Object sRecycleLock = new Object[0];</div><div class="line">      private static TouchTarget sRecycleBin;</div><div class="line">      private static int sRecycledCount;</div><div class="line"></div><div class="line">      public static final int ALL_POINTER_IDS = -1; // all ones</div><div class="line"></div><div class="line">      // The touched child view.</div><div class="line">      public View child;</div><div class="line"></div><div class="line">      // 触摸点的id</div><div class="line">      public int pointerIdBits;</div><div class="line"></div><div class="line">      //单链中指向的下一个节点的TouchTarget</div><div class="line">      public TouchTarget next;</div><div class="line"></div><div class="line">      private TouchTarget() &#123;</div><div class="line">      &#125;</div><div class="line">//构建TouchTarget</div><div class="line">      public static TouchTarget obtain(View child, int pointerIdBits) &#123;</div><div class="line">          final TouchTarget target;</div><div class="line">          synchronized (sRecycleLock) &#123;</div><div class="line">              if (sRecycleBin == null) &#123;</div><div class="line">                  target = new TouchTarget();</div><div class="line">              &#125; else &#123;</div><div class="line">                  target = sRecycleBin;</div><div class="line">                  sRecycleBin = target.next;</div><div class="line">                  sRecycledCount--;</div><div class="line">                  target.next = null;</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">          target.child = child;</div><div class="line">          target.pointerIdBits = pointerIdBits;</div><div class="line">          return target;</div><div class="line">      &#125;</div><div class="line">//回收处理</div><div class="line">      public void recycle() &#123;</div><div class="line">          synchronized (sRecycleLock) &#123;</div><div class="line">              if (sRecycledCount &lt; MAX_RECYCLED) &#123;</div><div class="line">                  next = sRecycleBin;</div><div class="line">                  sRecycleBin = this;</div><div class="line">                  sRecycledCount += 1;</div><div class="line">              &#125; else &#123;</div><div class="line">                  next = null;</div><div class="line">              &#125;</div><div class="line">              child = null;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>getTouchTarget</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 在mFirstTouchTarget单链中寻找目标TouchTarget 如果找到即返回，没有则反</div><div class="line"> */</div><div class="line">private TouchTarget getTouchTarget(View child) &#123;</div><div class="line"> //mFirstTouchTarget如果为null，那么直接返回null，如果能在mFirstTouchTarget单链中的</div><div class="line"> //TouchTarget的child找到和传入的child相同的就返回此TouchTarget。</div><div class="line">    for (TouchTarget target = mFirstTouchTarget; target != null; target = target.next) &#123;</div><div class="line">        if (target.child == child) &#123;</div><div class="line">            return target;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>addTouchTarget<br>可认为是更新mFirstTouchTarget，举例：<br>如果原来mFirstTouchTarget为touchTargetA，其中的 child为childA，next为null,即：</p>
+<p>mFirstTouchTarget=touchTargetA（childA）——&gt;null</p>
+<p>这时候调用addTouchTarget，传入child假设为chlidB，那么addTouchTarget的做法就是先构建  touchTargetB，然后将mFirstTouchTarget，添加到touchTargetB的next，并且更新mFirstTouchTarget为touchTargetB。即：</p>
+<p> mFirstTouchTarget=touchTargetB(childB)—&gt;touchTargetA(childA)—&gt;null</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 添加指定的子视图构成的TouchTarget，添加到触摸目标列表的开头。</div><div class="line">  * 假定列表本来不包括此子视图的触摸目标</div><div class="line">  */</div><div class="line"> private TouchTarget addTouchTarget(View child, int pointerIdBits) &#123;</div><div class="line">  //构建一个新的触摸目标</div><div class="line">     TouchTarget target = TouchTarget.obtain(child, pointerIdBits);</div><div class="line">     //将原有的mFirstTouchTarget添加到此触摸目标其后</div><div class="line">     target.next = mFirstTouchTarget;</div><div class="line">     //更新mFirstTouchTarget列表</div><div class="line">     mFirstTouchTarget = target;</div><div class="line">     //返回此触摸目标</div><div class="line">     return target;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>dispatchTransformedTouchEvent</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> *将事件交给坐标系中接收事件的View处理，过滤不必要的触点，如果需要重新组装这个事件，</div><div class="line"> *如果没有子View，那么这个事件将会把ViewGroup当做View来处理</div><div class="line"> */</div><div class="line"> private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,</div><div class="line">         View child, int desiredPointerIdBits) &#123;</div><div class="line">     final boolean handled;</div><div class="line"></div><div class="line">     // Canceling motions is a special case.  We don&apos;t need to perform any transformations</div><div class="line">     // or filtering.  The important part is the action, not the contents.</div><div class="line">     // 如果强制取消或是取消动作,则给子View或者当前ViewGroup作为View分发取消的的事件</div><div class="line">     final int oldAction = event.getAction();</div><div class="line">     if (cancel || oldAction == MotionEvent.ACTION_CANCEL) &#123;</div><div class="line">         event.setAction(MotionEvent.ACTION_CANCEL);</div><div class="line">         if (child == null) &#123;</div><div class="line">             handled = super.dispatchTouchEvent(event);</div><div class="line">         &#125; else &#123;</div><div class="line">             handled = child.dispatchTouchEvent(event);</div><div class="line">         &#125;</div><div class="line">         event.setAction(oldAction);</div><div class="line">         return handled;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">    /***</div><div class="line">  *  getPointerIdBits是获取触摸点的数量然后循环把各触摸点的id左移1位相或，即</div><div class="line">  *  把所有点的id信息保存到idBits中</div><div class="line">     *  public final int getPointerIdBits() &#123;</div><div class="line">     *     int idBits = 0;</div><div class="line">     *     final int pointerCount = nativeGetPointerCount(mNativePtr);</div><div class="line">     *     for (int i = 0; i &lt; pointerCount; i++) &#123;</div><div class="line">     *        idBits |= 1 &lt;&lt; nativeGetPointerId(mNativePtr, i);</div><div class="line">     *     &#125;</div><div class="line">     *   return idBits;</div><div class="line">  * &#125;</div><div class="line">     */</div><div class="line">     final int oldPointerIdBits = event.getPointerIdBits();</div><div class="line">     //两者&amp;运算，判断desiredPointerIdBits 即此id触摸点是否已经存在其中</div><div class="line">     final int newPointerIdBits = oldPointerIdBits &amp; desiredPointerIdBits;</div><div class="line"></div><div class="line">     //一些特殊情况下，可能会产生没有触摸点的事件，这种事件并不需要分发</div><div class="line">     if (newPointerIdBits == 0) &#123;</div><div class="line">         return false;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     </div><div class="line">     final MotionEvent transformedEvent;</div><div class="line">     //如果触摸点数量和信息没有发生改变，直接分发</div><div class="line">     if (newPointerIdBits == oldPointerIdBits) &#123;</div><div class="line">         if (child == null || child.hasIdentityMatrix()) &#123;</div><div class="line">          //如果子view为空，那么当前的ViewGroup作为一个View来分发</div><div class="line">             if (child == null) &#123;</div><div class="line">                 handled = super.dispatchTouchEvent(event);</div><div class="line">             &#125; else &#123;</div><div class="line">             //否则交给子View分发</div><div class="line">                 final float offsetX = mScrollX - child.mLeft;</div><div class="line">                 final float offsetY = mScrollY - child.mTop;</div><div class="line">                 event.offsetLocation(offsetX, offsetY);</div><div class="line"></div><div class="line">                 handled = child.dispatchTouchEvent(event);</div><div class="line"></div><div class="line">                 event.offsetLocation(-offsetX, -offsetY);</div><div class="line">             &#125;</div><div class="line">             return handled;</div><div class="line">         &#125;</div><div class="line">         //复制当前事件,没有满足上面的条件则需要处理再在下面的方法中分发</div><div class="line">         transformedEvent = MotionEvent.obtain(event);</div><div class="line">     &#125; else &#123;</div><div class="line">        //更新触摸点信息</div><div class="line">         transformedEvent = event.split(newPointerIdBits);</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     //如果触摸点信息不同或者不满足child == null || child.hasIdentityMatrix()条件</div><div class="line">     if (child == null) &#123;</div><div class="line">         handled = super.dispatchTouchEvent(transformedEvent);</div><div class="line">     &#125; else &#123;</div><div class="line">         final float offsetX = mScrollX - child.mLeft;</div><div class="line">         final float offsetY = mScrollY - child.mTop;</div><div class="line">         transformedEvent.offsetLocation(offsetX, offsetY);</div><div class="line">         if (! child.hasIdentityMatrix()) &#123;</div><div class="line">             transformedEvent.transform(child.getInverseMatrix());</div><div class="line">         &#125;</div><div class="line"></div><div class="line">         handled = child.dispatchTouchEvent(transformedEvent);</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     // Done.回收事件</div><div class="line">     transformedEvent.recycle();</div><div class="line">     return handled;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>接下来需要了解一些关于MotionEvent中的一些知识点：</p>
+<ul>
+<li>MotionEvent Index</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">MotionEvent把各个点的信息都存储在一个数组中。点的索引值就是它在数组中的位置。大多数用来与点交互的MotionEvent函数都是以索引值而不是点的ID作为参数的。getActionIndex()返回点的数据在MotionEvent中的索引Index</div><div class="line"> //ACTION_POINTER_INDEX_SHIFT 8</div><div class="line"> //ACTION_POINTER_INDEX_MASK 0xff00</div><div class="line"> //一般Action的后16位，前8位表示事件触控点的索引信息，后8位表示的是事件类型</div><div class="line"> public final int getAction() &#123;</div><div class="line">        return nativeGetAction(mNativePtr);</div><div class="line"> &#125;</div><div class="line"> //这里可以看出获取actionIndex是将Action&amp;0xff00，也就是取16位中的前8位，然后右移8位，比如：</div><div class="line"> //ACTION_DOWN 0x0000&amp;0xff00 得到的index就是0</div><div class="line"> public final int getActionIndex() &#123;</div><div class="line">        return (nativeGetAction(mNativePtr) &amp; ACTION_POINTER_INDEX_MASK)</div><div class="line">                &gt;&gt; ACTION_POINTER_INDEX_SHIFT;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>MotionEvent  ID</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">每个点也都有一个ID映射，该ID映射在整个手势期间一直存在，以便我们单独地追踪每个点</div><div class="line">使用getPointerId()可以获得一个点的ID，在手势随后的移动事件中，就可以用该ID来追踪这个点，点的ID在它的生命周期内是保证不会改变的</div><div class="line">    // Use the pointer ID to find the index of the active pointer</div><div class="line">    // and fetch its position。通过ID获取点的在数组中的索引Index</div><div class="line">	int pointerIndex = event.findPointerIndex(mActivePointerId);</div><div class="line">    // Get the pointer&apos;s current position，通过索引获取点的位置坐标</div><div class="line">    float x = event.getX(pointerIndex);</div><div class="line">    float y = event.getY(pointerIndex);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">关于MotionEvent的index和id的问题，可以参考</div><div class="line"></div><div class="line">&gt; http://blog.csdn.net/hamiton/article/details/51326075</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="ViewGroup中的dispatchTouchEvent"><a href="#ViewGroup中的dispatchTouchEvent" class="headerlink" title="ViewGroup中的dispatchTouchEvent"></a>ViewGroup中的dispatchTouchEvent</h2><p>了解完细节的基础，下面开始对dispatchTouchEvent的分析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div></pre></td><td class="code"><pre><div class="line">    @Override</div><div class="line">    public boolean dispatchTouchEvent(MotionEvent ev) &#123;</div><div class="line">        //系统调试 忽略</div><div class="line">        if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">            mInputEventConsistencyVerifier.onTouchEvent(ev, 1);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line">1、事件初始化重置一些属性和状态</div><div class="line"></div><div class="line">        //事件处理的标记</div><div class="line">        boolean handled = false;</div><div class="line">        //判断事件流能否被分发</div><div class="line">        //onFilterTouchEventForSecurity()用安全机制来过滤触摸事件，true为不过滤分发下去，false</div><div class="line">        //则销毁掉该事件。方法具体实现是去判断是否被其它窗口遮挡住了，如果遮挡住就要过滤掉该事件。</div><div class="line">        if (onFilterTouchEventForSecurity(ev)) &#123;</div><div class="line">            final int action = ev.getAction();</div><div class="line">            //action 用16位记录触摸点和事件类型，8-15位表示触摸点，0-7位表示事件类型</div><div class="line">            //MotionEvent.ACTION_MASK 0xff数值上等同于0x00ff 两者&amp;可以过滤触摸点，</div><div class="line">            //得到低8位的事件类型，action和ACTION_POINTER_INDEX_MASK（0xff00）&amp;可得到触摸点</div><div class="line">            final int actionMasked = action &amp; MotionEvent.ACTION_MASK;</div><div class="line"></div><div class="line">            //当前事件是一个按下事件，按下事件是一个初始化事件，所以分发之前需要重置一些状态</div><div class="line">            //mFirstTouchTarget单链表置为Null，清理触摸操作的所有痕迹</div><div class="line">            if (actionMasked == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">                //在启动新的触摸手势时清除所有先前的状态。</div><div class="line">                //由于一个应用程序切换，ANR，或一些其他的状态变化,framework可能已经失去了前一个手势</div><div class="line">                //事件的向上或者取消事件,重置接受者</div><div class="line">                cancelAndClearTouchTargets(ev);</div><div class="line">                resetTouchState();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line">2、事件是否拦截的判断</div><div class="line"></div><div class="line">            //事件拦截的标记</div><div class="line">            final boolean intercepted;</div><div class="line">            </div><div class="line">	        //ACTION_DOWN是事件流的起始事件，mFirstTouchTarget是为null的，</div><div class="line">	        //mFirstTouchTarget不为空，也就是已经经历过ACTION_DOWN且找到了事件接受的</div><div class="line">	        //对象，所以这两种情况都需要派发事件处理</div><div class="line">            if (actionMasked == MotionEvent.ACTION_DOWN</div><div class="line">                    || mFirstTouchTarget != null) &#123;</div><div class="line">               /**</div><div class="line">	            * FLAG_DISALLOW_INTERCEPT不允许接受事件的标志，ViewGroup提供了一个</div><div class="line">	            * requestDisallowInterceptTouchEvent来改变这个标记，默认是允许的，即</div><div class="line">	            * ~FLAG_DISALLOW_INTERCEPT</div><div class="line">                * 所以这个里的disallowIntercept默认是false</div><div class="line">                */</div><div class="line">                final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;</div><div class="line">                </div><div class="line">                //如果当前状态为可拦截，就交由当前Viewgroup的onInterceptTouchEvent</div><div class="line">                //方法来判断是否需要拦截</div><div class="line">                if (!disallowIntercept) &#123;</div><div class="line">                </div><div class="line">                 //这里就是是否拦截事件调用的地方，onInterceptTouchEvent默认返回的是</div><div class="line">                 //false，即不拦截。</div><div class="line">                    intercepted = onInterceptTouchEvent(ev);</div><div class="line">                 // 复原按下事件，防止事件发生变化</div><div class="line">					ev.setAction(action); </div><div class="line">                &#125; else &#123;</div><div class="line">	                //如果状态是不可以拦截 那么将拦截的标记置为false</div><div class="line">                    intercepted = false;</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">	            //当如果这不是一个按下事件，且没有事件接受对象，因此继续接受事件流</div><div class="line">                intercepted = true;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line">3、按下事件确定事件接受对象</div><div class="line"></div><div class="line">            //事件是否取消</div><div class="line">            final boolean canceled = resetCancelNextUpFlag(this)</div><div class="line">                    || actionMasked == MotionEvent.ACTION_CANCEL;</div><div class="line"></div><div class="line">			//是否需要分发给多个View，比如多个子View叠加 </div><div class="line">            final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;</div><div class="line">            //保存当前要分发给的目标</div><div class="line">            TouchTarget newTouchTarget = null;</div><div class="line">            //分发给新TouchTarget的标记</div><div class="line">            boolean alreadyDispatchedToNewTouchTarget = false;</div><div class="line">   </div><div class="line">            //ACTION_HOVER_MOVE 4.0引入的鼠标相关的事件，代表鼠标在view之上</div><div class="line">            if (!canceled &amp;&amp; !intercepted) &#123;</div><div class="line">            //ACTION_DOWN、ACTION_HOVER_MOVE或者多点触控触发</div><div class="line">                if (actionMasked == MotionEvent.ACTION_DOWN</div><div class="line">                        || (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_DOWN)</div><div class="line">                        || actionMasked == MotionEvent.ACTION_HOVER_MOVE) &#123;</div><div class="line">                    //这是获取触摸事件的序号 以及 触摸点的id信息。</div><div class="line">                    final int actionIndex = ev.getActionIndex(); // always 0 for down</div><div class="line">                    //如果split 为true，即多点触控，就把这个新触摸点的id左移1位保留在</div><div class="line">                    //idBitsToAssign </div><div class="line">                    final int idBitsToAssign = split ? 1 &lt;&lt; ev.getPointerId(actionIndex)</div><div class="line">                            : TouchTarget.ALL_POINTER_IDS;</div><div class="line">                    //将触摸目标链表中与触摸点id相同的TouchTarget移除</div><div class="line">                    removePointersFromTouchTargets(idBitsToAssign);</div><div class="line">  </div><div class="line">					//遍历子View来寻找事件接受者</div><div class="line">                    if (childrenCount != 0) &#123;</div><div class="line">                        // Find a child that can receive the event.</div><div class="line">                        // Scan children from front to back.</div><div class="line">                        final View[] children = mChildren;</div><div class="line">                        final float x = ev.getX(actionIndex);</div><div class="line">                        final float y = ev.getY(actionIndex);</div><div class="line"></div><div class="line">                        for (int i = childrenCount - 1; i &gt;= 0; i--) &#123;</div><div class="line">                            final View child = children[i];</div><div class="line">                            //如果子view不能接受事件或者事件发生的位置不在其内则直接跳过</div><div class="line">                            if (!canViewReceivePointerEvents(child)</div><div class="line">                                    || !isTransformedTouchPointInView(x, y, </div><div class="line">                                    child, null)) &#123;</div><div class="line">                                continue;</div><div class="line">                            &#125;</div><div class="line">                           //能够处理这个触点的View是否是已经处理之前的View，即：</div><div class="line">                           //查找child是否存在于mFirstTouchTarget的单链表中。 </div><div class="line">                           //比如我在action_down的时候食指放在一个的视图上，</div><div class="line">                           //后面我又放下了我的中指再这个视图上，触发</div><div class="line">                           //ACTION_POINTER_DOWN,这样mFirstTouchTarget</div><div class="line">                           //不为null,且这两个手指touch的视图都是同一个</div><div class="line">                            newTouchTarget = getTouchTarget(child);</div><div class="line">                            if (newTouchTarget != null) &#123;</div><div class="line">	                         //mFirstTouchTarget不为null且找到了接受事件的视图</div><div class="line">                             //将触摸点Id复制给新的TouchTarget对象，跳出遍历</div><div class="line">                                newTouchTarget.pointerIdBits |= idBitsToAssign;</div><div class="line">                                break;</div><div class="line">                            &#125;</div><div class="line">							//重置view的状态，能够重新分发事件</div><div class="line">							 resetCancelNextUpFlag(child);</div><div class="line">                             // 如果上面没有break，只有newTouchTarget为null，说明上面我们找</div><div class="line">                             // 的Child View和之前的肯定不是同一个，而是是新增的， 比如</div><div class="line">                             // mFirstTouchTarget为null，或者多点触</div><div class="line">                             // 摸的时候，一个手指按在了这个当前视图上，另一个手指按在</div><div class="line">                             // 了另一个视图,这时候我们就看此child是否分发该事件。</div><div class="line">                              if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) &#123;</div><div class="line">                                // 如果分发处理的时候处理了，那么会进入这里</div><div class="line">                                mLastTouchDownTime = ev.getDownTime();</div><div class="line">                                mLastTouchDownIndex = i;</div><div class="line">                                mLastTouchDownX = ev.getX();</div><div class="line">                                mLastTouchDownY = ev.getY();</div><div class="line">                                //把最新处理的事件的视图转化为TouchTarget</div><div class="line">                                //添加到事件接受视图队首，并更新mFirstTouchTarget</div><div class="line">                                </div><div class="line">                                //如果原来mFirstTouchTarget为touchTargetA，其中的child为</div><div class="line">                                //childA，next为null,这里新child暂定为chlidB，那么</div><div class="line">                                //addTouchTarget的做法就是先构建touchTargetB，然后将</div><div class="line">                                //touchTargetA，添加到touchTargetB的next，并且更新</div><div class="line">                                //mFirstTouchTarget为touchTargetB。即：</div><div class="line">								//mFirstTouchTarget=touchTargetB(child)——&gt;touchTargetA</div><div class="line">                                newTouchTarget = addTouchTarget(child, idBitsToAssign);</div><div class="line">                                // 分发给子View了，不用再继续循环了</div><div class="line">                                alreadyDispatchedToNewTouchTarget = true;</div><div class="line">                                break;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                       </div><div class="line">                    &#125;</div><div class="line">					//newTouchTarget == null mFirstTouchTarget != null没有找到新的可以分</div><div class="line">					//发该事件的子View，那最近最少使用的视图来接受</div><div class="line">                    if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) &#123;</div><div class="line">                        newTouchTarget = mFirstTouchTarget;</div><div class="line">                        while (newTouchTarget.next != null) &#123;</div><div class="line">                            newTouchTarget = newTouchTarget.next;</div><div class="line">                        &#125;</div><div class="line">                        newTouchTarget.pointerIdBits |= idBitsToAssign;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">            &#125;</div><div class="line">----------</div><div class="line">4、处理分发事件</div><div class="line"></div><div class="line">            // 将事件交给TouchTarget处理</div><div class="line">            if (mFirstTouchTarget == null) &#123;</div><div class="line">            // 没有目标的TouchTarget，ViewGroup自己处理，自己作为普通的View分发事件给onTouchEvent</div><div class="line">                handled = dispatchTransformedTouchEvent(ev, canceled, null,</div><div class="line">                        TouchTarget.ALL_POINTER_IDS);</div><div class="line">            &#125; else &#123;</div><div class="line">			//分发事件给接受者，但不包括已经分发过的对象</div><div class="line">                TouchTarget predecessor = null;</div><div class="line">                TouchTarget target = mFirstTouchTarget;</div><div class="line">                while (target != null) &#123;</div><div class="line">                    final TouchTarget next = target.next;</div><div class="line">                    if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) </div><div class="line">                    &#123;</div><div class="line">                    //如果mFirstTouchTarget==newTouchTarget，且</div><div class="line">                    //alreadyDispatchedToNewTouchTarget为true,那么表示处理了事件</div><div class="line">                     handled = true;</div><div class="line">                    &#125; else &#123;</div><div class="line">                        final boolean cancelChild = resetCancelNextUpFlag(target.child)</div><div class="line">                        || intercepted;</div><div class="line">                        //处理事件</div><div class="line">                        if (dispatchTransformedTouchEvent(ev, cancelChild,</div><div class="line">                                target.child, target.pointerIdBits)) &#123;</div><div class="line">                            handled = true;</div><div class="line">                        &#125;</div><div class="line">                        if (cancelChild) &#123;</div><div class="line">                            if (predecessor == null) &#123;</div><div class="line">                                mFirstTouchTarget = next;</div><div class="line">                            &#125; else &#123;</div><div class="line">                                predecessor.next = next;</div><div class="line">                            &#125;</div><div class="line">                            target.recycle();</div><div class="line">                            target = next;</div><div class="line">                            continue;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    predecessor = target;</div><div class="line">                    target = next;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            //取消或者抬起手势或鼠标在view上，则重置Touch状态</div><div class="line">            if (canceled</div><div class="line">                    || actionMasked == MotionEvent.ACTION_UP</div><div class="line">                    || actionMasked == MotionEvent.ACTION_HOVER_MOVE) &#123;</div><div class="line">                resetTouchState();</div><div class="line">            &#125; else if (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_UP) &#123;</div><div class="line">            //如果多点触控时，单个手指抬起，将触点的id从TouchTarget移除</div><div class="line">                final int actionIndex = ev.getActionIndex();</div><div class="line">                final int idBitsToRemove = 1 &lt;&lt; ev.getPointerId(actionIndex);</div><div class="line">                removePointersFromTouchTargets(idBitsToRemove);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">		//系统调试，没有处理事件</div><div class="line">        if (!handled &amp;&amp; mInputEventConsistencyVerifier != null) &#123;</div><div class="line">            mInputEventConsistencyVerifier.onUnhandledEvent(ev, 1);</div><div class="line">        &#125;</div><div class="line">        return handled;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<p>##ViewGroup中的onInterceptTouchEvent</p>
+<p>通过viewgroup的dispatchTouchEvent分发得来的事件，到这里决定是否要截获后续事件，显然这里默认返回的是false，即不需要，如果需要拦截就要返回true。当然后续事件也不会发给这个方法，而是发给viewgroup中的onTouchEvent方法，这个方法能获取的事件就只有touch_down,因为按下事件是一个事件流的开始，通过一个按下事件来判断具体是哪个view需要截获事件，接下来的事件也只会传递给拦截的view来处理。所以这里的onInterceptTouchEvent的职责就是是否拦截事件，交给自己的onTouchEvent处理事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">   * Implement this method to intercept all touch screen motion events.  This</div><div class="line">   * allows you to watch events as they are dispatched to your children, and</div><div class="line">   * take ownership of the current gesture at any point.</div><div class="line">   *</div><div class="line">   * &lt;p&gt;Using this function takes some care, as it has a fairly complicated</div><div class="line">   * interaction with &#123;@link View#onTouchEvent(MotionEvent)</div><div class="line">   * View.onTouchEvent(MotionEvent)&#125;, and using it requires implementing</div><div class="line">   * that method as well as this one in the correct way.  Events will be</div><div class="line">   * received in the following order:</div><div class="line">   *</div><div class="line">   * &lt;ol&gt;</div><div class="line">   * &lt;li&gt; You will receive the down event here.</div><div class="line">   * &lt;li&gt; The down event will be handled either by a child of this view</div><div class="line">   * group, or given to your own onTouchEvent() method to handle; this means</div><div class="line">   * you should implement onTouchEvent() to return true, so you will</div><div class="line">   * continue to see the rest of the gesture (instead of looking for</div><div class="line">   * a parent view to handle it).  Also, by returning true from</div><div class="line">   * onTouchEvent(), you will not receive any following</div><div class="line">   * events in onInterceptTouchEvent() and all touch processing must</div><div class="line">   * happen in onTouchEvent() like normal.</div><div class="line">   * &lt;li&gt; For as long as you return false from this function, each following</div><div class="line">   * event (up to and including the final up) will be delivered first here</div><div class="line">   * and then to the target&apos;s onTouchEvent().</div><div class="line">   * </div><div class="line">   * &lt;li&gt; If you return true from here, you will not receive any</div><div class="line">   * following events: the target view will receive the same event but</div><div class="line">   * with the action &#123;@link MotionEvent#ACTION_CANCEL&#125;, and all further</div><div class="line">   * events will be delivered to your onTouchEvent() method and no longer</div><div class="line">   * appear here.</div><div class="line">   * </div><div class="line">   * 如果你返回true，你将不会收到事件流中接下来的其他事件，这个目标的子view将会收到action为 </div><div class="line">   * action_cancle的事件,并且接下来的所有事件都将分发给你的ontouchevent方法，不会再传递到这个方</div><div class="line">   * 法里面</div><div class="line">   * &lt;/ol&gt;</div><div class="line">   *</div><div class="line">   * @param ev The motion event being dispatched down the hierarchy.</div><div class="line">   * @return Return true to steal motion events from the children and have</div><div class="line">   * them dispatched to this ViewGroup through onTouchEvent().</div><div class="line">   * The current target will receive an ACTION_CANCEL event, and no further</div><div class="line">   * messages will be delivered here.</div><div class="line">   */</div><div class="line">  public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</div><div class="line">      return false;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="url">
+                  事件分发—View中的dispatchTouchEvent和onTouchEvent分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:09:09+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="dispatchTouchEvent"><a href="#dispatchTouchEvent" class="headerlink" title="dispatchTouchEvent"></a>dispatchTouchEvent</h2><p>话不多说直接上源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line">   * Pass the touch screen motion event down to the target view, or this</div><div class="line">   * view if it is the target.</div><div class="line">   * 将屏幕的按压事件传递给目标view，或者当前view即目标view</div><div class="line">   * </div><div class="line">   * @param event The motion event to be dispatched.</div><div class="line">   * 需要分发的事件</div><div class="line">   * </div><div class="line">   * @return True if the event was handled by the view, false otherwise.</div><div class="line">   * 如果返回true表示这个事件被这个view处理了，否则反</div><div class="line">   */</div><div class="line">  public boolean dispatchTouchEvent(MotionEvent event) &#123;</div><div class="line">  </div><div class="line">   //系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onTouchEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">//过滤是不是能够传递这个touch事件</div><div class="line">      if (onFilterTouchEventForSecurity(event)) &#123;</div><div class="line">      </div><div class="line">          //首先判断我们在使用该view的时候是否有实现OnTouchListener，如果有实现就判断当前的view</div><div class="line">           //状态是不是ENABLED,如果实现的OnTouchListener的onTouch中返回true，并处理事件，则</div><div class="line">           //返回true，这个事件在此处理了。</div><div class="line">          if (mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp;</div><div class="line">                  mOnTouchListener.onTouch(this, event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">	//如果没有在代码里面setOnTouchListener的话，就判断View自身的onTouchEvent方法有没有</div><div class="line">	//处理，没有处理最后返回false，处理了返回true；</div><div class="line">          if (onTouchEvent(event)) &#123;</div><div class="line">              return true;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">      &#125;</div><div class="line">//系统调试分析相关，没有影响</div><div class="line">      if (mInputEventConsistencyVerifier != null) &#123;</div><div class="line">          mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      //如果即没有setOnTouchListener，也没有在onTouchEvent中处理，就返回false</div><div class="line">      return false;</div><div class="line">      </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>从上面的源码可以看出：在View的分发事件方法dispatchTouchEvent中，处理分发的顺序是实现OnTouchListener的onTouch()，之后是当前View的onTouchEvent(event)方法。</p>
+<h2 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a>onTouchEvent</h2><p>onTouchEvent的源码有点长，所以要沉下心来仔细阅读。事件消耗和事件处理都是返回true，事件消耗就相当于占坑不拉屎，虽然有点恶心哈，事件处理当然就是占坑拉屎。</p>
+<blockquote>
+<p>在Android的触摸消息中，已经实现了三种监测，它们分别是<br>1）pre-pressed：对应的语义是用户轻触(tap)了屏幕<br>2）pressed:对应的语义是用户点击(press)了屏幕<br>3）long pressed：对应的语义是用户长按(long press)了屏幕<br>下图是触摸消息随时间变化的时间轴示意图：<br><img src="http://www.linuxidc.com/upload/2012_08/120812092995921.png" alt="这里写图片描述"><br>相关引用来自&gt; <a href="http://www.linuxidc.com/Linux/2012-08/67979.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-08/67979.htm</a></p>
+</blockquote>
+<hr>
+<p>了解onTouchEvent就现需要了解的方法和类</p>
+<ul>
+<li>CheckForTap类<br>该类实现了Runnable接口，在run函数中设置触摸标识，并刷新Drawable的状态，同时用于发送一个检测长按事件的异步延迟消息，代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private final class CheckForTap implements Runnable &#123;  </div><div class="line">    public void run() &#123;  </div><div class="line">        // 进入该函数，说明已经过了ViewConfiguration.getTapTimeout()时间，   </div><div class="line">        // 即pre-pressed状态结束，宣告触摸进入pressed状态   </div><div class="line">        mPrivateFlags &amp;= ~PREPRESSED;   </div><div class="line">        mPrivateFlags |= PRESSED;  </div><div class="line">        refreshDrawableState(); // 刷新控件的背景Drawable   </div><div class="line">        // 如果长按检测没有被去使能，则发送一个检测长按事件的异步延迟消息   </div><div class="line">        if ((mViewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) &#123;  </div><div class="line">            postCheckForLongClick(ViewConfiguration.getTapTimeout());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line">private void postCheckForLongClick(int delayOffset) &#123;  </div><div class="line">    mHasPerformedLongPress = false;  </div><div class="line">  </div><div class="line">    // 实例化CheckForLongPress对象   </div><div class="line">    if (mPendingCheckForLongPress == null) &#123;  </div><div class="line">        mPendingCheckForLongPress = new CheckForLongPress();  </div><div class="line">    &#125;  </div><div class="line">    mPendingCheckForLongPress.rememberWindowAttachCount();  </div><div class="line">    // 调用PostDelayed函数发送长按事件的异步延迟消息   </div><div class="line">    postDelayed(mPendingCheckForLongPress,  </div><div class="line">            ViewConfiguration.getLongPressTimeout() - delayOffset);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>CheckForLongPress类<br>该类定义了长按操作发生时的响应处理，同样实现了Runnable接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">class CheckForLongPress implements Runnable &#123;  </div><div class="line">  </div><div class="line">    private int mOriginalWindowAttachCount;  </div><div class="line">  </div><div class="line">    public void run() &#123;  </div><div class="line">        // 进入该函数，说明检测到了长按操作   </div><div class="line">        if (isPressed() &amp;&amp; (mParent != null)  </div><div class="line">                &amp;&amp; mOriginalWindowAttachCount == mWindowAttachCount) &#123;  </div><div class="line">            if (performLongClick()) &#123;   </div><div class="line">                mHasPerformedLongPress = true;  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    public void rememberWindowAttachCount() &#123;  </div><div class="line">        mOriginalWindowAttachCount = mWindowAttachCount;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">public boolean performLongClick() &#123;  </div><div class="line">    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);  </div><div class="line">  </div><div class="line">    boolean handled = false;  </div><div class="line">    if (mOnLongClickListener != null) &#123;  </div><div class="line">        // 回调用户实现的长按操作监听函数（OnLongClickListener）   </div><div class="line">        handled = mOnLongClickListener.onLongClick(View.this);  </div><div class="line">    &#125;  </div><div class="line">    if (!handled) &#123;  </div><div class="line">        // 如果OnLongClickListener的onLongClick返回false   </div><div class="line">        // 则需要继续处理该长按事件，这里是显示上下文菜单   </div><div class="line">        handled = showContextMenu();  </div><div class="line">    &#125;  </div><div class="line">    if (handled) &#123;  </div><div class="line">        // 长按操作事件被处理了，此时应该给用户触觉上的反馈   </div><div class="line">        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);  </div><div class="line">    &#125;  </div><div class="line">    return handled;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>了解完，我们来看看onTouchEvent的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div></pre></td><td class="code"><pre><div class="line">   /**</div><div class="line">     * Implement this method to handle touch screen motion events.</div><div class="line">     * 如果需要处理屏幕产生的事件流需要实现这个方法</div><div class="line">     * </div><div class="line">     * @param event The motion event.</div><div class="line">     * </div><div class="line">     * @return True if the event was handled, false otherwise.</div><div class="line">     * 如果返回true表示这个处理了这个事件，false则反</div><div class="line">     */</div><div class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</div><div class="line">    </div><div class="line">	    //viewFLags用来记录当前View的状态</div><div class="line">        final int viewFlags = mViewFlags;</div><div class="line">        </div><div class="line">		//如果当前View状态为DISABLED，如果不清楚DISABLED是一种什么状态那你应该用过</div><div class="line">		//setEnabled(boolean enabled)这个方法，DISABLED就是ENABLED相反的状态。</div><div class="line">		//DISABLED = 0x00000020 ,ENABLED_MASK = 0x00000020</div><div class="line">        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) &#123;</div><div class="line">	        if (event.getAction() == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PRESSED) != 0) &#123;</div><div class="line">               //如果View的状态是被按压过，且当抬起事件产生，重置View状态为未按压，刷新Drawable的状态</div><div class="line">                mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                refreshDrawableState();</div><div class="line">            &#125;</div><div class="line">            //如果当前View是一个DISABLED状态，且当前View是一个可点击或者是可长按的状态则当前事件在</div><div class="line">            //此消耗不做处理，返回true。</div><div class="line">            return (((viewFlags &amp; CLICKABLE) == CLICKABLE ||</div><div class="line">                    (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE));</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line"></div><div class="line">		//TouchDelegate是一个事件处理逻辑封装的一个类，也就是说Touch事件处理被委托了，那么就交由</div><div class="line">		//mTouchDelegate.onTouchEvent处理，如果返回true，则事件被处理了，则不会向下传递</div><div class="line">        if (mTouchDelegate != null) &#123;</div><div class="line">            if (mTouchDelegate.onTouchEvent(event)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line">		//如果当前View的状态是可点击或者是可长按的，就对事件流进行细节处理</div><div class="line">        if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||</div><div class="line">                (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)) &#123;</div><div class="line">            switch (event.getAction()) &#123;</div><div class="line">                case MotionEvent.ACTION_UP:</div><div class="line">	                //PREPRESSED = 0x02000000</div><div class="line">                    boolean prepressed = (mPrivateFlags &amp; PREPRESSED) != 0;</div><div class="line">                    //如果是pressed状态或者是prepressed状态，才进行处理   </div><div class="line">                    if ((mPrivateFlags &amp; PRESSED) != 0 || prepressed) &#123;</div><div class="line">                        // take focus if we don&apos;t have it already and we should in</div><div class="line">                        // touch mode.</div><div class="line">                        //如果设定了获取焦点，那么调用requestFocus获得焦点</div><div class="line">                        boolean focusTaken = false;</div><div class="line">                        if (isFocusable() &amp;&amp; isFocusableInTouchMode() &amp;&amp; !isFocused()) &#123;</div><div class="line">                            focusTaken = requestFocus();</div><div class="line">                        &#125;</div><div class="line">						</div><div class="line">                        if (prepressed) &#123;</div><div class="line">                            // The button is being released before we actually</div><div class="line">                            // showed it as pressed.  Make it show the pressed</div><div class="line">                            // state now (before scheduling the click) to ensure</div><div class="line">                            // the user sees it.</div><div class="line">                            //在释放之前给用户显示View的prepressed的状态，状态需要改变为</div><div class="line">                            //PRESSED，并且需要将背景变为按下的状态为了让用户感知到</div><div class="line">                            mPrivateFlags |= PRESSED;</div><div class="line">                            refreshDrawableState();</div><div class="line">                       &#125;</div><div class="line">						// 是否处理过长按操作了，如果是，则直接返回   </div><div class="line">                        if (!mHasPerformedLongPress) &#123;</div><div class="line">                            //如果不是长按的话，仅仅是一个Tap，所以移除长按的回调</div><div class="line">                            removeLongPressCallback();</div><div class="line"></div><div class="line">                            // Only perform take click actions if we were in the pressed state</div><div class="line">                            if (!focusTaken) &#123;</div><div class="line">                                // Use a Runnable and post this rather than calling</div><div class="line">                                // performClick directly. This lets other visual state</div><div class="line">                                // of the view update before click actions start.</div><div class="line">                                //UI子线程去执行click，为了让click事件开始的时候其他视觉发</div><div class="line">                                //生变化不影响。</div><div class="line">                                if (mPerformClick == null) &#123;</div><div class="line">                                    mPerformClick = new PerformClick();</div><div class="line">                                &#125;</div><div class="line">                                //如果post消息失败，直接调用处理click事件</div><div class="line">                                if (!post(mPerformClick)) &#123;</div><div class="line">                                    performClick();</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line"></div><div class="line"></div><div class="line">----------</div><div class="line"></div><div class="line"></div><div class="line">                        if (mUnsetPressedState == null) &#123;</div><div class="line">                            mUnsetPressedState = new UnsetPressedState();</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        if (prepressed) &#123;</div><div class="line">	                        //ViewConfiguration.getPressedStateDuration() 获得的是按下效 </div><div class="line">                            //果显示的时间,由PRESSED_STATE_DURATION常量指定,在2.2中为125</div><div class="line">                            //毫秒,也就是隔了125毫秒按钮的状态重置为未点击之前的状态。目的是让用户</div><div class="line">                            //感知到click的效果</div><div class="line">                            postDelayed(mUnsetPressedState,</div><div class="line">                                    ViewConfiguration.getPressedStateDuration());</div><div class="line">                        &#125; else if (!post(mUnsetPressedState)) &#123;</div><div class="line">                            //如果通过post(Runnable runnable)方式调用失败，则直接调用</div><div class="line">                            mUnsetPressedState.run();</div><div class="line">                        &#125;</div><div class="line">                        //移除Tap的回调 重置View的状态</div><div class="line">                        removeTapCallback();</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line"></div><div class="line">                case MotionEvent.ACTION_DOWN:</div><div class="line">                    mHasPerformedLongPress = false;</div><div class="line">					//在触摸事件中执行按钮相关的动作,如果返回true则表示已经消耗了down</div><div class="line">                    if (performButtonActionOnTouchDown(event)) &#123;</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    // Walk up the hierarchy to determine if we&apos;re inside a scrolling container.</div><div class="line">                    //判断是否在一个滚动的容器内</div><div class="line">                    boolean isInScrollingContainer = isInScrollingContainer();</div><div class="line"></div><div class="line">                    // 如果父容器是一个可滚动的容器</div><div class="line">                    if (isInScrollingContainer) &#123;</div><div class="line">                        mPrivateFlags |= PREPRESSED;</div><div class="line">                        //将view的状态变为PREPRESSED，检测是Tap还是长按事件</div><div class="line">                        if (mPendingCheckForTap == null) &#123;</div><div class="line">                            mPendingCheckForTap = new CheckForTap();</div><div class="line">                        &#125;</div><div class="line">                        postDelayed(mPendingCheckForTap, ViewConfiguration.getTapTimeout());</div><div class="line">                    &#125; else &#123;</div><div class="line">                        // Not inside a scrolling container, so show the feedback right away</div><div class="line">                        //直接将view状态转化为PRESSED，更新Drawable</div><div class="line">                        mPrivateFlags |= PRESSED;</div><div class="line">                        refreshDrawableState();</div><div class="line">                        //是否是长按事件的判断</div><div class="line">                        checkForLongClick(0);</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">				//接收到系统发出的ACTION_CANCLE事件时，重置状态</div><div class="line">                case MotionEvent.ACTION_CANCEL:</div><div class="line">                    mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                    refreshDrawableState();</div><div class="line">                    removeTapCallback();</div><div class="line">                    break;</div><div class="line"></div><div class="line">                case MotionEvent.ACTION_MOVE:</div><div class="line">                    final int x = (int) event.getX();</div><div class="line">                    final int y = (int) event.getY();</div><div class="line"></div><div class="line">                    // 如果移动超出了按钮的范围</div><div class="line">                    if (!pointInView(x, y, mTouchSlop)) &#123;</div><div class="line">                        // Outside button</div><div class="line">                        removeTapCallback();</div><div class="line">                        if ((mPrivateFlags &amp; PRESSED) != 0) &#123;</div><div class="line">                            // Remove any future long press/tap checks</div><div class="line">                            //移除长按的回调</div><div class="line">                            removeLongPressCallback();</div><div class="line"></div><div class="line">                            // Need to switch from pressed to not pressed</div><div class="line">                            mPrivateFlags &amp;= ~PRESSED;</div><div class="line">                            refreshDrawableState();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return false;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>对于onTouchEvent总的来说，首先受到事件首先判断当前View的状态是否为DISABLED，如果是则只需要简单的做一些状态的重置，不对事件做细节处理。如果不是DISABLED，就需要对事件细节进行处理，这时候又半路来个程咬金TouchDelegate，如果mTouchDelegate不为空，且返回了true，就表示该事件流有人给你代劳处理了，后面的分析View自己也不用做了。最后如果没人拦截处理，那就得View自己来。</p>
+<p>下面开始是View自己处理事件流的逻辑过程描叙，即switch判断事件分支的处理：</p>
+<ul>
+<li><p>ACTION_DOWN<br>  判断是否在触摸事件中执行按钮相关的动作，如果是，直接跳出，不是则继续判断当前View是否在一个可滑动的容器中，如果是则判断是否是一个点击tab事件，还是长按事件的检查，如果不是则直接转化状态为PRESSED并判断是否为长按事件。</p>
+</li>
+<li><p>ACTION_MOVE<br> 判断移动的点是否在当前View中，如果不在其中且当前状态为PRESSED则重置非PRESSED，且移除长按的回调。</p>
+</li>
+<li><p>ACTION_UP<br> 当抬起事件产生，首先判断View的状态是pressed状态或者是prepressed状态（也就是按过），才进行处理，如果是prepressed状态则变为pressed，并更新Drawable，然后判断在Down中的mHasPerformedLongPress标志，有没有变为true，也就是有没有产生执行长按事件，如果没有，则把这个事件流当做一个click事件做处理，也就是执行performClick中的代码，执行完click中的代码，最后重置View的状态和刷新Drawable。</p>
+</li>
+<li><p>ACTION_CANCLE<br> 当系统发送一个action_cancle的事件，则重置View的状态为非PRESSED，刷新Drawable的状态，且移除Tab的回调。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/22/TCPIP分层模型/" itemprop="url">
                   TCPIP分层模型
                 </a>
@@ -350,124 +1659,13 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/22/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T10:31:05+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hello-World/" itemprop="url" rel="index">
-                    <span itemprop="name">Hello World</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/hello-world/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Hello World.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -506,7 +1704,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -514,7 +1712,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -523,7 +1721,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

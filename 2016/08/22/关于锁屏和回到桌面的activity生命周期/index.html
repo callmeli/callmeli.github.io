@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="tcp/ip," />
+  <meta name="keywords" content="activity生命周期," />
 
 
 
@@ -57,38 +57,30 @@
 
 
 
-<meta name="description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
-
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
+<meta name="description" content="因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：
+1、android锁屏和finish()后activity生命周期的变化
+2、关于Activity与SurfaceView的生命周期  
+下面是复制的里面的具体内容：锁屏分为两个步骤，先是锁定屏幕，再是黑屏onCreate(在该方法里锁屏)—&amp;gt;onS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCPIP分层模型">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/TCPIP分层模型/index.html">
+<meta property="og:title" content="关于锁屏和回到桌面的activity生命周期">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/关于锁屏和回到桌面的activity生命周期/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
-
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160129197">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160418640">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160403827">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160457688">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818164138745">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160527979">
-<meta property="og:updated_time" content="2016-08-22T05:05:07.933Z">
+<meta property="og:description" content="因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：
+1、android锁屏和finish()后activity生命周期的变化
+2、关于Activity与SurfaceView的生命周期  
+下面是复制的里面的具体内容：锁屏分为两个步骤，先是锁定屏幕，再是黑屏onCreate(在该方法里锁屏)—&amp;gt;onS">
+<meta property="og:image" content="http://img.blog.csdn.net/20150904153508899">
+<meta property="og:image" content="http://img.blog.csdn.net/20150904153535391">
+<meta property="og:image" content="http://img.blog.csdn.net/20150904153809811">
+<meta property="og:image" content="http://img.blog.csdn.net/20150904153830870">
+<meta property="og:updated_time" content="2016-08-22T05:25:43.836Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCPIP分层模型">
-<meta name="twitter:description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
-
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160818160129197">
+<meta name="twitter:title" content="关于锁屏和回到桌面的activity生命周期">
+<meta name="twitter:description" content="因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：
+1、android锁屏和finish()后activity生命周期的变化
+2、关于Activity与SurfaceView的生命周期  
+下面是复制的里面的具体内容：锁屏分为两个步骤，先是锁定屏幕，再是黑屏onCreate(在该方法里锁屏)—&amp;gt;onS">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20150904153508899">
 
 
 
@@ -106,7 +98,7 @@
   };
 </script>
 
-  <title> TCPIP分层模型 | Ervin's Blog </title>
+  <title> 关于锁屏和回到桌面的activity生命周期 | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -246,7 +238,7 @@
             
             
               
-                TCPIP分层模型
+                关于锁屏和回到桌面的activity生命周期
               
             
           </h1>
@@ -258,7 +250,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:05:07+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:25:43+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -272,8 +264,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/网络协议/" itemprop="url" rel="index">
-                    <span itemprop="name">网络协议</span>
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
                   </a>
                 </span>
 
@@ -288,8 +280,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/TCPIP分层模型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/TCPIP分层模型/" itemprop="commentsCount"></span>
+                <a href="/2016/08/22/关于锁屏和回到桌面的activity生命周期/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/关于锁屏和回到桌面的activity生命周期/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -311,40 +303,19 @@
       
 
       
-        <p><strong>推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】</strong></p>
-<h2 id="一、TCP-IP分层模型"><a href="#一、TCP-IP分层模型" class="headerlink" title="一、TCP/IP分层模型"></a><strong>一、TCP/IP分层模型</strong></h2><p>TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">下图是osi和tcpip的比较</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160129197" alt="这里写图片描述"></p>
-<h2 id="二、分层结构"><a href="#二、分层结构" class="headerlink" title="二、分层结构"></a><strong>二、分层结构</strong></h2><p><strong>1、应用层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（网络管理协议）、telnet （远程登录协议 ）、smtp（简单邮件传输协议）、dns（域名解析），这次主要是面向用户的交互的。这里的应用层集成了osi分层模型中 的应用、会话、表示层三层的功能。</div></pre></td></tr></table></figure>
-<p><strong>2、传输层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">传输层的作用就是将应用层的数据进行传输转运。比如我们常说的tcp（可靠的传输控制协议）、udp（用户数据报协议）。传输单位为报文段。</div><div class="line">tcp（Transmission Control Protocol）</div><div class="line">	面向连接（先要和对方确定连接、传输结束需要断开连接，类似打电话）、复杂可靠的、有很好的重传和查错机制。一般用与高速、可靠的通信服务</div><div class="line">udp（user datagram protocol）</div><div class="line">	面向无连接（无需确认对方是否存在，类似寄包裹）、简单高效、没有重传机制。一般用于即时通讯、广播通信等</div></pre></td></tr></table></figure>
-<p><strong>3、网络层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">网络层用来处理网络中流动的数据包，数据包为最小的传递单位，比如我们常用的ip协议、icmp协议、arp协议（通过分析ip地址得出物理mac地址）。</div></pre></td></tr></table></figure>
-<p><strong>4、数据链路层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">数据链路层一般用来处理连接硬件的部分，包括控制网卡、硬件相关的设备驱动等。传输单位数据帧。</div></pre></td></tr></table></figure>
-<p><strong>5、物理层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">物理层一般为负责数据传输的硬件，比如我们了解的双绞线电缆、无线、光纤等。比特流光电等信号发送接收数据。</div></pre></td></tr></table></figure>
-<h2 id="三、数据传递"><a href="#三、数据传递" class="headerlink" title="三、数据传递"></a><strong>三、数据传递</strong></h2><ul>
-<li><strong>数据传递</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">首先应用层将数据报文按照协议封装格式压缩然后传递给传输层、传输层通过协议将数据报封装为数据报段、然后传递给网络层，网络层将数据报段封装为数据包，并传递给数据链路层，数据链路层收到数据包，封装为数据帧，然后又将数据帧转比特流传递给物理层，物理层将比特流通过光或电信号发送给目标。</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160418640" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">详细的数据传递</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160403827" alt="这里写图片描述"></p>
+        <p>因为朋友的一个问题引发了对这个问题的探索，当然一如既往的先去百度了一把：”锁定屏幕 activity的生命周期“，结果看了2篇比较靠前的帖子：</p>
+<p><a href="http://www.th7.cn/Program/Android/201310/157073.shtml" target="_blank" rel="external">1、android锁屏和finish()后activity生命周期的变化</a></p>
+<p><a href="http://wbj05791467.blog.163.com/blog/static/120329697201356349428/" target="_blank" rel="external">2、关于Activity与SurfaceView的生命周期  </a></p>
+<p>下面是复制的里面的具体内容：<br>锁屏分为两个步骤，先是锁定屏幕，再是黑屏<br>onCreate(在该方法里锁屏)—&gt;onStart—&gt;onResume<br>黑屏后：onPause<br>点亮屏幕后：onResume</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>然而我发现这与我的猜想完全不一样，所以我决定自己写个demo验证一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity &#123;</div><div class="line">	private final String TAG = &quot;MainActivity&quot;;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		Log.d(TAG, &quot;onCreate&quot;);</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStart() &#123;</div><div class="line">		Log.d(TAG, &quot;onStart&quot;);</div><div class="line">		super.onStart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onNewIntent(Intent intent) &#123;</div><div class="line">		Log.d(TAG, &quot;onNewIntent&quot;);</div><div class="line">		super.onNewIntent(intent);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onRestart() &#123;</div><div class="line">		Log.d(TAG, &quot;onRestart&quot;);</div><div class="line">		super.onRestart();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onResume() &#123;</div><div class="line">		Log.d(TAG, &quot;onResume&quot;);</div><div class="line">		super.onResume();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onPause() &#123;</div><div class="line">		Log.d(TAG, &quot;onPause&quot;);</div><div class="line">		super.onPause();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onStop() &#123;</div><div class="line">		Log.d(TAG, &quot;onStop&quot;);</div><div class="line">		super.onStop();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onDestroy() &#123;</div><div class="line">		Log.d(TAG, &quot;onDestroy&quot;);</div><div class="line">		super.onDestroy();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##结果##<br> 一、锁屏和解锁操作</p>
+<p>1、按下锁屏：<br><img src="http://img.blog.csdn.net/20150904153508899" alt="这里写图片描述"></p>
+<p>2、打开屏幕<br><img src="http://img.blog.csdn.net/20150904153535391" alt="这里写图片描述"></p>
 <hr>
-<ul>
-<li><strong>数据交互</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">数据交互传递的过程</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160457688" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http报文通过tcp发送的举例</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818164138745" alt="这里写图片描述"></p>
-<hr>
-<ul>
-<li>应用交互举例</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20160818160527979" alt="这里写图片描述"></p>
+<p> 二、桌面和再次回到应用操作</p>
+<p>1、回到桌面<br><img src="http://img.blog.csdn.net/20150904153809811" alt="这里写图片描述"><br>2、再次回到应用<br><img src="http://img.blog.csdn.net/20150904153830870" alt="这里写图片描述"></p>
+<p>不难发现：这两个操作走的生命周期是一样的，而上面的帖子说不会锁屏只会走onpause，我把项目的sdk，从5.1切换到2.3，也没有发现这种情况。</p>
 
       
     </div>
@@ -359,7 +330,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tcp-ip/" rel="tag">#tcp/ip</a>
+            <a href="/tags/activity生命周期/" rel="tag">#activity生命周期</a>
           
         </div>
       
@@ -368,17 +339,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/" rel="next" title="基于httpclient网络框架库在android 6.0sdk找不到包解决方案">
+                <i class="fa fa-chevron-left"></i> 基于httpclient网络框架库在android 6.0sdk找不到包解决方案
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" rel="prev" title="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
-                事件分发—View中的dispatchTouchEvent和onTouchEvent分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -393,10 +360,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/TCPIP分层模型/"
-     data-title="TCPIP分层模型"
+        <div class="ds-share flat" data-thread-key="2016/08/22/关于锁屏和回到桌面的activity生命周期/"
+     data-title="关于锁屏和回到桌面的activity生命周期"
      data-content=""
-     data-url="http://yoursite.com/2016/08/22/TCPIP分层模型/">
+     data-url="http://yoursite.com/2016/08/22/关于锁屏和回到桌面的activity生命周期/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -423,8 +390,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/TCPIP分层模型/"
-           data-title="TCPIP分层模型" data-url="http://yoursite.com/2016/08/22/TCPIP分层模型/">
+      <div class="ds-thread" data-thread-key="2016/08/22/关于锁屏和回到桌面的activity生命周期/"
+           data-title="关于锁屏和回到桌面的activity生命周期" data-url="http://yoursite.com/2016/08/22/关于锁屏和回到桌面的activity生命周期/">
       </div>
     
   </div>
@@ -567,7 +534,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、TCP-IP分层模型"><span class="nav-number">1.</span> <span class="nav-text">一、TCP/IP分层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、分层结构"><span class="nav-number">2.</span> <span class="nav-text">二、分层结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、数据传递"><span class="nav-number">3.</span> <span class="nav-text">三、数据传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">1.</span> <span class="nav-text">实验</span></a></li></ol></div>
             
           </div>
         </section>

@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="tcp/ip," />
+  <meta name="keywords" content="handler," />
 
 
 
@@ -57,38 +57,31 @@
 
 
 
-<meta name="description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
+<meta name="description" content="##相关名词简介 ##
 
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
+1、 MessageQueue 消息队列 
+承载消息的容器         
+123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCPIP分层模型">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/TCPIP分层模型/index.html">
+<meta property="og:title" content="handler机制的深入理解">
+<meta property="og:url" content="http://yoursite.com/2016/08/22/handler机制的深入理解/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
+<meta property="og:description" content="##相关名词简介 ##
 
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160129197">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160418640">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160403827">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160457688">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818164138745">
-<meta property="og:image" content="http://img.blog.csdn.net/20160818160527979">
-<meta property="og:updated_time" content="2016-08-22T05:05:07.933Z">
+1、 MessageQueue 消息队列 
+承载消息的容器         
+123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
+<meta property="og:image" content="http://img.blog.csdn.net/20151109114044397">
+<meta property="og:image" content="http://img.blog.csdn.net/20151109125958481">
+<meta property="og:updated_time" content="2016-08-22T05:14:19.615Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCPIP分层模型">
-<meta name="twitter:description" content="推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】
-一、TCP/IP分层模型TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。
-1下图是osi和tcpip的比较
+<meta name="twitter:title" content="handler机制的深入理解">
+<meta name="twitter:description" content="##相关名词简介 ##
 
-二、分层结构1、应用层
-1应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160818160129197">
+1、 MessageQueue 消息队列 
+承载消息的容器         
+123456789//取消息- final Message next() //移除消息- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)- final void removeMes">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151109114044397">
 
 
 
@@ -106,7 +99,7 @@
   };
 </script>
 
-  <title> TCPIP分层模型 | Ervin's Blog </title>
+  <title> handler机制的深入理解 | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -246,7 +239,7 @@
             
             
               
-                TCPIP分层模型
+                handler机制的深入理解
               
             
           </h1>
@@ -258,7 +251,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:05:07+08:00" content="2016-08-22">
+            <time itemprop="dateCreated" datetime="2016-08-22T13:14:19+08:00" content="2016-08-22">
               2016-08-22
             </time>
           </span>
@@ -272,8 +265,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/网络协议/" itemprop="url" rel="index">
-                    <span itemprop="name">网络协议</span>
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
                   </a>
                 </span>
 
@@ -288,8 +281,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/TCPIP分层模型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/TCPIP分层模型/" itemprop="commentsCount"></span>
+                <a href="/2016/08/22/handler机制的深入理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/handler机制的深入理解/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -311,40 +304,28 @@
       
 
       
-        <p><strong>推荐书籍：图解TCP/IP 人民邮电出版社 竹下隆史等【日】</strong></p>
-<h2 id="一、TCP-IP分层模型"><a href="#一、TCP-IP分层模型" class="headerlink" title="一、TCP/IP分层模型"></a><strong>一、TCP/IP分层模型</strong></h2><p>TCP/IP模型分为5层：应用层、传输层、网络层、数据链路层以及 物理层。分层就类似接口的定义，定义了每个层的行为职责。这样的分层抽象提供了更多实现的自由。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">下图是osi和tcpip的比较</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160129197" alt="这里写图片描述"></p>
-<h2 id="二、分层结构"><a href="#二、分层结构" class="headerlink" title="二、分层结构"></a><strong>二、分层结构</strong></h2><p><strong>1、应用层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">应用层是我们经常接触使用的部分，比如常用的http协议、ftp协议（文件传输协议）、snmp（网络管理协议）、telnet （远程登录协议 ）、smtp（简单邮件传输协议）、dns（域名解析），这次主要是面向用户的交互的。这里的应用层集成了osi分层模型中 的应用、会话、表示层三层的功能。</div></pre></td></tr></table></figure>
-<p><strong>2、传输层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">传输层的作用就是将应用层的数据进行传输转运。比如我们常说的tcp（可靠的传输控制协议）、udp（用户数据报协议）。传输单位为报文段。</div><div class="line">tcp（Transmission Control Protocol）</div><div class="line">	面向连接（先要和对方确定连接、传输结束需要断开连接，类似打电话）、复杂可靠的、有很好的重传和查错机制。一般用与高速、可靠的通信服务</div><div class="line">udp（user datagram protocol）</div><div class="line">	面向无连接（无需确认对方是否存在，类似寄包裹）、简单高效、没有重传机制。一般用于即时通讯、广播通信等</div></pre></td></tr></table></figure>
-<p><strong>3、网络层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">网络层用来处理网络中流动的数据包，数据包为最小的传递单位，比如我们常用的ip协议、icmp协议、arp协议（通过分析ip地址得出物理mac地址）。</div></pre></td></tr></table></figure>
-<p><strong>4、数据链路层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">数据链路层一般用来处理连接硬件的部分，包括控制网卡、硬件相关的设备驱动等。传输单位数据帧。</div></pre></td></tr></table></figure>
-<p><strong>5、物理层</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">物理层一般为负责数据传输的硬件，比如我们了解的双绞线电缆、无线、光纤等。比特流光电等信号发送接收数据。</div></pre></td></tr></table></figure>
-<h2 id="三、数据传递"><a href="#三、数据传递" class="headerlink" title="三、数据传递"></a><strong>三、数据传递</strong></h2><ul>
-<li><strong>数据传递</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">首先应用层将数据报文按照协议封装格式压缩然后传递给传输层、传输层通过协议将数据报封装为数据报段、然后传递给网络层，网络层将数据报段封装为数据包，并传递给数据链路层，数据链路层收到数据包，封装为数据帧，然后又将数据帧转比特流传递给物理层，物理层将比特流通过光或电信号发送给目标。</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160418640" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">详细的数据传递</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160403827" alt="这里写图片描述"></p>
+        <p>##相关名词简介 ##</p>
 <hr>
-<ul>
-<li><strong>数据交互</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">数据交互传递的过程</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818160457688" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http报文通过tcp发送的举例</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20160818164138745" alt="这里写图片描述"></p>
+<p>1、 MessageQueue 消息队列 </p>
+<pre><code>承载消息的容器         
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//取消息</div><div class="line">- final Message next() </div><div class="line">//移除消息</div><div class="line">- final boolean removeMessages(Handler h, int what, Object object,boolean doRemove)</div><div class="line">- final void removeMessages(Handler h, Runnable r, Object object)</div><div class="line">//移除消息及回调</div><div class="line">- final void removeCallbacksAndMessages(Handler h, Object object)</div><div class="line">//初始化唤醒消息</div><div class="line">- final boolean enqueueMessage(Message msg, long when)</div></pre></td></tr></table></figure>
+<p> 2、 Message 消息</p>
+<pre><code>传递的实体内容
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> //消息标识符，类似id字段</div><div class="line">- public int what;</div><div class="line">//传递的int值，如果消息传递的内容仅仅是int值时，可以降低开销</div><div class="line">- public int arg1;    </div><div class="line">- public int arg2;</div><div class="line">//消息的内容对象</div><div class="line">- public Object obj;</div><div class="line">//消息内容</div><div class="line">- Bundle data;</div><div class="line">//时间</div><div class="line">- long when;</div><div class="line">//发送的目标处理者</div><div class="line">- Handler target;     </div><div class="line">//子线程</div><div class="line">- Runnable callback;   </div><div class="line">//消息池最大消息量</div><div class="line">- private static final int MAX_POOL_SIZE = 10;</div></pre></td></tr></table></figure>
+<p> 3、Handler 处理机</p>
+<pre><code>消息的上传和处理者
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//消息队列</div><div class="line">- final MessageQueue mQueue;</div><div class="line">//消息队列的管理员</div><div class="line">- final Looper mLooper;</div><div class="line">//消息处理的回调接口</div><div class="line">- final Callback mCallback;</div><div class="line">//消息处理，一种runnable的消息，直接执行，一种就需要目标handler去处理</div><div class="line">- public void dispatchMessage(Message msg)</div><div class="line">//发送runnable消息，还有其他重载方法</div><div class="line">- public final boolean post(Runnable r)</div><div class="line">//发送消息，还有其他重载方法</div><div class="line">- public boolean sendMessageAtTime(Message msg, long uptimeMillis)</div></pre></td></tr></table></figure>
+<p> 4、Looper 管理员</p>
+<pre><code>消息管理员，负责从消息队列取消息交给handler处理
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">//构建looper对象</div><div class="line">public static void prepare() &#123;</div><div class="line">        if (sThreadLocal.get() != null) &#123;</div><div class="line">            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</div><div class="line">        &#125;</div><div class="line">        //将looper写入thread缓存，myLooper() 中能够得到缓存的looper</div><div class="line">        sThreadLocal.set(new Looper());</div><div class="line">    &#125;</div><div class="line">//私有构造器，初始化队列</div><div class="line">private Looper() &#123;</div><div class="line">        mQueue = new MessageQueue();</div><div class="line">        mRun = true;</div><div class="line">        mThread = Thread.currentThread();</div><div class="line">    &#125;</div><div class="line">---------------------------------------------------------------</div><div class="line">//特别说明，此方法是取消息，交给handler处理</div><div class="line">public static void loop() &#123;</div><div class="line">		//获取looper对象</div><div class="line">        Looper me = myLooper();</div><div class="line">        if (me == null) &#123;</div><div class="line">            throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</div><div class="line">        &#125;</div><div class="line">        //获取消息队列</div><div class="line">        MessageQueue queue = me.mQueue;</div><div class="line">        ...</div><div class="line">        //不停的取消息</div><div class="line">        while (true) &#123;</div><div class="line">            //获取消息</div><div class="line">            Message msg = queue.next();</div><div class="line">            if (msg != null) &#123;</div><div class="line">                if (msg.target == null) &#123;</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                ...</div><div class="line">				//发送给handler处理</div><div class="line">                msg.target.dispatchMessage(msg);</div><div class="line">                ...</div><div class="line">				//回收消息</div><div class="line">                msg.recycle();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <hr>
-<ul>
-<li>应用交互举例</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20160818160527979" alt="这里写图片描述"></p>
+<p>将handler机制比喻为流水线，更生动的分析其机制</p>
+<p><img src="http://img.blog.csdn.net/20151109114044397" alt="这里写图片描述"></p>
+<hr>
+<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><hr>
+<p><img src="http://img.blog.csdn.net/20151109125958481" alt="这里写图片描述"></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">你可能会想，为什么handler所在的主线程不自己去直接处理请求，而需要通过handler、message和looper来实现，其实这是为了线程安全来考虑。都知道非UI线程是不允许直接更新ui，但是如果你直接去在UI线程里面取网络数据，或者做一些耗时操作的时候，将会阻塞UI绘制，导致ANR，所以需要需要这套机制，如果有耗时任务的话通过runnable的异步任务来执行，得到结果后再通知handler更新UI</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -359,7 +340,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tcp-ip/" rel="tag">#tcp/ip</a>
+            <a href="/tags/handler/" rel="tag">#handler</a>
           
         </div>
       
@@ -368,16 +349,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2016/08/22/Activity中布局资源layoutResId在setContentView加载过程分析/" rel="next" title="Activity中布局资源layoutResId在setContentView加载过程分析">
+                <i class="fa fa-chevron-left"></i> Activity中布局资源layoutResId在setContentView加载过程分析
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/08/22/事件分发—View中的dispatchTouchEvent和onTouchEvent分析/" rel="prev" title="事件分发—View中的dispatchTouchEvent和onTouchEvent分析">
-                事件分发—View中的dispatchTouchEvent和onTouchEvent分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/08/22/adpter中的观察者模式/" rel="prev" title="adapter中的观察者模式">
+                adapter中的观察者模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -393,10 +374,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/TCPIP分层模型/"
-     data-title="TCPIP分层模型"
+        <div class="ds-share flat" data-thread-key="2016/08/22/handler机制的深入理解/"
+     data-title="handler机制的深入理解"
      data-content=""
-     data-url="http://yoursite.com/2016/08/22/TCPIP分层模型/">
+     data-url="http://yoursite.com/2016/08/22/handler机制的深入理解/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -423,8 +404,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/TCPIP分层模型/"
-           data-title="TCPIP分层模型" data-url="http://yoursite.com/2016/08/22/TCPIP分层模型/">
+      <div class="ds-thread" data-thread-key="2016/08/22/handler机制的深入理解/"
+           data-title="handler机制的深入理解" data-url="http://yoursite.com/2016/08/22/handler机制的深入理解/">
       </div>
     
   </div>
@@ -567,7 +548,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、TCP-IP分层模型"><span class="nav-number">1.</span> <span class="nav-text">一、TCP/IP分层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、分层结构"><span class="nav-number">2.</span> <span class="nav-text">二、分层结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、数据传递"><span class="nav-number">3.</span> <span class="nav-text">三、数据传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#流程分析"><span class="nav-number">1.</span> <span class="nav-text">流程分析</span></a></li></ol></div>
             
           </div>
         </section>

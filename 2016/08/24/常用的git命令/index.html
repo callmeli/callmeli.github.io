@@ -65,7 +65,7 @@
 <meta property="og:description" content="前言对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系，git是分布式版本控制系统。git版本控制中有三个重要的概念：工作区（working tree）、暂存区（index或stage）、版本库（repository）">
 <meta property="og:image" content="http://img.blog.csdn.net/20160824101757335">
 <meta property="og:image" content="http://img.blog.csdn.net/20160824102119758">
-<meta property="og:updated_time" content="2016-08-24T02:24:56.626Z">
+<meta property="og:updated_time" content="2016-08-24T12:31:43.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用的git命令">
 <meta name="twitter:description" content="前言对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系，git是分布式版本控制系统。git版本控制中有三个重要的概念：工作区（working tree）、暂存区（index或stage）、版本库（repository）">
@@ -245,7 +245,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-24T10:24:56+08:00" content="2016-08-24">
+            <time itemprop="dateCreated" datetime="2016-08-24T20:31:43+08:00" content="2016-08-24">
               2016-08-24
             </time>
           </span>
@@ -328,7 +328,7 @@
 <li>git status<br>工作区中的文件当前处于什么状态</li>
 </ul>
 <h4 id="提交历史管理"><a href="#提交历史管理" class="headerlink" title="提交历史管理"></a>提交历史管理</h4><ul>
-<li>git branch<br>展示分支列表, 新建分支（git branch new_branch）,删除分支（git branch -d new_branch）</li>
+<li>git branch<br>展示分支列表, 新建分支（git branch new_branch）,删除分支（git branch -d new_branch）<br>查看远程分支（git branch -r）、查看所有分支（git branch -a）</li>
 <li>git checkout<br>更换分支（git checkout new_branch）、丢弃工作区的修改（git checkout – file）</li>
 <li>git commit<br>将工作区的更改内容提交到本地版本库中。<br>git commit -a -m ‘msg’ -a 未暂存的文件也提交 -m ‘msg’ 提交的描述信息<br>git commit –amend 修改本地提交的最后一次</li>
 <li>git diff<br>展示版本之间的区别</li>
@@ -337,8 +337,9 @@
 </ul>
 <h4 id="共同协作"><a href="#共同协作" class="headerlink" title="共同协作"></a>共同协作</h4><ul>
 <li>git fetch<br>获取远程更新到本地，可指定 git fetch &lt;远程主机名&gt; &lt;分支名&gt;</li>
-<li>git pull<br>获取远程主机的分支信息合并,pull=fetch+merge</li>
-<li>git push<br>将本地仓库提交的修改同步到远程库中</li>
+<li>git pull<br>获取远程主机的分支信息合并,pull=fetch+merge<br>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</li>
+<li>git push<br>将本地仓库提交的修改同步到远程库中<br>新建的分支推送到远程列表 git push origin local_branch:remote_branch<br>删除远程分支 git push origin –delete 分支名 或 ：分支名</li>
+<li>git remote<br>查看远程主机名，git remote show 主机名 查看远程主机信息，rename 原名 目标名等，</li>
 </ul>
 
       
@@ -363,17 +364,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/http协议/" rel="next" title="http协议">
-                <i class="fa fa-chevron-left"></i> http协议
+              <a href="/2016/08/24/一个开发者需要了解的常用linux命令/" rel="next" title="一个开发者需要了解的常用linux命令">
+                <i class="fa fa-chevron-left"></i> 一个开发者需要了解的常用linux命令
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/24/一个开发者需要了解的常用linux命令/" rel="prev" title="一个开发者需要了解的常用linux命令">
-                一个开发者需要了解的常用linux命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

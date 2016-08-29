@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -57,16 +57,15 @@
 
 
 
-<meta name="description" content="对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系统，git是分散式版本控制系统。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="常用的git命令">
-<meta property="og:url" content="http://yoursite.com/2016/08/23/常用的git命令/index.html">
+<meta name="description" content="一只喜马拉雅山上的野生猿">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ervin's Blog">
+<meta property="og:url" content="http://yoursite.com/tags/AVTransportService/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系统，git是分散式版本控制系统。">
-<meta property="og:updated_time" content="2016-08-23T12:39:13.707Z">
+<meta property="og:description" content="一只喜马拉雅山上的野生猿">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用的git命令">
-<meta name="twitter:description" content="对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系统，git是分散式版本控制系统。">
+<meta name="twitter:title" content="Ervin's Blog">
+<meta name="twitter:description" content="一只喜马拉雅山上的野生猿">
 
 
 
@@ -84,7 +83,7 @@
   };
 </script>
 
-  <title> 常用的git命令 | Ervin's Blog </title>
+  <title> 标签: AVTransportService | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -111,7 +110,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,198 +208,46 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                常用的git命令
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-23T20:39:13+08:00" content="2016-08-23">
-              2016-08-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/版本控制/" itemprop="url" rel="index">
-                    <span itemprop="name">版本控制</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/23/常用的git命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/23/常用的git命令/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/23/常用的git命令/" class="leancloud_visitors" data-flag-title="常用的git命令">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是<br>svn是集中式版本控制系统，git是分散式版本控制系统。<br><a id="more"></a><br>而Git中有一些比较重要的命令，对于开发会有很多帮助，所以必须要理解清楚。</p>
-<h4 id="创建一个工作区"><a href="#创建一个工作区" class="headerlink" title="创建一个工作区"></a>创建一个工作区</h4><ul>
-<li><p>git init<br>如果我们需要建立一个版本控制仓库或者初始化一个现有的仓库，特别注意如果要作为一个远程的git库，应该加-bare生成没有工作目录的裸库。</p>
-</li>
-<li><p>git clone<br>克隆一个版本控制仓库到指定路径，如 git clone xxx.git mygit</p>
-</li>
-</ul>
-<h4 id="对工作区进行编辑"><a href="#对工作区进行编辑" class="headerlink" title="对工作区进行编辑"></a>对工作区进行编辑</h4><ul>
-<li>git add<br>将需要提交的文件信息添加到暂存区中</li>
-<li>git mv<br>修改文件名称或转移文件路径</li>
-<li>git reset<br>版本、文件重置，<br>可选配置参数<br>–soft 暂存区和工作区都会保留，版本提交版本回退到指定版本<br>–mixed 工作区会保留，暂存区和本地提交版本库都会回退到指定的版本<br>–hard 直接还原、工作区、暂存和本地提交版本都会回退到指定的版本</li>
-<li>git rm<br>将文件移除,git rm –cached 只删除索引保留文件，即恢复成untracked状态 </li>
-</ul>
-<h4 id="版本历史和状态"><a href="#版本历史和状态" class="headerlink" title="版本历史和状态"></a>版本历史和状态</h4><ul>
-<li>git grep<br>查找Git库里面的相关内容</li>
-<li>git log<br>展示commit的日志,git log –since=2.weeks<br>可配置选项<br>-(n)    仅显示最近的 n 条提交<br>–since, –after 仅显示指定时间之后的提交。<br>–until, –before 仅显示指定时间之前的提交。<br>–author 仅显示指定作者相关的提交。<br>–committer 仅显示指定提交者相关的提交。</li>
-<li>git show<br>展示版本的修改详情（git show e6b7783887ee8d3d67bee67ef73cb2e233c8a856）</li>
-<li>git status<br>工作树中的文件当前处于什么状态</li>
-</ul>
-<h4 id="提交历史管理"><a href="#提交历史管理" class="headerlink" title="提交历史管理"></a>提交历史管理</h4><ul>
-<li>git branch<br>展示分支列表, 新建分支（git branch new_branch）,删除分支（git branch -d new_branch）</li>
-<li>git checkout<br>更换分支（git checkout new_branch）、恢复工作树文件（git checkout HEAD）</li>
-<li>git commit<br>将工作区的更改内容提交到本地版本库中。<br>git commit -a -m ‘msg’ -a 未暂存的文件也提交 -m ‘msg’ 提交的描述信息<br>git commit –amend 修改本地提交的最后一次</li>
-<li>git diff<br>展示版本之间的区别</li>
-<li>git merge<br>两个开发版本的合并，这个过程如果有冲突需要手动合并。</li>
-<li>git tag<br>版本标签</li>
-</ul>
-<h4 id="协作"><a href="#协作" class="headerlink" title="协作"></a>协作</h4><ul>
-<li>git fetch<br>获取远程更新到本地，可指定 git fetch &lt;远程主机名&gt; &lt;分支名&gt;</li>
-<li>git pull<br>获取远程主机的分支信息合并,pull=fetch+merge</li>
-<li>git push<br>将本地仓库提交的修改同步到远程库中</li>
-</ul>
-
-      
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        AVTransportService
+        <small>标签</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-      
-    </div>
+            <a class="post-title-link" href="/2016/08/29/订阅AVTransportService观察日志/" itemprop="url">
+              
+                <span itemprop="name">订阅AVTransportService观察日志</span>
+              
+            </a>
+        
+      </h1>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/git/" rel="tag">#git</a>
-          
-        </div>
-      
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-08-29T11:04:01+08:00"
+              content="2016-08-29" >
+          08-29
+        </time>
+      </div>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/08/22/http协议/" rel="next" title="http协议">
-                <i class="fa fa-chevron-left"></i> http协议
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2016/08/23/常用的git命令/"
-     data-title="常用的git命令"
-     data-content=""
-     data-url="http://yoursite.com/2016/08/23/常用的git命令/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
+    
   </div>
-</div>
-      
-    </div>
-  </div>
+
+  
 
 
           </div>
@@ -408,14 +255,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/08/23/常用的git命令/"
-           data-title="常用的git命令" data-url="http://yoursite.com/2016/08/23/常用的git命令/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -435,17 +274,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://qlogo2.store.qq.com/qzone/735266765/735266765/100?1422807745"
@@ -456,7 +286,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -464,7 +294,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -473,7 +303,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -547,17 +377,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个工作区"><span class="nav-number">1.</span> <span class="nav-text">创建一个工作区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对工作区进行编辑"><span class="nav-number">2.</span> <span class="nav-text">对工作区进行编辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本历史和状态"><span class="nav-number">3.</span> <span class="nav-text">版本历史和状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提交历史管理"><span class="nav-number">4.</span> <span class="nav-text">提交历史管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协作"><span class="nav-number">5.</span> <span class="nav-text">协作</span></a></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -642,10 +461,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
-
-
 
   
 

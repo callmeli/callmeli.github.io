@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/29/订阅AVTransportService观察日志/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
 <meta property="og:description" content="windows MediaPlayer 订阅AVTransportService 观察setTransportURI、Play、Pause动作产生的log研究分析log来确定dlna播放的逻辑。">
-<meta property="og:updated_time" content="2016-08-29T03:21:36.125Z">
+<meta property="og:updated_time" content="2016-08-29T03:22:46.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="订阅AVTransportService观察日志">
 <meta name="twitter:description" content="windows MediaPlayer 订阅AVTransportService 观察setTransportURI、Play、Pause动作产生的log研究分析log来确定dlna播放的逻辑。">
@@ -242,7 +242,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-29T11:21:36+08:00" content="2016-08-29">
+            <time itemprop="dateCreated" datetime="2016-08-29T11:22:46+08:00" content="2016-08-29">
               2016-08-29
             </time>
           </span>
@@ -305,24 +305,18 @@
 
       
         <p>windows MediaPlayer 订阅AVTransportService 观察setTransportURI、Play、Pause动作产生的log<br>研究分析log来确定dlna播放的逻辑。<br><a id="more"></a></p>
-<p>#订阅</p>
-<ol>
-<li>10:34    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstatus val="OK"><br>    <numberoftracks val="0"><br>    <currenttrack val="0"><br>    <currenttrackduration val="00:00:00"><br>    <currentmediaduration val="00:00:00"><br>    <currenttrackuri val=""><br>    <avtransporturi val=""><br>    <currenttrackmetadata val=""><br>    <avtransporturimetadata val=""><br>    <playbackstoragemedium val="NONE"><br>    <recordstoragemedium val="NOT_IMPLEMENTED"><br>    <possibleplaybackstoragemedia val="NONE,NETWORK,UNKNOWN,HDD,CD-DA,DVD-VIDEO"><br>    <possiblerecordstoragemedia val="NOT_IMPLEMENTED"><br>    <currentplaymode val="NORMAL"><br>    <transportplayspeed val="1"><br>    <recordmediumwritestatus val="NOT_IMPLEMENTED"><br>    <currentrecordqualitymode val="NOT_IMPLEMENTED"><br>    <possiblerecordqualitymodes val="NOT_IMPLEMENTED"><br>    <nextavtransporturi val=""><br>    <nextavtransporturimetadata val=""><br>    <relativetimeposition val="0:00:00"><br>    <absolutetimeposition val="NOT_IMPLEMENTED"><br>    <relativecounterposition val="-1"><br>    <absolutecounterposition val="-1"><br>    <currenttransportactions val=""><br>  </currenttransportactions></absolutecounterposition></relativecounterposition></absolutetimeposition></relativetimeposition></nextavtransporturimetadata></nextavtransporturi></possiblerecordqualitymodes></currentrecordqualitymode></recordmediumwritestatus></transportplayspeed></currentplaymode></possiblerecordstoragemedia></possibleplaybackstoragemedia></recordstoragemedium></playbackstoragemedium></avtransporturimetadata></currenttrackmetadata></avtransporturi></currenttrackuri></currentmediaduration></currenttrackduration></currenttrack></numberoftracks></transportstatus></instanceid><br></event>
+<h1 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h1><ol>
+<li><p>10:34    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
+<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstatus val="OK"><br>    <numberoftracks val="0"><br>    <currenttrack val="0"><br>    <currenttrackduration val="00:00:00"><br>    <currentmediaduration val="00:00:00"><br>    <currenttrackuri val=""><br>    <avtransporturi val=""><br>    <currenttrackmetadata val=""><br>    <avtransporturimetadata val=""><br>    <playbackstoragemedium val="NONE"><br>    <recordstoragemedium val="NOT_IMPLEMENTED"><br>    <possibleplaybackstoragemedia val="NONE,NETWORK,UNKNOWN,HDD,CD-DA,DVD-VIDEO"><br>    <possiblerecordstoragemedia val="NOT_IMPLEMENTED"><br>    <currentplaymode val="NORMAL"><br>    <transportplayspeed val="1"><br>    <recordmediumwritestatus val="NOT_IMPLEMENTED"><br>    <currentrecordqualitymode val="NOT_IMPLEMENTED"><br>    <possiblerecordqualitymodes val="NOT_IMPLEMENTED"><br>    <nextavtransporturi val=""><br>    <nextavtransporturimetadata val=""><br>    <relativetimeposition val="0:00:00"><br>    <absolutetimeposition val="NOT_IMPLEMENTED"><br>    <relativecounterposition val="-1"><br>    <absolutecounterposition val="-1"><br>    <currenttransportactions val=""><br>  </currenttransportactions></absolutecounterposition></relativecounterposition></absolutetimeposition></relativetimeposition></nextavtransporturimetadata></nextavtransporturi></possiblerecordqualitymodes></currentrecordqualitymode></recordmediumwritestatus></transportplayspeed></currentplaymode></possiblerecordstoragemedia></possibleplaybackstoragemedia></recordstoragemedium></playbackstoragemedium></avtransporturimetadata></currenttrackmetadata></avtransporturi></currenttrackuri></currentmediaduration></currenttrackduration></currenttrack></numberoftracks></transportstatus></instanceid><br></event>
 
-</li>
-</ol>
-<p>#setAVTransportURI</p>
-<ol>
+<h1 id="setAVTransportURI"><a href="#setAVTransportURI" class="headerlink" title="setAVTransportURI"></a>setAVTransportURI</h1></li>
 <li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="TRANSITIONING"><br>    <numberoftracks val="1"><br>    <currenttrack val="1"><br>    <currenttrackduration val="00:00:00"><br>    <currentmediaduration val="00:00:00"><br>    <currenttransportactions val="Stop"><br>  </currenttransportactions></currentmediaduration></currenttrackduration></currenttrack></numberoftracks></transportstate></instanceid><br></event></li>
 <li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt; <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br>     <transportstate val="STOPPED"><br>     <currenttrackduration val="00:00:00"><br>     <currentmediaduration val="00:00:00"><br>     <currenttrackuri val="http://fdfs.xmcdn.com/group6/M04/83/84/wKgDhFT-9DPRtEzaACc-SIvoxD4124.mp3"><br>     <avtransporturi val="http://fdfs.xmcdn.com/group6/M04/83/84/wKgDhFT-9DPRtEzaACc-SIvoxD4124.mp3"><br>     <currenttrackmetadata val=""><br>     <avtransporturimetadata val=""><br>     <currenttransportactions val="Play, Seek, X_DLNA_SeekTime"><br>   </currenttransportactions></avtransporturimetadata></currenttrackmetadata></avtransporturi></currenttrackuri></currentmediaduration></currenttrackduration></transportstate></instanceid><br> </event></li>
 <li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt; <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br> </instanceid></event></li>
 <li><p>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
  <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br>     <currenttrackduration val="00:05:21"><br>     <currentmediaduration val="00:05:21"><br>     <currenttransportactions val="Play, Seek, X_DLNA_SeekTime"><br>   </currenttransportactions></currentmediaduration></currenttrackduration></instanceid><br> </event>
 
-</li>
-</ol>
-<p>#播放</p>
-<ol>
+<h1 id="播放"><a href="#播放" class="headerlink" title="播放"></a>播放</h1></li>
 <li><p>10:51    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
 <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="PLAYING"><br>    <currenttransportactions val="Pause, Stop, Seek, X_DLNA_SeekTime"><br>  </currenttransportactions></transportstate></instanceid><br></event>
 </li>
@@ -332,8 +326,7 @@
 
 </li>
 </ol>
-<p>#暂停</p>
-<ol>
+<h1 id="暂停"><a href="#暂停" class="headerlink" title="暂停"></a>暂停</h1><ol>
 <li>10:45    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="PAUSED_PLAYBACK"><br>    <currenttransportactions val="Play, Stop, Seek, X_DLNA_SeekTime"><br>  </currenttransportactions></transportstate></instanceid><br></event>
 </li>
 </ol>
@@ -555,7 +548,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#订阅"><span class="nav-number">1.</span> <span class="nav-text">订阅</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#setAVTransportURI"><span class="nav-number">2.</span> <span class="nav-text">setAVTransportURI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#播放"><span class="nav-number">3.</span> <span class="nav-text">播放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#暂停"><span class="nav-number">4.</span> <span class="nav-text">暂停</span></a></li></ol></div>
             
           </div>
         </section>

@@ -246,7 +246,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-29T11:04:01+08:00" content="2016-08-29">
+            <time itemprop="dateCreated" datetime="2016-08-29T11:21:36+08:00" content="2016-08-29">
               2016-08-29
             </time>
           </span>
@@ -309,42 +309,12 @@
 
       
         
-          
-            <p>windows MediaPlayer 订阅AVTransportService 观察setTransportURI、Play、Pause动作产生的log<br>研究分析log来确定dlna播放的逻辑。<br><!--!more--></p>
-<p>#订阅</p>
-<ol>
-<li>10:34    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstatus val="OK"><br>    <numberoftracks val="0"><br>    <currenttrack val="0"><br>    <currenttrackduration val="00:00:00"><br>    <currentmediaduration val="00:00:00"><br>    <currenttrackuri val=""><br>    <avtransporturi val=""><br>    <currenttrackmetadata val=""><br>    <avtransporturimetadata val=""><br>    <playbackstoragemedium val="NONE"><br>    <recordstoragemedium val="NOT_IMPLEMENTED"><br>    <possibleplaybackstoragemedia val="NONE,NETWORK,UNKNOWN,HDD,CD-DA,DVD-VIDEO"><br>    <possiblerecordstoragemedia val="NOT_IMPLEMENTED"><br>    <currentplaymode val="NORMAL"><br>    <transportplayspeed val="1"><br>    <recordmediumwritestatus val="NOT_IMPLEMENTED"><br>    <currentrecordqualitymode val="NOT_IMPLEMENTED"><br>    <possiblerecordqualitymodes val="NOT_IMPLEMENTED"><br>    <nextavtransporturi val=""><br>    <nextavtransporturimetadata val=""><br>    <relativetimeposition val="0:00:00"><br>    <absolutetimeposition val="NOT_IMPLEMENTED"><br>    <relativecounterposition val="-1"><br>    <absolutecounterposition val="-1"><br>    <currenttransportactions val=""><br>  </currenttransportactions></absolutecounterposition></relativecounterposition></absolutetimeposition></relativetimeposition></nextavtransporturimetadata></nextavtransporturi></possiblerecordqualitymodes></currentrecordqualitymode></recordmediumwritestatus></transportplayspeed></currentplaymode></possiblerecordstoragemedia></possibleplaybackstoragemedia></recordstoragemedium></playbackstoragemedium></avtransporturimetadata></currenttrackmetadata></avtransporturi></currenttrackuri></currentmediaduration></currenttrackduration></currenttrack></numberoftracks></transportstatus></instanceid><br></event>
-
-</li>
-</ol>
-<p>#setAVTransportURI</p>
-<ol>
-<li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="TRANSITIONING"><br>    <numberoftracks val="1"><br>    <currenttrack val="1"><br>    <currenttrackduration val="00:00:00"><br>    <currentmediaduration val="00:00:00"><br>    <currenttransportactions val="Stop"><br>  </currenttransportactions></currentmediaduration></currenttrackduration></currenttrack></numberoftracks></transportstate></instanceid><br></event></li>
-<li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt; <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br>     <transportstate val="STOPPED"><br>     <currenttrackduration val="00:00:00"><br>     <currentmediaduration val="00:00:00"><br>     <currenttrackuri val="http://fdfs.xmcdn.com/group6/M04/83/84/wKgDhFT-9DPRtEzaACc-SIvoxD4124.mp3"><br>     <avtransporturi val="http://fdfs.xmcdn.com/group6/M04/83/84/wKgDhFT-9DPRtEzaACc-SIvoxD4124.mp3"><br>     <currenttrackmetadata val=""><br>     <avtransporturimetadata val=""><br>     <currenttransportactions val="Play, Seek, X_DLNA_SeekTime"><br>   </currenttransportactions></avtransporturimetadata></currenttrackmetadata></avtransporturi></currenttrackuri></currentmediaduration></currenttrackduration></transportstate></instanceid><br> </event></li>
-<li>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt; <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br> </instanceid></event></li>
-<li><p>10:48    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br> &lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
- <event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>   <instanceid val="0"><br>     <currenttrackduration val="00:05:21"><br>     <currentmediaduration val="00:05:21"><br>     <currenttransportactions val="Play, Seek, X_DLNA_SeekTime"><br>   </currenttransportactions></currentmediaduration></currenttrackduration></instanceid><br> </event>
-
-</li>
-</ol>
-<p>#播放</p>
-<ol>
-<li><p>10:51    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="PLAYING"><br>    <currenttransportactions val="Pause, Stop, Seek, X_DLNA_SeekTime"><br>  </currenttransportactions></transportstate></instanceid><br></event>
-</li>
-<li><p>10:51    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <currenttrackduration val="00:05:21"><br>    <currentmediaduration val="00:05:21"><br>    <currenttransportactions val="Pause, Stop, Seek, X_DLNA_SeekTime"><br>  </currenttransportactions></currentmediaduration></currenttrackduration></instanceid><br></event>
-
-
-</li>
-</ol>
-<p>#暂停</p>
-<ol>
-<li>10:45    ervin.li (DESKTOP-AN6UGUL : Windows Media Player)/urn:upnp-org:serviceId:AVTransport    LastChange<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"><br>  <instanceid val="0"><br>    <transportstate val="PAUSED_PLAYBACK"><br>    <currenttransportactions val="Play, Stop, Seek, X_DLNA_SeekTime"><br>  </currenttransportactions></transportstate></instanceid><br></event>
-</li>
-</ol>
-
-          
+          <p>windows MediaPlayer 订阅AVTransportService 观察setTransportURI、Play、Pause动作产生的log<br>研究分析log来确定dlna播放的逻辑。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/29/订阅AVTransportService观察日志/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

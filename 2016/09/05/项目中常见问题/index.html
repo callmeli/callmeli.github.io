@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="混淆," />
+  <meta name="keywords" content="项目开发," />
 
 
 
@@ -57,34 +57,16 @@
 
 
 
-<meta name="description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android混淆的使用">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/Android中混淆的使用/index.html">
+<meta property="og:title" content="项目开发中经典问题">
+<meta property="og:url" content="http://yoursite.com/2016/09/05/项目中常见问题/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
-<meta property="og:updated_time" content="2016-08-22T06:21:17.699Z">
+<meta property="og:description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
+<meta property="og:updated_time" content="2016-09-05T01:54:08.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android混淆的使用">
-<meta name="twitter:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="twitter:title" content="项目开发中经典问题">
+<meta name="twitter:description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
 
 
 
@@ -102,7 +84,7 @@
   };
 </script>
 
-  <title> Android混淆的使用 | Ervin's Blog </title>
+  <title> 项目开发中经典问题 | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -248,7 +230,7 @@
             
             
               
-                Android混淆的使用
+                项目开发中经典问题
               
             
           </h1>
@@ -260,8 +242,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:21:17+08:00" content="2016-08-22">
-              2016-08-22
+            <time itemprop="dateCreated" datetime="2016-09-05T09:54:08+08:00" content="2016-09-05">
+              2016-09-05
             </time>
           </span>
 
@@ -274,8 +256,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
+                  <a href="/categories/工作/" itemprop="url" rel="index">
+                    <span itemprop="name">工作</span>
                   </a>
                 </span>
 
@@ -290,8 +272,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/Android中混淆的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Android中混淆的使用/" itemprop="commentsCount"></span>
+                <a href="/2016/09/05/项目中常见问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/05/项目中常见问题/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,7 +283,7 @@
 
           
           
-             <span id="/2016/08/22/Android中混淆的使用/" class="leancloud_visitors" data-flag-title="Android混淆的使用">
+             <span id="/2016/09/05/项目中常见问题/" class="leancloud_visitors" data-flag-title="项目开发中经典问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -322,43 +304,21 @@
       
 
       
-        <p>一、前言<br>一个apk从开始到发布一般过程：</p>
-<ul>
-<li>搭建框架（选择使用的框架，分配包名）</li>
-<li>开始编码（编写布局，逻辑，自测）</li>
-<li>编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）</li>
-<li>测试优化（测试crash和优化性能）</li>
-<li>上线发布<a id="more"></a>
-从蜻蜓fm没有加混淆，导致宙斯和普罗米修斯的代码泄露，就可以看出一个应用混淆的重要性。因此我们为了保证自己的开发成果不会被别人窃取，添加混淆必须的。 所以下面记录一些常用的混淆。<br>二、 使用混淆<br>混淆一般是在项目工程的project.properties中来配置混淆文件的路径，默认的路径是<br>\${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt，${sdk.dir}代表的是sdk所在路径。但是默认混淆是被注销的，如果需要启用默认的混淆就需要把#号去掉。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># This file is automatically generated by Android Tools.</div><div class="line"># Do not modify this file -- YOUR CHANGES WILL BE ERASED!</div><div class="line">#</div><div class="line"># This file must be checked in Version Control Systems.</div><div class="line">#</div><div class="line"># To customize properties used by the Ant build system edit</div><div class="line"># &quot;ant.properties&quot;, and override values to adapt the script to your</div><div class="line"># project structure.</div><div class="line">#</div><div class="line"># To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):</div><div class="line">//也就是这里如果需要启用默认的混淆文件就需要去掉行首的#号</div><div class="line">#proguard.config=$&#123;sdk.dir&#125;/tools/proguard/proguard-android.txt:proguard-project.txt</div><div class="line"># Project target.</div><div class="line">target=android-20</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>三、 自定义混淆文件<br>一般我们在开发中，可能会添加或引用到第三方的开发包或库，所以有些文件是不需要混淆的，这时候可能就需要自定义混淆文件，添加我们自己开发中不需要混淆的部分。一般的做法是使用项目目录中的proguard-project.txt文件</p>
-<p>1、修改项目工程的project.properties中混淆文件配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proguard.config = proguard-project.txt</div></pre></td></tr></table></figure>
-<p>2、在proguard-project.txt中编写混淆</p>
-<h2 id="常用混淆指令"><a href="#常用混淆指令" class="headerlink" title="常用混淆指令"></a>常用混淆指令</h2><p>如果需要自己定义混淆文件，那么常用的一些混淆指令就需要有所了解。</p>
-<ul>
-<li>基本配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 是否使用大小写混合 </div><div class="line">-dontusemixedcaseclassnames  </div><div class="line"></div><div class="line">#如果应用程序引入的有jar包,并且混淆jar包里面的类dont skip nonpublic library classes </div><div class="line">-dontskipnonpubliclibraryclasses class </div><div class="line"></div><div class="line">#混淆时不做预校验  dont preverify </div><div class="line">-dontpreverify </div><div class="line"></div><div class="line">#混淆采用的算法.</div><div class="line">-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* </div><div class="line"></div><div class="line"># 屏蔽警告 ignore warnings </div><div class="line">-ignorewarnings </div><div class="line"></div><div class="line">#设置混淆的压缩比率 0 ~ 7 optimization passes </div><div class="line">-optimizationpasses 5 </div><div class="line"></div><div class="line">#混淆后生产映射文件 map 类名-&gt;转化后类名的映射</div><div class="line">-verbose</div></pre></td></tr></table></figure>
-<ul>
-<li>可选配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#应用的依赖包，如android-support-v4</div><div class="line">-libraryjars class_path </div><div class="line"></div><div class="line">#不混淆某些类</div><div class="line">-keep [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类的成员</div><div class="line">-keepclassmembers [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类及其成员</div><div class="line">-keepclasseswithmembers [,modifier,...]</div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepnames class_specification </div><div class="line"></div><div class="line">#不混淆类的成员名</div><div class="line">-keepclassmembernames class_specification </div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepclasseswithmembernames class_specification </div><div class="line"></div><div class="line">#假设调用不产生任何影响，在proguard代码优化时会将该调用remove掉。如system.out.println#和Log.v等等</div><div class="line">-assumenosideeffects class_specification </div><div class="line"></div><div class="line">#不提示warnning</div><div class="line">-dontwarn [class_filter]</div></pre></td></tr></table></figure>
-<blockquote>
-<p>详细的可选内容：<a href="http://blog.isming.me/2014/05/31/use-proguard/" target="_blank" rel="external">http://blog.isming.me/2014/05/31/use-proguard/</a></p>
-</blockquote>
-<p>四、混淆产生的文件<br>一旦混淆生成，打包发布，可能会遇到一些混淆过的代码报出的异常，那么可能代码报错分析可能就需要用到下面的文件。</p>
-<ol>
-<li><p>mapping.txt<br>表示混淆前后代码的对照表，这个文件非常重要。如果你的代码混淆后会产生bug的话，log提示中是混淆后的代码，希望定位到源代码的话就可以根据mapping.txt反推。<br>每次发布都要保留它方便该版本出现问题时调出日志进行排查，它可以根据版本号或是发布时间命名来保存或是放进代码版本控制中。</p>
-</li>
-<li><p>dump.txt<br>描述apk内所有class文件的内部结构。</p>
-</li>
-<li><p>seeds.txt<br>列出了没有被混淆的类和成员。</p>
-</li>
-<li><p>usage.txt<br>列出了源代码中被删除在apk中不存在的代码。</p>
-</li>
-</ol>
+        <p>昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。<br><a id="more"></a></p>
+<h4 id="cursor未关闭"><a href="#cursor未关闭" class="headerlink" title="cursor未关闭"></a>cursor未关闭</h4><p>这种问题我以为只有面试中才会有，没想到可能一不小心就会发生在身边。一定要记得关闭游标cursor.close()。</p>
+<h4 id="popwindow和dialog的show和dissmiss一定要判断activity是否存活"><a href="#popwindow和dialog的show和dissmiss一定要判断activity是否存活" class="headerlink" title="popwindow和dialog的show和dissmiss一定要判断activity是否存活"></a>popwindow和dialog的show和dissmiss一定要判断activity是否存活</h4><p>如果不判断直接使用的话，可能会导致crash，View not attached to window manager。可以在dismiss之前判断Activity不为null</p>
+<h4 id="UI线程不能处理耗时任务"><a href="#UI线程不能处理耗时任务" class="headerlink" title="UI线程不能处理耗时任务"></a>UI线程不能处理耗时任务</h4><p>这一点都知道，但是如果封装多了，你可能不是特别确定这个线程是ui线程还是非ui线程，所以每当写耗时任务的时候都自己注意下当前线程</p>
+<h4 id="BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务"><a href="#BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务" class="headerlink" title="BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务"></a>BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务</h4><p>新建线程做耗时任务这一点是自己都没有想到的，BroadcastReceiver中onReciver方法时间不能超过10s，否则就会anr，所以不能直接做耗时任务，而如果新建线程做耗时任务的话，这样子如果onReceiver的进程被干掉了，也就是onReciver走完了，那么宿主进程干了，宿主上所有的线程会被回收掉，所以耗时任务也会做不了。这里建议如果有耗时任务使用service。</p>
+<h4 id="BroadcastReceiver中的Context使用要注意"><a href="#BroadcastReceiver中的Context使用要注意" class="headerlink" title="BroadcastReceiver中的Context使用要注意"></a>BroadcastReceiver中的Context使用要注意</h4><p>广播中的context有些方法是没有实现，所以最好是使用application的context</p>
+<h4 id="Handler不应该是activity的非静态匿名内部类"><a href="#Handler不应该是activity的非静态匿名内部类" class="headerlink" title="Handler不应该是activity的非静态匿名内部类"></a>Handler不应该是activity的非静态匿名内部类</h4><p>这种做法以前很多时候会这么干，当时也就没有多想，今天回头看了下这里是会存在内存泄漏的风险。一般Handler在类中以匿名内部类的形式出现，隐式持有外部activity的引用，但是handler的又被Message对象持有(msg.target的对象默认是当前的handler)，如果activity的生命周期结束，但是message还在队列中，可能导致activity不能被回收导致内存泄漏。所以一般都使用静态内部类的加载方式，原因是静态内部类不会持有对外的引用。</p>
+<h4 id="常用的Fragment建议使用show和hide，而不是频繁的new"><a href="#常用的Fragment建议使用show和hide，而不是频繁的new" class="headerlink" title="常用的Fragment建议使用show和hide，而不是频繁的new"></a>常用的Fragment建议使用show和hide，而不是频繁的new</h4><p>页面频繁的新建，页面的一些业务app可能整个生命周期只需要一次，这样频繁的新建回收会导致垃圾产生的量多，gc回收的频率也会增加，这样回收的时间也会加长，还会增加cpu和电量的损耗。</p>
+<h4 id="StringBuffer中append字符串需要判空"><a href="#StringBuffer中append字符串需要判空" class="headerlink" title="StringBuffer中append字符串需要判空"></a>StringBuffer中append字符串需要判空</h4><p>常常使用StringBuffer的append的方法时候不会添加判空，一旦成串发给后台可能就是产生问题。而且最好不要使用append(“name”+”&amp;”)类似这种的，+的效率并没有直接append的效率高。</p>
+<h4 id="慎用try-catch"><a href="#慎用try-catch" class="headerlink" title="慎用try catch"></a>慎用try catch</h4><p>很多时候为了保证代码块的健壮性，添加try catch 过多的trycatch会增加程序的负担，特别是多个逻辑放在一个try中，一旦第一个发生异常，后面的都将获取不到，所以一个try最好只放一个逻辑，只对一个变量try，这样第一个发生出错其他的数据逻辑还能有，比如推送中，后台可能需要用户的token，还需要设备的id，还有设备的sim卡的信息，如果sim卡信息没有，其他两个能获取到也能推送，如果写在一个try中，第一个逻辑就是获取sim卡信息的，一旦出错，所有的都获取不到，这样推送也进行不了了。</p>
+<h4 id="类单一职责的问题"><a href="#类单一职责的问题" class="headerlink" title="类单一职责的问题"></a>类单一职责的问题</h4><p>一个类承担一个职责，不要很多乱七八糟逻辑都在一个里面，比如一个类处理播放的逻辑，你就不应该把下载的逻辑也放在这个里面，这样会导致这个类臃肿，这么多逻辑的高耦合，不符合高内聚，低耦合的设计思想。还有类中的方法也应该单一方法处理单一逻辑这样才能提高方法的复用性，也能提高阅读代码的质量。</p>
+<h4 id="接口定义回调的方法需要三思"><a href="#接口定义回调的方法需要三思" class="headerlink" title="接口定义回调的方法需要三思"></a>接口定义回调的方法需要三思</h4><p>回调方法的个数和意义都要想清楚了再定义，要从全局考虑。不然后面修改起来可能会影响很多逻辑，到时候再修改就会很麻烦。</p>
+<h4 id="资源字符串不要hardcode在代码里面"><a href="#资源字符串不要hardcode在代码里面" class="headerlink" title="资源字符串不要hardcode在代码里面"></a>资源字符串不要hardcode在代码里面</h4><p>不要为了偷懒直接将字符串写在代码中，如果程序需要多语言适配，那么再改起来会很头大。而且这也不符合规范。</p>
+<h4 id="方法参数控制"><a href="#方法参数控制" class="headerlink" title="方法参数控制"></a>方法参数控制</h4><p>如果一个方法的参数超过4个就可以考虑用类来封装，然后把参数传递改为直接传类的引用</p>
+<h4 id="不要再for中做remove操作，会漏删"><a href="#不要再for中做remove操作，会漏删" class="headerlink" title="不要再for中做remove操作，会漏删"></a>不要再for中做remove操作，会漏删</h4><p>for中每次remove都会调用一次arrayCopy的操作，会导致一些元素的索引值变化，但是for循环的int的标志会递增，就可能导致漏删。建议使用迭代器或foreach操作。感兴趣可以看一下arraylist中的remove方法。</p>
 
       
     </div>
@@ -373,7 +333,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/混淆/" rel="tag">#混淆</a>
+            <a href="/tags/项目开发/" rel="tag">#项目开发</a>
           
         </div>
       
@@ -382,16 +342,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/handler机制的深入理解/" rel="next" title="handler机制的深入理解">
-                <i class="fa fa-chevron-left"></i> handler机制的深入理解
+              <a href="/2016/08/29/订阅AVTransportService观察日志/" rel="next" title="订阅AVTransportService观察日志">
+                <i class="fa fa-chevron-left"></i> 订阅AVTransportService观察日志
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/08/22/Java虚拟机/" rel="prev" title="Java虚拟机简介">
-                Java虚拟机简介 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/05/android开发gradle了解/" rel="prev" title="android开发gradle了解">
+                android开发gradle了解 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -407,10 +367,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/Android中混淆的使用/"
-     data-title="Android混淆的使用"
+        <div class="ds-share flat" data-thread-key="2016/09/05/项目中常见问题/"
+     data-title="项目开发中经典问题"
      data-content=""
-     data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+     data-url="http://yoursite.com/2016/09/05/项目中常见问题/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -437,8 +397,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/Android中混淆的使用/"
-           data-title="Android混淆的使用" data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+      <div class="ds-thread" data-thread-key="2016/09/05/项目中常见问题/"
+           data-title="项目开发中经典问题" data-url="http://yoursite.com/2016/09/05/项目中常见问题/">
       </div>
     
   </div>
@@ -581,7 +541,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用混淆指令"><span class="nav-number">1.</span> <span class="nav-text">常用混淆指令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cursor未关闭"><span class="nav-number">1.</span> <span class="nav-text">cursor未关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#popwindow和dialog的show和dissmiss一定要判断activity是否存活"><span class="nav-number">2.</span> <span class="nav-text">popwindow和dialog的show和dissmiss一定要判断activity是否存活</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UI线程不能处理耗时任务"><span class="nav-number">3.</span> <span class="nav-text">UI线程不能处理耗时任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务"><span class="nav-number">4.</span> <span class="nav-text">BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReceiver中的Context使用要注意"><span class="nav-number">5.</span> <span class="nav-text">BroadcastReceiver中的Context使用要注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler不应该是activity的非静态匿名内部类"><span class="nav-number">6.</span> <span class="nav-text">Handler不应该是activity的非静态匿名内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的Fragment建议使用show和hide，而不是频繁的new"><span class="nav-number">7.</span> <span class="nav-text">常用的Fragment建议使用show和hide，而不是频繁的new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StringBuffer中append字符串需要判空"><span class="nav-number">8.</span> <span class="nav-text">StringBuffer中append字符串需要判空</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#慎用try-catch"><span class="nav-number">9.</span> <span class="nav-text">慎用try catch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类单一职责的问题"><span class="nav-number">10.</span> <span class="nav-text">类单一职责的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口定义回调的方法需要三思"><span class="nav-number">11.</span> <span class="nav-text">接口定义回调的方法需要三思</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源字符串不要hardcode在代码里面"><span class="nav-number">12.</span> <span class="nav-text">资源字符串不要hardcode在代码里面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法参数控制"><span class="nav-number">13.</span> <span class="nav-text">方法参数控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不要再for中做remove操作，会漏删"><span class="nav-number">14.</span> <span class="nav-text">不要再for中做remove操作，会漏删</span></a></li></ol></div>
             
           </div>
         </section>

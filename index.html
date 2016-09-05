@@ -246,7 +246,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-05T16:33:10+08:00" content="2016-09-05">
+            <time itemprop="dateCreated" datetime="2016-09-05T16:56:47+08:00" content="2016-09-05">
               2016-09-05
             </time>
           </span>
@@ -309,117 +309,12 @@
 
       
         
-          
-            <pre><code>使用androidstudio构建项目不得不需要对gradle了解，gradle是基于jvm，基于DSL语法的自动化构建工具。是google引入，替换ant和maven的新工具，其依赖兼容maven和ivy。gradle相比ant，扩展性更好，灵活性更高。 
-</code></pre><h4 id="gradle模型"><a href="#gradle模型" class="headerlink" title="gradle模型"></a>gradle模型</h4><p> gradle模型中两个重要的概念：project和module，以往eclipse的ant模型，workspace代表的项目工程空间，project代表的项目。而在gradle中project代表的是一整个工程，module代表是一个应用或一个库。</p>
-<h4 id="gradle结构"><a href="#gradle结构" class="headerlink" title="gradle结构"></a>gradle结构</h4><p> <code>这里只说明.gradle文件，其他的文件就不标识出来了</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">    project</div><div class="line">        |</div><div class="line">        |—— —— module(app)  </div><div class="line">        |            |</div><div class="line">        |            |  </div><div class="line">        |           build.gradle </div><div class="line">        build.gradle </div><div class="line">        |</div><div class="line">        settings.gradle</div><div class="line">```    </div><div class="line"> - module下的build.gradle </div><div class="line">   app或库的相关配置在此配置</div><div class="line"> - project下的build.gradle </div><div class="line">  1、工程需要的gradle工具的引用版本、及下载某些引用库的仓库。2、工程所有module的相关通用配置</div></pre></td></tr></table></figure></p>
-<p>// Top-level build file where you can add configuration options common to all sub-projects/modules.<br>buildscript {<br>    repositories {<br>        jcenter()<br>    }<br>    dependencies {<br>        classpath ‘com.android.tools.build:gradle:2.1.0’<br>        // NOTE: Do not place your application dependencies here; they belong<br>        // in the individual module build.gradle files<br>    }<br>}<br>allprojects {<br>    repositories {<br>        jcenter()<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- project下的settings.gradle</div><div class="line">  项目所有的module需要在此声明</div></pre></td></tr></table></figure></p>
-<p>   include ‘:app’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### gradle配置</div><div class="line"> 一般使用中指针对app的gradle进行修改配置，所以这里对gradle的相关配置做配置说明。如果这些配置记不住，没关系，androidstudio提供了非常好用的图形界面。</div><div class="line"> `选中module——&gt;菜单File——&gt;project struture` 可以看到项目配置、sdk配置及module的各项配置。</div></pre></td></tr></table></figure></p>
-<p>apply plugin: ‘com.android.application’<br>//申明这个工程的属性是安卓运行app<br>//而不是’com.android.library’ 库工程。</p>
-<p>def buildTime = new Date().format(“yyMMddHHmmss”)<br><strong>编译需要的引用配置<br>dependencies {<br>    //jar引用，fileTree(dir:’libs’,include：’<em>.jar’)所有文件目录树下的libs的jar的引用，<br>    // 剔除</em>v4的jar引用exclude：’<em>v4.jar’<br>    compile fileTree(dir: ‘libs’, include: ‘</em>.jar’, exclude: ‘*v4.jar’)<br>    //工程引用<br>    compile project(‘:SmartDevice:WiFiControlLibrary’)<br>    compile project(‘:SmartDevice:social_sdk_library_project’)<br>}
-</strong>工程的相关配置<br>android {<br>    //编译的sdk版本<br>    compileSdkVersion 23<br>    //编译工具的版本<br>    buildToolsVersion “23.0.2”<br>    //解决sdk中org.apache.http.*相关包被剔除的问题<br>    useLibrary ‘org.apache.http.legacy’<br>    //关闭Android Studio的PNG合法性检查的,有些.9的图片可能会出现合法性的问题。用这个可以解决<br>    aaptOptions.cruncherEnabled = false<br>    aaptOptions.useNewCruncher = false</p>
-<pre><code>*java编译相关配置
-compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_7
-    targetCompatibility JavaVersion.VERSION_1_7
-}
-*签名，签名可以防止app被恶意串改，只有签名相同的程序才能升级替换安装
-signingConfigs {
-    //正式包需要的keystore相关信息
-    myConfig {
-        //keystore路径
-        storeFile file(&quot;build-files/xxxxx.keystore&quot;)
-        //keystore密码
-        storePassword &quot;222222&quot;
-        //keystore别名
-        keyAlias &quot;xxxxxxx&quot;
-        //别名的密码
-        keyPassword &quot;3333333&quot;
-    }
-    //调试包keystore的配置
-    debugConfig {
-        storeFile file(&quot;build-files/debug.keystore&quot;)
-        storePassword &quot;android&quot;
-        keyAlias &quot;androiddebugkey&quot;
-        keyPassword &quot;android&quot;
-    }
-}
-*渠道配置，defaultConfig原生配置，可以多渠道 类似flavor_wandoujia {}
-defaultConfig {
-    applicationId &quot;com.xxxxx.xxxxx.xxxxxx&quot;
-    minSdkVersion 15
-    targetSdkVersion 23
-    versionCode 1
-    versionName &quot;1.0&quot;
-    //支持multidex 解决65536爆包问题
-    //multiDexEnabled true
-}
-*build编译app的时候的配置，一般这里混淆的使用
-buildTypes {
-    debug {
-        signingConfig signingConfigs.debugConfig
-        // 显示Log
-        buildConfigField &quot;boolean&quot;, &quot;LOG_DEBUG&quot;, &quot;true&quot;
-        minifyEnabled false
-        zipAlignEnabled false
-        shrinkResources false
-    }
-    release {
-        signingConfig signingConfigs.myConfig
-        zipAlignEnabled true
-        //是否混淆
-        minifyEnabled true
-        // 移除无用的resource文件,开启这个会报错，待解决
-        //  shrinkResources true
-        proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-project.txt&apos;
-    }
-
-}
-*编译的 lint 开关
-lintOptions {
-    // set to true to turn off analysis progress reporting by lint
-    quiet true
-    // if true, stop the gradle build if errors are found
-    abortOnError false
-    // if true, only report errors
-    ignoreWarnings true
-    checkAllWarnings false
-    checkReleaseBuilds false
-    // lintConfig file(&quot;lint.xml&quot;)
-}
-*为所有的子项目设置一些通用配置
-subprojects {
-   //配置一个新的gradle一样
-}
-*Eclipse 中迁移过来的代码都带这个设置，一般做指定目录
-sourceSets {
-    main {
-        manifest.srcFile &apos;AndroidManifest.xml&apos;
-        java.srcDirs = [&apos;src&apos;]
-        resources.srcDirs = [&apos;src&apos;]
-        aidl.srcDirs = [&apos;src&apos;]
-        renderscript.srcDirs = [&apos;src&apos;]
-        res.srcDirs = [&apos;res&apos;]
-        assets.srcDirs = [&apos;assets&apos;]
-        //so库的引用
-        jniLibs.srcDirs = [&apos;libs&apos;]
-    }
-    // Move the tests to tests/java, tests/res, etc...
-    instrumentTest.setRoot(&apos;tests&apos;)
-    // Move the build types to build-types/&lt;type&gt;
-    // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-    // This moves them out of them default location under src/&lt;type&gt;/... which would
-    // conflict with src/ being used by the main source set.
-    // Adding new build types or product flavors should be accompanied
-    // by a similar customization.
-    debug.setRoot(&apos;build-types/debug&apos;)
-    release.setRoot(&apos;build-types/release&apos;)
-}
-</code></pre><p>}</p>
-<p>```</p>
-<p>后续在详细介绍多渠道打包和gradle task任务、以及gradle使用groovy语言。</p>
-
-          
+          <p> 使用androidstudio构建项目不得不需要对gradle了解，gradle是基于jvm，基于DSL语法的自动化构建工具。是google引入，替换ant和maven的新工具，其依赖兼容maven和ivy。gradle相比ant，扩展性更好，灵活性更高。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/05/android开发gradle了解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

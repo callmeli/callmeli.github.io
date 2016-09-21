@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="NanoHttpd," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -57,19 +57,15 @@
 
 
 
-<meta name="description" content="很荣幸在工作之中能够接触到这么强大的开源工具，不得不说nanohttpd十分强大的一个开源项目，理解这
-个类让我对http、socket、server都有了新的认知。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="NanoHttpd">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/nanohttpd/index.html">
+<meta name="description" content="一只喜马拉雅山上的野生猿">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ervin's Blog">
+<meta property="og:url" content="http://yoursite.com/categories/android/page/2/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="很荣幸在工作之中能够接触到这么强大的开源工具，不得不说nanohttpd十分强大的一个开源项目，理解这
-个类让我对http、socket、server都有了新的认知。">
-<meta property="og:updated_time" content="2016-08-22T06:04:44.528Z">
+<meta property="og:description" content="一只喜马拉雅山上的野生猿">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NanoHttpd">
-<meta name="twitter:description" content="很荣幸在工作之中能够接触到这么强大的开源工具，不得不说nanohttpd十分强大的一个开源项目，理解这
-个类让我对http、socket、server都有了新的认知。">
+<meta name="twitter:title" content="Ervin's Blog">
+<meta name="twitter:description" content="一只喜马拉雅山上的野生猿">
 
 
 
@@ -87,7 +83,7 @@
   };
 </script>
 
-  <title> NanoHttpd | Ervin's Blog </title>
+  <title> 分类: android | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -114,7 +110,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -212,185 +208,51 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                NanoHttpd
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:04:44+08:00" content="2016-08-22">
-              2016-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/22/nanohttpd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/nanohttpd/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/22/nanohttpd/" class="leancloud_visitors" data-flag-title="NanoHttpd">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <pre><code>很荣幸在工作之中能够接触到这么强大的开源工具，不得不说nanohttpd十分强大的一个开源项目，理解这
-个类让我对http、socket、server都有了新的认知。
-</code></pre> <a id="more"></a>
-<h1 id="1、nanohttpd-轻量的httpserver"><a href="#1、nanohttpd-轻量的httpserver" class="headerlink" title="1、nanohttpd 轻量的httpserver"></a>1、nanohttpd 轻量的httpserver</h1><p> nanohttpd 开源地址</p>
-<blockquote>
-<p><a href="https://github.com/NanoHttpd/nanohttpd" target="_blank" rel="external">https://github.com/NanoHttpd/nanohttpd</a></p>
-</blockquote>
-<hr>
-<h1 id="2、nanohttpd中HttpServer"><a href="#2、nanohttpd中HttpServer" class="headerlink" title="2、nanohttpd中HttpServer"></a>2、nanohttpd中HttpServer</h1><p> 由于我只用到了nanohttpd中的HttpServer类，HttpServer这个类就能够建立一个简单的httpserver，但如果需要其他处理就需要在这个类的基础上添加其他的功能。而我也是在httpserver基础上改进的所以也就只粗略的讲讲它的内容</p>
-<p>关键字：HTTPSession、ServerSocket、Thread、Response、File</p>
-<pre><code>HttpServer通过端口号创建ServerSocket，然后开启线程去ServerSocket中不停的去获取客户端soket传递的socket。
-
-最后通过访问的报文返回相对的Response，Response即http的访问响应，通过socket的outputstream以io流的形式把response的报文返回给客户端。
-
- 当然其中也包含对文件的报文的处理，和异常处理的情况我也就不展开了。如果有兴趣可以自己去看看这个类。
-</code></pre>
-      
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        android
+        <small>分类</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-      
-    </div>
+            <a class="post-title-link" href="/2016/08/22/基于httpclient网络框架库在android 6.0sdk找不到包解决方案/" itemprop="url">
+              
+                <span itemprop="name">基于httpclient网络框架库在android 6.0sdk找不到包解决方案</span>
+              
+            </a>
+        
+      </h1>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/NanoHttpd/" rel="tag">#NanoHttpd</a>
-          
-        </div>
-      
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-08-22T13:41:21+08:00"
+              content="2016-08-22" >
+          08-22
+        </time>
+      </div>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/08/22/关于锁屏和回到桌面的activity生命周期/" rel="next" title="关于锁屏和回到桌面的activity生命周期">
-                <i class="fa fa-chevron-left"></i> 关于锁屏和回到桌面的activity生命周期
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/handler机制的深入理解/" rel="prev" title="handler机制的深入理解">
-                handler机制的深入理解 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2016/08/22/nanohttpd/"
-     data-title="NanoHttpd"
-     data-content=""
-     data-url="http://yoursite.com/2016/08/22/nanohttpd/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/android/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/categories/android/">1</a><span class="page-number current">2</span>
+  </nav>
 
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
 
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
-    </div>
-  </div>
 
 
           </div>
@@ -398,14 +260,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/08/22/nanohttpd/"
-           data-title="NanoHttpd" data-url="http://yoursite.com/2016/08/22/nanohttpd/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -425,17 +279,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
@@ -538,17 +383,6 @@
       </section>
 
       
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、nanohttpd-轻量的httpserver"><span class="nav-number">1.</span> <span class="nav-text">1、nanohttpd 轻量的httpserver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、nanohttpd中HttpServer"><span class="nav-number">2.</span> <span class="nav-text">2、nanohttpd中HttpServer</span></a></li></ol></div>
-            
-          </div>
-        </section>
-      
 
     </div>
   </aside>
@@ -632,10 +466,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
-
-
 
   
 

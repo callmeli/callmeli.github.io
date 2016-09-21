@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gradle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="上一篇AndroidStudio使用Gradle-基础篇还留下了gradle一些比较实用的点没有介绍，这里介绍下其他细节。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AndroidStudio使用Gradle-高级篇">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/androidstudio使用Gradle高级篇/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="上一篇AndroidStudio使用Gradle-基础篇还留下了gradle一些比较实用的点没有介绍，这里介绍下其他细节。">
+<meta property="og:image" content="http://img.blog.csdn.net/20160920212321324">
+<meta property="og:image" content="http://img.blog.csdn.net/20160920212234518">
+<meta property="og:image" content="http://img.blog.csdn.net/20160920212246777">
+<meta property="og:updated_time" content="2016-09-21T03:12:20.203Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AndroidStudio使用Gradle-高级篇">
+<meta name="twitter:description" content="上一篇AndroidStudio使用Gradle-基础篇还留下了gradle一些比较实用的点没有介绍，这里介绍下其他细节。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160920212321324">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> AndroidStudio使用Gradle-高级篇 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s6.cnzz.com/stat.php?id=1260194082&web_id=1260194082" type="text/javascript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AndroidStudio使用Gradle-高级篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T16:11:23+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/19/androidstudio使用Gradle高级篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/19/androidstudio使用Gradle高级篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/19/androidstudio使用Gradle高级篇/" class="leancloud_visitors" data-flag-title="AndroidStudio使用Gradle-高级篇">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇<a href="https://callmeli.github.io/2016/09/05/androidstudio%E4%BD%BF%E7%94%A8Gradle%E5%9F%BA%E7%A1%80%E7%AF%87/#more" target="_blank" rel="external">AndroidStudio使用Gradle-基础篇</a>还留下了gradle一些比较实用的点没有介绍，这里介绍下其他细节。<br><a id="more"></a></p>
+<h4 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h4><ul>
+<li>Gradle Plugin for Android 类参考<br> <a href="http://dcow.io/android-gradle-plugin-docs/overview-summary.html" target="_blank" rel="external">http://dcow.io/android-gradle-plugin-docs/overview-summary.html</a></li>
+<li>android Gradle build-system 源码<br> <a href="https://android.googlesource.com/platform/tools/base/+/gradle_2.0.0/build-system/" target="_blank" rel="external">https://android.googlesource.com/platform/tools/base/+/gradle_2.0.0/build-system/</a></li>
+</ul>
+<h4 id="多渠道打包"><a href="#多渠道打包" class="headerlink" title="多渠道打包"></a>多渠道打包</h4><p>安卓的应用市场，不像苹果那样只有一个appstore，自从google被墙以后，国内的应用市场风生水起，应用市场是一个很大的流量入口，只要站在风口，猪也能飞起来。流量就是风。当下国内做的比较好的应用市场，有豌豆荚，360（安全卫士绑定），百度（搜索绑定），应用宝（QQ绑定），后三者都是有点流氓的做法。为了统计不同应用市场的相关下载使用数据，所以多渠道成为一种必然。</p>
+<p>1、配置AndroidManifext.xml<br>这里配置的目的，可以通过javacode找到Metadata配置的渠道值。目前友盟统计是国内现阶段应用分析做的比较好的。所以这里也贴下友盟的配置，当然有后台的自己统计也行，一般做法，就是在application的oncreate的时候可以通过packageInfo读取设定的相关配置上传服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//UMENG_CHANNEL是文档指定配置渠道名的字段，</div><div class="line">//$&#123;UMENG_CHANNEL_VALUE&#125;是占位符，在后面gradle中指定相关内容</div><div class="line">&lt;meta-data</div><div class="line">   android:name=&quot;UMENG_CHANNEL&quot;</div><div class="line">   android:value=&quot;$&#123;UMENG_CHANNEL_VALUE&#125;&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>2、 在app的gradle中添加渠道配置可以敲代码直接添加，当然也可以通过配置工具project structure进行配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">android  &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        //豌豆荚的渠道配置</div><div class="line">        wandoujia&#123;</div><div class="line">            //一些相关配置</div><div class="line">            minSdkVersion 15</div><div class="line">            //此id可以不同渠道号不同</div><div class="line">            applicationId &apos;com.myapplication.app&apos;</div><div class="line">            proguardFile &apos;proguard-project.txt&apos;</div><div class="line">            targetSdkVersion 23</div><div class="line">            versionCode 1000000</div><div class="line">            versionName &apos;1.0.0&apos;</div><div class="line">        &#125;</div><div class="line">        yingyongbao&#123;</div><div class="line">            //同上</div><div class="line">        &#125;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3、 将gradle配置值给AndroidManifext.xml中的meta-data占位符<code>${umeng_channel_value}</code><br>productFlavors.each是对所有渠道的一个遍历,括号里面的内容是一个闭包，flavor代表参数，也就是遍历的渠道，这里的manifestPlaceholders字面理解就是manifest中的占位符。很遗憾找了很久gradle的源码，仅仅只看到了，manifestPlaceholders是ProductFlavor父类BaseConfigImpl的一个map类型的成员变量，目前的作用是[key,value]中的key能替换在menifest中的占位符${key}，但必须名称一样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android  &#123;</div><div class="line">   productFlavors &#123;</div><div class="line">    //同上</div><div class="line">   &#125;</div><div class="line">   productFlavors.each &#123;</div><div class="line">          flavor -&gt; flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: flavor.name]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4、 执行打包<br>打开as下面的终端，输入打包命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradlew assemblerelease</div></pre></td></tr></table></figure></p>
+<h4 id="task任务"><a href="#task任务" class="headerlink" title="task任务"></a>task任务</h4><p>gradle的一块大的组成，task任务。build.gradle是构建脚本文件，当运行gradle命令的时候会从当前目录查找build.gradle文件来执行构建。所以我们可以在gradle添加相关的task，来定义任务。可以通过as面板的右上角那个Gradle点进去查看tasks。如下图所示<br><img src="http://img.blog.csdn.net/20160920212321324" alt="这里写图片描述"></p>
+<h5 id="常用task"><a href="#常用task" class="headerlink" title="常用task"></a>常用task</h5><ol>
+<li>assemble<br>assemble任务通常用来打包apk,但不运行单元测试，一般在命令行中输入 gradle assembleDebug,如果是多渠道，可以直接加渠道名，如assembleYingyongbao</li>
+<li>check<br>check任务包含了项目中所有验证相关的任务，比如运行测试的任务</li>
+<li>build<br>build任务包含了check和assemble，也就是编译输出</li>
+<li>clean<br>clean任务会删除build目录，移除所有构建的文件</li>
+<li>deviceCheck<br>连接设备并运行检查</li>
+</ol>
+<h5 id="自定task"><a href="#自定task" class="headerlink" title="自定task"></a>自定task</h5><ol>
+<li><p>在gradle中编写代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">task sayhello &lt;&lt; &#123;</div><div class="line">       println &apos;Hello world!&apos;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过命令行调用代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//q 是 quiet 的简写，意思是要安静、干净的输出。如果不加 -q 则会输出日志</div><div class="line">gradle -q sayhello</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看项目的所有task任务信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gradle tasks //本地安装gradle可以直接使用gradle命令</div><div class="line">gradlew tasks //本地未安装可以项目自带的gradlew命令</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="gradle中使用groovy脚本"><a href="#gradle中使用groovy脚本" class="headerlink" title="gradle中使用groovy脚本"></a>gradle中使用groovy脚本</h4><p>gradle是基于groovy语言的，所以能够在gradle中能够使用groovy语言，特别是在build.gradle通过使用groovy来添加相关的处理逻辑。如批量修改应用名称.<br>这里有篇帖子写深入理解Gradle里面有讲Groovy的语法等待很多细节内容，感兴趣的可以看看<a href="http://www.infoq.com/cn/articles/android-in-depth-gradle/" target="_blank" rel="external">深入理解Gradle</a>,这篇文章很详细，当然如果有兴趣也能自建gradle文件，写一个工具脚本，然后通过apply引入。但是这里只对Variants操作tasks相关的操作简单介绍，详细的建议去看博客。<br><code>如果还想深入了解的gradle可以参考极客学院的文档</code><a href="http://wiki.jikexueyuan.com/project/gradle-2-user-guide/" target="_blank" rel="external">Gradle用户指南</a></p>
+<h5 id="Variants种类"><a href="#Variants种类" class="headerlink" title="Variants种类"></a>Variants种类</h5><ul>
+<li>applicationVariants（只适用于app plugin，也就是安装包的gradle中使用）</li>
+<li>libraryVariants（只适用于library plugin，也就是库工程的gradle中使用）</li>
+<li>testVariants（都适用，但由于和测试相关目前接触很少）</li>
+</ul>
+<h5 id="Variants的属性介绍"><a href="#Variants的属性介绍" class="headerlink" title="Variants的属性介绍"></a>Variants的属性介绍</h5><p><img src="http://img.blog.csdn.net/20160920212234518" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20160920212246777" alt="这里写图片描述"></p>
+<h5 id="applicationVariants常用场景"><a href="#applicationVariants常用场景" class="headerlink" title="applicationVariants常用场景"></a>applicationVariants常用场景</h5><p>更改release输出的名称<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">//groovy中def 定义方法和变量都能用def define，每句语句可以省略 分号;</div><div class="line">def buildTime() &#123;</div><div class="line">    def date = new Date()</div><div class="line">    def formattedDate = date.format(&apos;yyyyMMdd&apos;)</div><div class="line">    return formattedDate</div><div class="line">&#125;</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">           /****</div><div class="line">            *通过类参考和部分源码个人感觉applicationVariant是</div><div class="line">            *ApplicationVariantImpl可以通过反射调用类中的相关信息，实际上数据保存</div><div class="line">            *ApplicationVariantImpl中的ApplicationVariantData中，</div><div class="line">            *ApplicationVariantImpl实现的是BseVariant接口，所以BaseVariant接口中</div><div class="line">            *的getXXX方法我们都应该可以通过直接variant.XXX获取到相应的值。</div><div class="line">           **/</div><div class="line">            //each就是一个groovy中的遍历方法，后面&#123;&#125;中是一个闭包，-&gt;</div><div class="line">            //前面的是传入参数，变种variant，variant</div><div class="line">            applicationVariants.each &#123; variant -&gt;</div><div class="line">            //Returns the variant outputs. There should always be at least one </div><div class="line">            //output.这个是BaseVariant方法中getOutputs()的解释。</div><div class="line">            //遍历这个输出，app的输出肯定有apk</div><div class="line">                variant.outputs.each &#123; output -&gt;</div><div class="line">                    if (output.outputFile != null &amp;&amp; output.outputFile.name.endsWith(&apos;.apk&apos;)</div><div class="line">                        &amp;&amp;&apos;release&apos;.equals(variant.buildType.name)) &#123;</div><div class="line">                       //将输出的apk名称更改</div><div class="line">                        def apkFile = new File(</div><div class="line">                                output.outputFile.getParent(),</div><div class="line">    &quot;app_$&#123;variant.flavorName&#125;_v$&#123;variant.versionName&#125;_$&#123;buildTime()&#125;.apk&quot;)</div><div class="line">                        output.outputFile = apkFile</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gradle/" rel="tag">#gradle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/05/androidstudio使用Gradle基础篇/" rel="next" title="AndroidStudio使用Gradle-基础篇">
+                <i class="fa fa-chevron-left"></i> AndroidStudio使用Gradle-基础篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/19/androidstudio使用Gradle高级篇/"
+     data-title="AndroidStudio使用Gradle-高级篇"
+     data-content=""
+     data-url="http://yoursite.com/2016/09/19/androidstudio使用Gradle高级篇/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/19/androidstudio使用Gradle高级篇/"
+           data-title="AndroidStudio使用Gradle-高级篇" data-url="http://yoursite.com/2016/09/19/androidstudio使用Gradle高级篇/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description">一只喜马拉雅山上的野生猿</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">Lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关资料"><span class="nav-number">1.</span> <span class="nav-text">相关资料</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多渠道打包"><span class="nav-number">2.</span> <span class="nav-text">多渠道打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#task任务"><span class="nav-number">3.</span> <span class="nav-text">task任务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#常用task"><span class="nav-number">3.1.</span> <span class="nav-text">常用task</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定task"><span class="nav-number">3.2.</span> <span class="nav-text">自定task</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gradle中使用groovy脚本"><span class="nav-number">4.</span> <span class="nav-text">gradle中使用groovy脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Variants种类"><span class="nav-number">4.1.</span> <span class="nav-text">Variants种类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Variants的属性介绍"><span class="nav-number">4.2.</span> <span class="nav-text">Variants的属性介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#applicationVariants常用场景"><span class="nav-number">4.3.</span> <span class="nav-text">applicationVariants常用场景</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("TFcLIBHC0vprDDlMV0mxdUqK-gzGzoHsz", "Y225wDwPr0kmCtMFLey2WNjS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="fragment," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="一、fragment简介了解fragment基本了解这三个关键词：
+求同fragment必须依托于activity，所以生命周期直接受到宿主activity的影响，一个宿主可以管理加载多个fragment。就相当于寄生一样的概念，宿主生则寄生者生，宿主死则寄生者亡。
+存异fragment可以作为activitylayout中的一部分，fragment也能定义自己的布局，当然fragment是否需要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fragment基础篇">
+<meta property="og:url" content="http://yoursite.com/2016/09/22/fragment基础篇/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="一、fragment简介了解fragment基本了解这三个关键词：
+求同fragment必须依托于activity，所以生命周期直接受到宿主activity的影响，一个宿主可以管理加载多个fragment。就相当于寄生一样的概念，宿主生则寄生者生，宿主死则寄生者亡。
+存异fragment可以作为activitylayout中的一部分，fragment也能定义自己的布局，当然fragment是否需要">
+<meta property="og:image" content="http://img.blog.csdn.net/20160922100811802">
+<meta property="og:image" content="http://img.blog.csdn.net/20160922102236090">
+<meta property="og:updated_time" content="2016-09-22T12:54:49.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fragment基础篇">
+<meta name="twitter:description" content="一、fragment简介了解fragment基本了解这三个关键词：
+求同fragment必须依托于activity，所以生命周期直接受到宿主activity的影响，一个宿主可以管理加载多个fragment。就相当于寄生一样的概念，宿主生则寄生者生，宿主死则寄生者亡。
+存异fragment可以作为activitylayout中的一部分，fragment也能定义自己的布局，当然fragment是否需要">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160922100811802">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> fragment基础篇 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s6.cnzz.com/stat.php?id=1260194082&web_id=1260194082" type="text/javascript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                fragment基础篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-22T09:58:58+08:00" content="2016-09-22">
+              2016-09-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/22/fragment基础篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/22/fragment基础篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/22/fragment基础篇/" class="leancloud_visitors" data-flag-title="fragment基础篇">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、fragment简介"><a href="#一、fragment简介" class="headerlink" title="一、fragment简介"></a>一、fragment简介</h3><p>了解fragment基本了解这三个关键词：</p>
+<h4 id="求同"><a href="#求同" class="headerlink" title="求同"></a>求同</h4><p>fragment必须依托于activity，所以生命周期直接受到宿主activity的影响，一个宿主可以管理加载多个fragment。就相当于寄生一样的概念，宿主生则寄生者生，宿主死则寄生者亡。</p>
+<h4 id="存异"><a href="#存异" class="headerlink" title="存异"></a>存异</h4><p>fragment可以作为activitylayout中的一部分，fragment也能定义自己的布局，当然fragment是否需要展现给用户，都是可以自己定义的。</p>
+<h4 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h4><p>目前接触到的项目中，fragment比起activity的使用频率更高，很多时候都采用单activity宿主，多fragment的结构。这样做的好处：1. 这样比多个activity更省内存.2. 一个activiy多个fragment能有效解耦.activity承载的逻辑可以更少更清晰，其他对应的逻辑业务可以放到相对的fragment中.3. fragment有和activity一样具备ui的处理能力，也具有和宿主activity绑定的生命周期.</p>
+<p>###二、fragment生命周期<br>生命周期是一个很重要的东西，了解一个类的生命周期，能很轻松的决定什么时间段该干什么活，不该干什么活，有些活能不能在这里干。只有对fragment的生命周期有所掌握，才能运用自如。</p>
+<p>####生命周期介绍<br>下面是来源于android官网的生命周期图：<br><img src="http://img.blog.csdn.net/20160922100811802" alt="这里写图片描述"></p>
+<ul>
+<li><p>onAttach(Context context)<br> onAttach调用是在activity的oncreate方法中，这里的context是activity，看源码传递的都是activity。</p>
+</li>
+<li><p>onCreate(Bundle savedInstanceState)<br>这里的savedInstanceState和activity的oncreate的bundle类似，即fragment在回收之前保存的一些状态值。</p>
+</li>
+<li><p>onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)<br>inflater，container，savedInstancestate都是fragmentManager中传入的，inflater能够将一个布局文件xml加载为一个view，container是fragment要插入的父布局，一般来着activity的布局。savedInstancestate是上一个被回收activefragment保存的数据，可能为空。oncreateview的作用就是加载fragment的布局到activity中，当然如果你这个fragment没有任何的view，也可以返回null。  </p>
+</li>
+<li><p>onActivityCreated(Bundle savedInstanceState)<br>前面这4个方法都在activity的onCreate()中</p>
+</li>
+<li><p>onStart()<br>当activity调用onstart的时候会通过fragmentManager中的dispatchStart分发，调用其中fragment的onstart，所以和activity一样，当fragment onstart可见不可操作。</p>
+</li>
+<li><p>onResume()<br>同上dispatchResume分发调用fragment的onresume方法，fragment可见可操作。</p>
+</li>
+<li><p>onPause()<br>同上dispatchPause分发调用fragment的onpause方法，fragment从RESUMED恢复到STARTED的状态，fragment可见不可操作。</p>
+</li>
+<li><p>onStop()<br>同上dispatchStop分发调用fragment的onstop方法，fragment的最后状态变为ACTIVITY_CREATED，不可见且不可操作，同时如果activity在内存缺少的时候被回收，那么fragment也不能幸免。</p>
+</li>
+<li><p>onDestroyView()<br>在onstop之后ondestroy之前被调用，状态回归CREATED，当状态变为CREATED之后，但还没有被宿主移除。</p>
+</li>
+<li><p>onDestroy()</p>
+</li>
+<li>onDetach()<br>分发状态，ondestroy走完就接着执行onDetach。</li>
+</ul>
+<p><code>下一篇帖子会对生命周期做详细源码分析</code></p>
+<p>####activity生命周期的关系<br>贴一张官网的图，可以先了解。至于为什么，<code>下一篇通过源码详细分析O_O</code><br><img src="http://img.blog.csdn.net/20160922102236090" alt="这里写图片描述"></p>
+<p>###三、fragment使用<br>在使用之前需要了解fragment是怎么区分身份标识的。通过Tag和Id。fragment类中有一个mTag的成员变量和一个mFragmentId成员变量，mFragmentId是非必须指定的，默认是加载的布局layout的id，当然也可以在layout中通过android:id指定其id，而mTag是添加是给定的一个String类型的tag，可以用来区分不同的fragment。即：</p>
+<ul>
+<li>Tag mTag </li>
+<li>Id mFragmentId<br>FragmentManager提供了findFragmentById和findFragmentByTag来查找对应的唯一fragment,所以这个点需要在使用之前有所了解。使用fragment的方式一般有两种：<br>####一、直接在布局中添加fragment<br>android:name属性布局需要实例化的类，android:id属性提供唯一Id，即:mFragmentId，android:tag属性唯一字符串mTag。</li>
+</ul>
+<p>1、 MainActivity中的布局添加fragment的布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line">    &lt;fragment</div><div class="line">	    android:name=&quot;com.example.ervinli.demo.BaseFragment&quot;</div><div class="line">        android:id=&quot;@+id/fragment_base&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;/&gt;</div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>2、fragment的需要实现onCreateView的方法加载布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class BaseFragment extends android.app.Fragment &#123;</div><div class="line">    @Override</div><div class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container,</div><div class="line">                             Bundle savedInstanceState) &#123;</div><div class="line">        return inflater.inflate(R.layout.fragment_base, container, false);</div><div class="line">    &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>3、R.layout.fragment_base布局文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">             xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">             android:layout_width=&quot;match_parent&quot;</div><div class="line">             android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;TextView</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:text=&quot;@string/hello_blank_fragment&quot;/&gt;</div><div class="line"></div><div class="line">&lt;/FrameLayout&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="二、通过FragmentManager和FragmentTransaction动态添加替换"><a href="#二、通过FragmentManager和FragmentTransaction动态添加替换" class="headerlink" title="二、通过FragmentManager和FragmentTransaction动态添加替换"></a>二、通过FragmentManager和FragmentTransaction动态添加替换</h4><p>如果加载布局的id！=0，那么mFragmentId就是布局的id，如果调用用FragmentTransaction的重载方法add(int containerViewId, Fragment fragment, String tag) 那么这个参数tag，不为空那么就是mTag。<br>1、MainActivity中的布局添加布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;LinearLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    android:orientation=&quot;vertical&quot;&gt;</div><div class="line"></div><div class="line">    &lt;FrameLayout</div><div class="line">        android:id=&quot;@+id/fragment_container&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;/&gt;</div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>2、MainActivity中添加逻辑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends Activity &#123;</div><div class="line">    private FragmentTransaction mFragmentTransaction;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        mFragmentTransaction = getFragmentManager().beginTransaction();</div><div class="line">        BaseFragment baseFragment = new BaseFragment();</div><div class="line">        mFragmentTransaction.add(R.id.fragment_container, baseFragment);</div><div class="line">        mFragmentTransaction.commit();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3、R.layout.fragment_base布局文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">             xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">             android:layout_width=&quot;match_parent&quot;</div><div class="line">             android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;TextView</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:text=&quot;@string/hello_blank_fragment&quot;/&gt;</div><div class="line"></div><div class="line">&lt;/FrameLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>同样这种方法也能添加使用fragment，相比较而言，第二种比第一种更灵活，更实用。第二种方法中用到了FragmentManager、FragmentTransaction，还有为什么第二种比第一种好些，以及其他细节将会转移到下一篇博客。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fragment/" rel="tag">#fragment</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/19/androidstudio使用Gradle高级篇/" rel="next" title="AndroidStudio使用Gradle-高级篇">
+                <i class="fa fa-chevron-left"></i> AndroidStudio使用Gradle-高级篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/22/fragment基础篇/"
+     data-title="fragment基础篇"
+     data-content=""
+     data-url="http://yoursite.com/2016/09/22/fragment基础篇/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/22/fragment基础篇/"
+           data-title="fragment基础篇" data-url="http://yoursite.com/2016/09/22/fragment基础篇/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description">一只喜马拉雅山上的野生猿</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">Lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、fragment简介"><span class="nav-number">1.</span> <span class="nav-text">一、fragment简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#求同"><span class="nav-number">1.1.</span> <span class="nav-text">求同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存异"><span class="nav-number">1.2.</span> <span class="nav-text">存异</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目的"><span class="nav-number">1.3.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、通过FragmentManager和FragmentTransaction动态添加替换"><span class="nav-number">1.4.</span> <span class="nav-text">二、通过FragmentManager和FragmentTransaction动态添加替换</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("TFcLIBHC0vprDDlMV0mxdUqK-gzGzoHsz", "Y225wDwPr0kmCtMFLey2WNjS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

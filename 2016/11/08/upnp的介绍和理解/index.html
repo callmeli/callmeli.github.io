@@ -1,0 +1,851 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="upnp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UPnP的介绍和理解">
+<meta property="og:url" content="http://yoursite.com/2016/11/08/upnp的介绍和理解/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
+<meta property="og:image" content="http://img.blog.csdn.net/20161107154604158">
+<meta property="og:image" content="http://img.blog.csdn.net/20161108113327404">
+<meta property="og:image" content="http://img.blog.csdn.net/20161108120057084">
+<meta property="og:updated_time" content="2016-11-08T05:58:39.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UPnP的介绍和理解">
+<meta name="twitter:description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161107154604158">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> UPnP的介绍和理解 | Ervin's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s6.cnzz.com/stat.php?id=1260194082&web_id=1260194082" type="text/javascript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                UPnP的介绍和理解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-08T10:40:59+08:00" content="2016-11-08">
+              2016-11-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/智能硬件/" itemprop="url" rel="index">
+                    <span itemprop="name">智能硬件</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/08/upnp的介绍和理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/08/upnp的介绍和理解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/08/upnp的介绍和理解/" class="leancloud_visitors" data-flag-title="UPnP的介绍和理解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cling库地址：</div><div class="line">http://4thline.org/projects/cling/</div></pre></td></tr></table></figure></p>
+<h2 id="UPnP简介"><a href="#UPnP简介" class="headerlink" title="UPnP简介"></a>UPnP简介</h2><p> upnp是 universal plug and play，即：即插即用设备，可以当作是一个相对复杂的网络协议，毕竟它包含了很多其他的网络协议，如：ip（设备寻址），tcp、udp（数据打包发送）、http（数据传递格式）等。</p>
+<p>upnp可以扩展，也就是说你还可以在启动加入其他的协议，比如：传递数据时，http协议再包一层json协议，或者数据传递使用xml协议来传递等等。</p>
+<p>upnp之所以强大，感觉很大一个原因是基于互联网，这样对等设备可以通过互联网自由交互，也就是说任何可以联网的设备都可以使用upnp协议。</p>
+<h2 id="UPnP工作步骤"><a href="#UPnP工作步骤" class="headerlink" title="UPnP工作步骤"></a>UPnP工作步骤</h2><p>有兴趣的可以去看看这个upnp文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">英文版ppt介绍：</div><div class="line">http://101.96.10.63/trinea.github.io/doc/upnp/UPnP_UDA_tutorial_July2014.pdf</div><div class="line"></div><div class="line">中文版文档介绍：</div><div class="line">http://read.pudn.com/downloads37/doc/comm/125876/UDA1.0-ChinesePDF.pdf</div></pre></td></tr></table></figure>
+<p>工作步骤其实只是一个工作的逻辑，大概的按功能划分为6个步骤，如下图1所示：</p>
+<p><img src="http://img.blog.csdn.net/20161107154604158" alt="upnp工作步骤"></p>
+<p>工作流程如下图2所示：</p>
+<p><img src="http://img.blog.csdn.net/20161108113327404" alt="这里写图片描述"></p>
+<h3 id="0、寻址-Addressing"><a href="#0、寻址-Addressing" class="headerlink" title="0、寻址-Addressing"></a>0、寻址-Addressing</h3><p>既然基于互联网，那么基本的p2p协议需要满足，所以寻址算是upnp的基础。</p>
+<p>所以就必须要有寻址，寻址的过程就是设备获取ip地址的过程，这个里面一般都使用DHCP（Dynamic Host Configuration Protocol，动态主机配置协议），即路由动态的分配一个没有使用的ip地址给设备。</p>
+<h3 id="1、发现-Discovery"><a href="#1、发现-Discovery" class="headerlink" title="1、发现-Discovery"></a>1、发现-Discovery</h3><p>既然来到了互联网的大世界，通过寻址有了身份标识ip，闲的无聊那么必然就要找个小伙伴交流沟通，当然最好是妹子，所以这时候就有了一个发现的概念。</p>
+<p>首先你要先自我介绍，也就是网络中的控制点介绍自己（是什么、能干什么），因为不知道当前世界有多少个控制点，所以一般通过喊话的形式来介绍自己。也就是说新加入的设备以多播的形式广播自己的信息。</p>
+<p>当然如果作为一个控制点，也有权限搜索自己感兴趣的设备。搜的时候控制点自己不知道有没有自己感兴趣的设备。同样这也是通过多播的形式，当世界的另一端乖妹子听到了这个信息，那么就会以单独的形式应答，这就是单播响应。<code>就相当于面试一样，公司要找一个美工妹子，发布一个广告，添加要求福利待遇，然后留个邮箱，感兴趣的美工妹子们就会发简历到这个邮箱</code>。人可以喊，公司可以登招聘广告，但是设备不可以。那么设备是怎么做到的，设备是依托于ssdp（Simple Service Discovery Protocol）简单服务发现协议，这个协议类似定义了怎么喊，喊的格式，怎么登招聘广告，广告的格式是怎么样的。如下所示：</p>
+<ul>
+<li>设备介绍自己（喊话介绍自己格式）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NOTIFY * HTTP/1.1 (标准的http1.1协议)</div><div class="line">HOST: 239.255.255.250:1900（路由固定的多播地址和端口 互联网编号分配组织很强势的定义好了的）</div><div class="line">CACHE-CONTROL: max-age = seconds until advertisement expires 指代广播有效持续时间</div><div class="line">LOCATION: URL for UPnP description for root device</div><div class="line">NT: search target 设备类型</div><div class="line">NTS: ssdp:alive</div><div class="line">USN: advertisement UUID 复合标识符</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中特别说明的是LOCATION，LOCATION是关于设备更多信息的 URL 地址（或有关服务的内含设备），这也就是描叙设备信息的一个文档地址，后面会用到。</p>
+<ul>
+<li>控制点搜索（公司发布招聘广告格式）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">M-SEARCH * HTTP/1.1</div><div class="line">HOST: 239.255.255.250:1900（路由固定的多播地址和端口 互联网编号分配组织很强势的定义好了的）</div><div class="line">MAN: &quot;ssdp:discover&quot;</div><div class="line">MX: seconds to delay response</div><div class="line">ST: search target</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>这里需要注意的是ssdp其实包含两个简单协议，即：HTTPMU、HTTPU。HTTPMU（Http Multicast UDP）是http协议的变种，即通过udp的方式组播发送http格式的内容，HTTPU即通过udp的方式发送单播给host。</code></p>
+<h3 id="2、描述-Description"><a href="#2、描述-Description" class="headerlink" title="2、描述-Description"></a>2、描述-Description</h3><p>既然有了寻找小伙伴的方式，那么怎么挑选小伙伴呢？发现直接能得到的只有一些简单的标识信息，如设备（或服务）的 UPnP 类型、设备的全球唯一标识符和设备 UPnP 描述的 URL 地址。而要了解一个小伙伴当然是不够的，就相当于<code>招聘光靠简历个人简介是完全不够了，还需要了解他的长相身材，工作能力以及性格价值观等</code>。</p>
+<p>所以就需要获取设备描述，那么怎么获取呢？对的，怎么获取，其实在设备发现的时候就已经把设备描述带出来了，只是封装在一个url中，也就是LOCATION中的描述url，通过location中的url能获取一个xml，一般设备的描述都是通过xml来标识的。</p>
+<p>设备描述一般包含两个部分：描述所包含的物理与逻辑设备、一个或多个服务描述（描述设备对外暴露的能力）。也就相当于<code>物体除了基本的外观名称以外，还包括他能干什么</code>。设备描述包括特定厂商、制造商信息，如模块名称和编号、序列号、制造商名称、特定厂商网站 URL 等（详细信息如下）。对于设备中的每种服务，设备描述都包含服务类型、名称、服务描述 URL、控制 URL 以及事件 URL。设备描述还包含所有嵌入式设备描述与 URL 地址集。<br>如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</div><div class="line">&lt;root xmlns=&quot;urn:schemas-upnp-org:device-1-0&quot;&gt;</div><div class="line"> &lt;specVersion&gt;</div><div class="line"> &lt;major&gt;1&lt;/major&gt;</div><div class="line"> &lt;minor&gt;0&lt;/minor&gt;</div><div class="line"> &lt;/specVersion&gt;</div><div class="line"> &lt;URLBase&gt;base URL for all relative URLs&lt;/URLBase&gt;</div><div class="line"> &lt;device&gt; </div><div class="line"> &lt;deviceType&gt;urn:schemas-upnp-org:device:deviceType:v&lt;/deviceType&gt;</div><div class="line"> &lt;friendlyName&gt;short user-friendly title&lt;/friendlyName&gt;</div><div class="line"> &lt;manufacturer&gt;manufacturer name&lt;/manufacturer&gt;</div><div class="line"> &lt;manufacturerURL&gt;URL to manufacturer site&lt;/manufacturerURL&gt;</div><div class="line"> &lt;modelDescription&gt;long user-friendly title&lt;/modelDescription&gt;</div><div class="line"> &lt;modelName&gt;model name&lt;/modelName&gt;</div><div class="line"> &lt;modelNumber&gt;model number&lt;/modelNumber&gt;</div><div class="line"> &lt;modelURL&gt;URL to model site&lt;/modelURL&gt;</div><div class="line"> &lt;serialNumber&gt;manufacturer&apos;s serial number&lt;/serialNumber&gt;</div><div class="line"> &lt;UDN&gt;uuid:UUID&lt;/UDN&gt;</div><div class="line"> &lt;UPC&gt;Universal Product Code&lt;/UPC&gt;</div><div class="line"> &lt;iconList&gt;</div><div class="line"> &lt;icon&gt;</div><div class="line"> &lt;mimetype&gt;image/format&lt;/mimetype&gt;</div><div class="line"> &lt;width&gt;horizontal pixels&lt;/width&gt;</div><div class="line"> &lt;height&gt;vertical pixels&lt;/height&gt;</div><div class="line"> &lt;depth&gt;color depth&lt;/depth&gt;</div><div class="line"> &lt;url&gt;URL to icon&lt;/url&gt;</div><div class="line"> &lt;/icon&gt;</div><div class="line"> XML to declare other icons, if any, go here</div><div class="line"> &lt;/iconList&gt;</div><div class="line"> &lt;!--以上是信息描叙，以下是能力行为描叙--&gt;</div><div class="line"> &lt;serviceList&gt;</div><div class="line"> &lt;service&gt;</div><div class="line"> &lt;serviceType&gt;urn:schemas-upnp-org:service:serviceType:v&lt;/serviceType&gt;</div><div class="line"> &lt;serviceId&gt;urn:upnp-org:serviceId:serviceID&lt;/serviceId&gt;</div><div class="line"> &lt;SCPDURL&gt;URL to service description&lt;/SCPDURL&gt;</div><div class="line"> &lt;controlURL&gt;URL for control&lt;/controlURL&gt;</div><div class="line"> &lt;eventSubURL&gt;URL for eventing&lt;/eventSubURL&gt;</div><div class="line"> &lt;/service&gt;</div><div class="line"> Declarations for other services defined by a UPnP Forum working committee (if any)</div><div class="line"> go here</div><div class="line"> Declarations for other services added by UPnP vendor (if any) go here</div><div class="line"> &lt;/serviceList&gt;</div><div class="line"> &lt;!--以上是能力行为描叙,以下是从设备描述--&gt;</div><div class="line"> &lt;deviceList&gt;</div><div class="line"> Description of embedded devices defined by a UPnP Forum working committee (if any)</div><div class="line"> go here</div><div class="line"> Description of embedded devices added by UPnP vendor (if any) go here</div><div class="line"> &lt;/deviceList&gt;</div><div class="line"> &lt;presentationURL&gt;URL for presentation&lt;/presentationURL&gt;</div><div class="line"> &lt;/device&gt;</div><div class="line">&lt;/root&gt;</div></pre></td></tr></table></figure>
+<p><code>这里需要值得注意的是：能力行为的描述</code>也就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;service&gt;</div><div class="line">&lt;serviceType&gt;urn:schemas-upnp-org:service:serviceType:v&lt;/serviceType&gt;</div><div class="line">&lt;serviceId&gt;urn:upnp-org:serviceId:serviceID&lt;/serviceId&gt;</div><div class="line">&lt;SCPDURL&gt;URL to service description&lt;/SCPDURL&gt;</div><div class="line">&lt;controlURL&gt;URL for control&lt;/controlURL&gt;</div><div class="line">&lt;eventSubURL&gt;URL for eventing&lt;/eventSubURL&gt;</div><div class="line">&lt;/service&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>serviceType<br>描述UPnP 服务类型，固定格式：urn:domain-name:service:serviceType:v</li>
+<li>serviceId<br>服务标识符，固定格式urn:domain-name:serviceId:serviceID，一般应用中访问就需要通过serviceId来调用相关的服务</li>
+<li>SCPDURL<br>服务描述的 URL，url中细节描述了服务包含的action，参数等。后面控制订阅都需要用到。</li>
+<li>controlURL<br>控制的 URL，调用服务的action必须要通过这个url来调用，就相当于一个控制服务的地址</li>
+<li>eventSubURL<br>事件的 URL，如果服务没有事件，则该元素必须展示出来，但是应该为空。</li>
+</ul>
+<p>下面看看标准SCPDURL中的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</div><div class="line">&lt;scpd xmlns=&quot;urn:schemas-UPnP-org:service-1-0&quot;&gt;</div><div class="line"> &lt;!--要求upnp的架构版本--&gt;</div><div class="line"> &lt;specVersion&gt;</div><div class="line"> &lt;major&gt;1&lt;/major&gt;</div><div class="line"> &lt;minor&gt;0&lt;/minor&gt;</div><div class="line"> &lt;/specVersion&gt;</div><div class="line"> &lt;!--action列表--&gt;</div><div class="line"> &lt;actionList&gt;</div><div class="line"> &lt;action&gt;</div><div class="line"> &lt;!--action名称--&gt;</div><div class="line"> &lt;name&gt;actionName&lt;/name&gt;</div><div class="line"> &lt;!--参数列表--&gt;</div><div class="line"> &lt;argumentList&gt;</div><div class="line"> &lt;argument&gt;</div><div class="line"> &lt;!--参数名称--&gt;</div><div class="line"> &lt;name&gt;formalParameterName&lt;/name&gt;</div><div class="line"> &lt;!--参数是入参还是出参--&gt;</div><div class="line"> &lt;direction&gt;in xor out&lt;/direction&gt;</div><div class="line"> &lt;retval /&gt;</div><div class="line"> &lt;!--必须是一个状态变量的名称,文档后面状态变量的表会对应其类型和取值范围等，就类似类中的某个属性值的名称--&gt;</div><div class="line"> &lt;relatedStateVariable&gt;stateVariableName&lt;/relatedStateVariable&gt;</div><div class="line"> &lt;/argument&gt;</div><div class="line"> &lt;/argumentList&gt; </div><div class="line"> &lt;/actionList&gt; </div><div class="line"> &lt;!--状态变量的表--&gt;</div><div class="line"> &lt;serviceStateTable&gt;</div><div class="line"> &lt;!--sendEvents标识变量值发生变化需不需要回调通知状态改变--&gt;</div><div class="line"> &lt;stateVariable sendEvents=&quot;yes&quot;&gt;</div><div class="line"> &lt;!--状态变量的名称--&gt;</div><div class="line"> &lt;name&gt;variableName&lt;/name&gt;</div><div class="line"> &lt;!--状态变量的数据类型--&gt;</div><div class="line"> &lt;dataType&gt;variable data type&lt;/dataType&gt;</div><div class="line"> &lt;!--状态变量的初始化的值--&gt;</div><div class="line"> &lt;defaultValue&gt;default value&lt;/defaultValue&gt;</div><div class="line"> &lt;!--状态变量的允许设置的值--&gt;</div><div class="line"> &lt;allowedValueList&gt;</div><div class="line"> &lt;allowedValue&gt;enumerated value&lt;/allowedValue&gt;</div><div class="line">Other allowed values defined by UPnP Forum working committee (if any) go here</div><div class="line"> &lt;/allowedValueList&gt;</div><div class="line"> &lt;/stateVariable&gt;</div><div class="line"> &lt;stateVariable sendEvents=&quot;yes&quot;&gt;</div><div class="line"> &lt;name&gt;variableName&lt;/name&gt;</div><div class="line"> &lt;dataType&gt;variable data type&lt;/dataType&gt;</div><div class="line"> &lt;defaultValue&gt;default value&lt;/defaultValue&gt;</div><div class="line"> &lt;!--状态变量的允许设置的值范围--&gt;</div><div class="line"> &lt;allowedValueRange&gt;</div><div class="line"> &lt;minimum&gt;minimum value&lt;/minimum&gt;</div><div class="line"> &lt;maximum&gt;maximum value&lt;/maximum&gt;</div><div class="line"> &lt;step&gt;increment value&lt;/step&gt;</div><div class="line"> &lt;/allowedValueRange&gt;</div><div class="line"> &lt;/stateVariable&gt;</div><div class="line">Declarations for other state variables defined by UPnP Forum working committee</div><div class="line">(if any) go here</div><div class="line">Declarations for other state variables added by UPnP vendor (if any) go here</div><div class="line"> &lt;/serviceStateTable&gt;</div><div class="line">&lt;/scpd&gt;</div></pre></td></tr></table></figure>
+<p>在实际使用当中，service就相当于一个类，状态变量就相当于类的全局变量，一定别订阅，发生变化就要通知订阅者更新，而service中对应的action就相当于类中的方法。</p>
+<h3 id="3、控制-Control"><a href="#3、控制-Control" class="headerlink" title="3、控制-Control"></a>3、控制-Control</h3><p>既然有了身份标识，发现了小伙伴，那么控制就自然而然很重要了。其实控制就相当于领导和你沟通工作，让你干啥，你干完了给领导个反馈。</p>
+<p>那么控制是怎么实现的呢？一个控制的过程包含 控制地址、控制说明、控制执行、控制响应。</p>
+<ul>
+<li>控制地址</li>
+</ul>
+<p>发送控制命令，首先得有控制的地址，所以描述中的control url就是需要的控制地址，相当于你找到你的新玩具的控制开关的模块。</p>
+<ul>
+<li>控制说明</li>
+</ul>
+<p>找到了控制模块那么你需要知道怎么控制，这时候你就需要说明书了，而对于设备，描述中的scpd url，就详细表明了设备提供的功能和操作步骤。</p>
+<ul>
+<li>控制执行</li>
+</ul>
+<p>阅读完说明书，那么就需要你执行命令了。设备命令的执行传递依托于tcp/ip协议，而内容的封装在http协议中，但是http协议的内容光做展示可能比较合适，但是做命令的封装可能就相对较弱，所以upnp在http中增加了标准的交换数据的一种协议 soap（简单对象访问协议），soap协议简单、轻量、而且是基于xml协议的，所以内容格式可以看出是xml的语法结构，下面就看看具体的参考报文格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST path of control URL HTTP/1.1</div><div class="line">HOST: host of control URL:port of control URL</div><div class="line">CONTENT-LENGTH: bytes in body</div><div class="line">CONTENT-TYPE: text/xml; charset=&quot;utf-8&quot;</div><div class="line">SOAPACTION: &quot;urn:schemas-upnp-org:service:serviceType:v#actionName&quot; </div><div class="line">&lt;s:Envelope</div><div class="line"> xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</div><div class="line">s:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;</div><div class="line"> &lt;s:Body&gt;</div><div class="line"> &lt;u:actionName xmlns:u=&quot;urn:schemas-upnp-org:service:serviceType:v&quot;&gt;</div><div class="line"> &lt;argumentName&gt;in arg value&lt;/argumentName&gt;</div><div class="line">other in args and their values go here, if any</div><div class="line"> &lt;/u:actionName&gt;</div><div class="line"> &lt;/s:Body&gt;</div><div class="line">&lt;/s:Envelope&gt;</div></pre></td></tr></table></figure>
+<p><code>关于soap协议的介绍可以参考 w3c</code> <a href="http://www.w3school.com.cn/soap/" target="_blank" rel="external">soap教程</a></p>
+<ul>
+<li>控制响应<br>每个控制都需要有回应，就相当于你去播放cd一样，如果你执行了播放命令，没有声音播放，你会感觉很奇怪，会思考是不是音量太小或者坏叼了。所以一个控制命令执行后没有控制的响应也就不清楚命令执行的状况。下面看看标准的控制响应的报文：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">CONTENT-LENGTH: bytes in body</div><div class="line">CONTENT-TYPE: text/xml; charset=&quot;utf-8&quot;</div><div class="line">DATE: when response was generated</div><div class="line">EXT:</div><div class="line">SERVER: OS/version UPnP/1.0 product/version</div><div class="line">&lt;s:Envelope</div><div class="line"> xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</div><div class="line">s:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;</div><div class="line"> &lt;s:Body&gt;</div><div class="line"> &lt;u:actionNameResponse xmlns:u=&quot;urn:schemas-upnp-org:service:serviceType:v&quot;&gt;</div><div class="line"> &lt;argumentName&gt;out arg value&lt;/argumentName&gt;</div><div class="line">other out args and their values go here, if any</div><div class="line"> &lt;/u:actionNameResponse&gt;</div><div class="line"> &lt;/s:Body&gt;</div><div class="line">&lt;/s:Envelope&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4、事件-Eventing"><a href="#4、事件-Eventing" class="headerlink" title="4、事件-Eventing"></a>4、事件-Eventing</h3><p>事件即设备的状态量发生了变化，使用观察者模式，首先观察某个状态量就需要注册一个观察者，当状态量发生变化的时候，设备就会提示观察者状态量发生变化，请及时处理，有关于观察者可以去看看著名的<code>气象局的例子</code>，在upnp协议中事件协议是用的是GENA协议（Generic Event Notification Architecture）。下面是报文格式。</p>
+<ul>
+<li>订阅事件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SUBSCRIBE publisher path HTTP/1.1</div><div class="line">HOST: publisher host:publisher port</div><div class="line">CALLBACK: &lt;delivery URL&gt;</div><div class="line">NT: upnp:event</div><div class="line">TIMEOUT: Second-requested subscription duration</div></pre></td></tr></table></figure>
+<ul>
+<li><p>取消订阅</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UNSUBSCRIBE publisher path HTTP/1.1</div><div class="line">HOST: publisher host:publisher port</div><div class="line">SID: uuid:subscription UUID</div></pre></td></tr></table></figure>
+</li>
+<li><p>消息订阅</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">NOTIFY delivery path HTTP/1.1</div><div class="line">HOST: delivery host:delivery port</div><div class="line">CONTENT-TYPE: text/xml</div><div class="line">CONTENT-LENGTH: Bytes in body</div><div class="line">NT: upnp:event</div><div class="line">NTS: upnp:propchange</div><div class="line">SID: uuid:subscription-UUID</div><div class="line">SEQ: event key</div><div class="line">&lt;e:propertyset xmlns:e=&quot;urn:schemas-upnp-org:event-1-0&quot;&gt;</div><div class="line"> &lt;e:property&gt;</div><div class="line"> &lt;variableName&gt;new value&lt;/variableName&gt;</div><div class="line"> &lt;/e:property&gt;</div><div class="line">Other variable names and values (if any) go here.</div><div class="line">&lt;/e:propertyset&gt;</div></pre></td></tr></table></figure>
+<h3 id="5、展示-Presentation"><a href="#5、展示-Presentation" class="headerlink" title="5、展示-Presentation"></a>5、展示-Presentation</h3><p>展示作为一个控制和事件的补充，实现upnp协议并不强制要求。<code>其实就是一个网页，可以看到设备的信息和状态，做的好的还可以对设备进行控制</code>。如果提供的完整的话就可以不需要什么应用，一个网页就可以查看设备的基本信息，控制设备的基本操作。</p>
+<h2 id="UPnP总结"><a href="#UPnP总结" class="headerlink" title="UPnP总结"></a>UPnP总结</h2><p>上面详细的说明了upnp的协议的介绍，其实用一个图就可以全部概括起来，如下图3：</p>
+<p><img src="http://img.blog.csdn.net/20161108120057084" alt="upnp总结"></p>
+<ol>
+<li><p>寻址</p>
+<p>UPnP 网络互连的基础是基于DHCP或AutoIP的 IP 寻址。这也是p2p协议的基础，就相当于获取身份标识的ID（身份 证）。</p>
+</li>
+<li><p>发现<br>如果获取了一个 IP 地址，则 UPnP 网络的第 1 步是发现。在将一个设备添加到网络上之后，UPnP 发现协议允许该设备向网络中的控制点宣告其服务。同样，当一个控制点被添加到网络后，UPnP 发现协议允许该控制点在网上搜索<br>感兴趣的设备。这两者处理上都需要HTTPMU协议支持。ssdp协议是支撑发现的基础。</p>
+</li>
+<li><p>描述<br>UPnP 网络中的第 2 步是描述。控制点在发现一个设备之后仍然对其知之甚少。为了使控制点了解到更多关于设备及其能力的信息或与设备进行交互，则控制点必须取得来自该设备在发现消息中所提供之 URL 的设备描述。描述的基础是发现，如果没有发现获取到设备的最基础的信息，得不到location中的设备描述url，也就没有设备能力这一说。</p>
+</li>
+<li><p>控制<br>UPnP 网络中的第 3 步是控制。当一个控制点取得设备描述后，该控制点可将动作发至一个设备的服务。为此，控制点将一条适当的控制消息发至服务的控制 URL（在设备描述中提供）。控制消息同样利用简单对象访问协议（SOAP）通过 XML 来表达。</p>
+</li>
+<li><p>事件<br>UPnP 网络的第 4 步是事件触发。针对服务的 UPnP 描述包括一个服务响应的动作列表，以及一个对服务器运行时状态进行展示的变量列表。在这些变量变更时服务会发布更新，一个控制点可以预订接收此信息。服务通过发送事件消息来发布更新。事件消息包含一个或多个状态变量名和这些变量的当前值。这些消息同样通过 XML 来表达，并采用通用事件通知架构（GENA）格式。</p>
+</li>
+<li><p>展示<br>UPnP 网络中的第 5 步是展示。如果设备有用于展示的 URL，那么控制点就可以通过此 URL 取得一个页面，在浏览器中加载该页面，并且根据页面的功能，支持用户控制设备和/或浏览设备状态。每一项完成的程度取决于展示页面<br>和设备的具体功能。</p>
+</li>
+</ol>
+<p>其实cling库upnp协议的实现，框架本身就是通过代码来提供报文格式的封装，使用者能够动态确定设备交互报文的内容。有时间分享一下cling的源码分析。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/upnp/" rel="tag">#upnp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/09/android开发技巧-记录未捕获的crash异常日志/" rel="next" title="android开发技巧-记录未捕获的crash异常日志">
+                <i class="fa fa-chevron-left"></i> android开发技巧-记录未捕获的crash异常日志
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/08/upnp的介绍和理解/"
+     data-title="UPnP的介绍和理解"
+     data-content=""
+     data-url="http://yoursite.com/2016/11/08/upnp的介绍和理解/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/08/upnp的介绍和理解/"
+           data-title="UPnP的介绍和理解" data-url="http://yoursite.com/2016/11/08/upnp的介绍和理解/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description">一只喜马拉雅山上的野生猿</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/callmeli" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
+                  
+                    <i class="fa fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">友情链接</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lakeshire.github.io/" target="_blank">Lakeshire's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP简介"><span class="nav-number">2.</span> <span class="nav-text">UPnP简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP工作步骤"><span class="nav-number">3.</span> <span class="nav-text">UPnP工作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0、寻址-Addressing"><span class="nav-number">3.1.</span> <span class="nav-text">0、寻址-Addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、发现-Discovery"><span class="nav-number">3.2.</span> <span class="nav-text">1、发现-Discovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、描述-Description"><span class="nav-number">3.3.</span> <span class="nav-text">2、描述-Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、控制-Control"><span class="nav-number">3.4.</span> <span class="nav-text">3、控制-Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、事件-Eventing"><span class="nav-number">3.5.</span> <span class="nav-text">4、事件-Eventing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、展示-Presentation"><span class="nav-number">3.6.</span> <span class="nav-text">5、展示-Presentation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP总结"><span class="nav-number">4.</span> <span class="nav-text">UPnP总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"callmeli"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("TFcLIBHC0vprDDlMV0mxdUqK-gzGzoHsz", "Y225wDwPr0kmCtMFLey2WNjS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -1,87 +1,266 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
 <head>
-  <meta charset="utf-8">
-  
-  <title>项目开发中经典问题 | Ervin&#39;s Blog | 生于忧患，死于安乐</title>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-  
-  <meta name="author" content="ervin li">
-  
 
-  
-  <meta name="description" content="一只喜马拉雅山上的野生猿">
-  
 
-  
-  
-  <meta name="keywords" content="项目开发">
-  
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="项目开发中经典问题"/>
 
-  <meta property="og:site_name" content="Ervin&#39;s Blog"/>
 
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Ervin&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="项目开发," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目开发中经典问题">
+<meta property="og:url" content="http://yoursite.com/2016/09/05/项目中常见问题/index.html">
+<meta property="og:site_name" content="Ervin's Blog">
+<meta property="og:description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
+<meta property="og:updated_time" content="2016-09-05T01:54:08.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目开发中经典问题">
+<meta name="twitter:description" content="昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 项目开发中经典问题 | Ervin's Blog </title>
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-<body>
-<div class="blog">
-  <div class="content">
+  
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Ervin&#39;s Blog</a>
-    </h1>
-    <p class="site-description">生于忧患，死于安乐</p>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Ervin's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
-  <nav class="site-navigation">
-    <ul>
+  <p class="site-subtitle">生于忧患，死于安乐</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
       
-        <li><a href="/">主页</a></li>
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
       
-        <li><a href="/archives">归档</a></li>
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
-  </nav>
-</header>
-
-    <main class="site-main posts-loop">
-    <article>
+  
 
   
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-    <h3 class="article-title"><span>项目开发中经典问题</span></h3>
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-  
+      <header class="post-header">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/09/05/项目中常见问题/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-09-05T01:54:08.433Z">
-          2016-09-05
-        </time>
-      </a>
-    </span>
-  </div>
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                项目开发中经典问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-05T09:54:08+08:00" content="2016-09-05">
+              2016-09-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工作/" itemprop="url" rel="index">
+                    <span itemprop="name">工作</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
 
 
-  
+    <div class="post-body" itemprop="articleBody">
 
-  <div class="article-content">
-    <div class="entry">
+      
+      
+
       
         <p>昨天项目组，进行了一波线上代码的codereview的分享，把线上有改进优化的代码的问题拿出来分享。是一次有预谋、有计划、有组织的好分享。所以这里也记录，防止后面出现犯同样的错误吧。<br><a id="more"></a></p>
 <h4 id="cursor未关闭"><a href="#cursor未关闭" class="headerlink" title="cursor未关闭"></a>cursor未关闭</h4><p>这种问题我以为只有面试中才会有，没想到可能一不小心就会发生在身边。一定要记得关闭游标cursor.close()。</p>
@@ -102,53 +281,266 @@
       
     </div>
 
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
+    <div>
       
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/工作/">工作</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/项目开发/">项目开发</a>
-    </span>
-    
-
+        
+      
     </div>
 
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目开发/" rel="tag">#项目开发</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/29/订阅AVTransportService观察日志/" rel="next" title="订阅AVTransportService观察日志">
+                <i class="fa fa-chevron-left"></i> 订阅AVTransportService观察日志
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/05/androidstudio使用Gradle基础篇/" rel="prev" title="AndroidStudio使用Gradle-基础篇">
+                AndroidStudio使用Gradle-基础篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
     
   </div>
-</article>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
+               alt="ervin li" />
+          <p class="site-author-name" itemprop="name">ervin li</p>
+          <p class="site-description motion-element" itemprop="description">一只喜马拉雅山上的野生猿</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cursor未关闭"><span class="nav-number">1.</span> <span class="nav-text">cursor未关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#popwindow和dialog的show和dissmiss一定要判断activity是否存活"><span class="nav-number">2.</span> <span class="nav-text">popwindow和dialog的show和dissmiss一定要判断activity是否存活</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UI线程不能处理耗时任务"><span class="nav-number">3.</span> <span class="nav-text">UI线程不能处理耗时任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务"><span class="nav-number">4.</span> <span class="nav-text">BroadcastReceiver不能新建线程做耗时任务，更不能直接做耗时任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReceiver中的Context使用要注意"><span class="nav-number">5.</span> <span class="nav-text">BroadcastReceiver中的Context使用要注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler不应该是activity的非静态匿名内部类"><span class="nav-number">6.</span> <span class="nav-text">Handler不应该是activity的非静态匿名内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的Fragment建议使用show和hide，而不是频繁的new"><span class="nav-number">7.</span> <span class="nav-text">常用的Fragment建议使用show和hide，而不是频繁的new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StringBuffer中append字符串需要判空"><span class="nav-number">8.</span> <span class="nav-text">StringBuffer中append字符串需要判空</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#慎用try-catch"><span class="nav-number">9.</span> <span class="nav-text">慎用try catch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类单一职责的问题"><span class="nav-number">10.</span> <span class="nav-text">类单一职责的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口定义回调的方法需要三思"><span class="nav-number">11.</span> <span class="nav-text">接口定义回调的方法需要三思</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源字符串不要hardcode在代码里面"><span class="nav-number">12.</span> <span class="nav-text">资源字符串不要hardcode在代码里面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法参数控制"><span class="nav-number">13.</span> <span class="nav-text">方法参数控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不要再for中做remove操作，会漏删"><span class="nav-number">14.</span> <span class="nav-text">不要再for中做remove操作，会漏删</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ervin li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
 
   
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2016 ervin li
-    
-  </p>
-</footer>
-    
-  </div>
-</div>
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
 </body>
 </html>

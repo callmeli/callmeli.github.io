@@ -1,312 +1,87 @@
-<!doctype html>
-
-
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>UPnP的介绍和理解 | Ervin&#39;s Blog | 生于忧患，死于安乐</title>
 
   
+  <meta name="author" content="ervin li">
+  
 
+  
+  <meta name="description" content="一只喜马拉雅山上的野生猿">
+  
 
-<html class="theme-next mist use-motion">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  
+  
+  <meta name="keywords" content="upnp">
+  
 
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+  <meta property="og:title" content="UPnP的介绍和理解"/>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta property="og:site_name" content="Ervin&#39;s Blog"/>
 
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
 
-
-
-
-
-
-
-
-
-
-
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
-
-
-
-
-  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-
-
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="upnp," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
-
-
-
-
-
-
-<meta name="description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="UPnP的介绍和理解">
-<meta property="og:url" content="http://yoursite.com/2016/11/08/upnp的介绍和理解/index.html">
-<meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
-<meta property="og:image" content="http://img.blog.csdn.net/20161107154604158">
-<meta property="og:image" content="http://img.blog.csdn.net/20161108113327404">
-<meta property="og:image" content="http://img.blog.csdn.net/20161108120057084">
-<meta property="og:updated_time" content="2016-11-08T05:58:39.148Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UPnP的介绍和理解">
-<meta name="twitter:description" content="前言做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20161107154604158">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"always"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 0,
-      author: '博主'
-    }
-  };
-</script>
-
-  <title> UPnP的介绍和理解 | Ervin's Blog </title>
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Ervin&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  
+<body>
+<div class="blog">
+  <div class="content">
 
-
-
-
-
-
-
-
-  <div style="display: none;">
-    <script src="http://s6.cnzz.com/stat.php?id=1260194082&web_id=1260194082" type="text/javascript"></script>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Ervin&#39;s Blog</a>
+    </h1>
+    <p class="site-description">生于忧患，死于安乐</p>
   </div>
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Ervin's Blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle">生于忧患，死于安乐</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
-            
-            首页
-          </a>
-        </li>
+        <li><a href="/">主页</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-
+        <li><a href="/archives">归档</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-</nav>
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
+    <h3 class="article-title"><span>UPnP的介绍和理解</span></h3>
     
-      <header class="post-header">
+  
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                UPnP的介绍和理解
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-08T10:40:59+08:00" content="2016-11-08">
-              2016-11-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/智能硬件/" itemprop="url" rel="index">
-                    <span itemprop="name">智能硬件</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/08/upnp的介绍和理解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/08/upnp的介绍和理解/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/08/upnp的介绍和理解/" class="leancloud_visitors" data-flag-title="UPnP的介绍和理解">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-        </div>
-      </header>
-    
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/08/upnp的介绍和理解/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-08T02:40:59.000Z">
+          2016-11-08
+        </time>
+      </a>
+    </span>
+  </div>
 
 
-    <div class="post-body" itemprop="articleBody">
+  
 
-      
-      
-
+  <div class="article-content">
+    <div class="entry">
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>做android智能硬件开发一年，蓝牙接触多的就是spp模拟串口通信，而更多的是upnp，因为大部分的项目都是基于cling库的wifi方案的项目。设备的wifi方案相对于蓝牙方案，传输速度快，覆盖范围广，能够脱离设备独立联网，协议规范简单明了，但价格相对要高一些。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cling库地址：</div><div class="line">http://4thline.org/projects/cling/</div></pre></td></tr></table></figure></p>
 <h2 id="UPnP简介"><a href="#UPnP简介" class="headerlink" title="UPnP简介"></a>UPnP简介</h2><p> upnp是 universal plug and play，即：即插即用设备，可以当作是一个相对复杂的网络协议，毕竟它包含了很多其他的网络协议，如：ip（设备寻址），tcp、udp（数据打包发送）、http（数据传递格式）等。</p>
@@ -405,447 +180,53 @@
       
     </div>
 
-    <div>
-      
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/upnp/" rel="tag">#upnp</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/10/09/android开发技巧-记录未捕获的crash异常日志/" rel="next" title="android开发技巧-记录未捕获的crash异常日志">
-                <i class="fa fa-chevron-left"></i> android开发技巧-记录未捕获的crash异常日志
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2016/11/08/upnp的介绍和理解/"
-     data-title="UPnP的介绍和理解"
-     data-content=""
-     data-url="http://yoursite.com/2016/11/08/upnp的介绍和理解/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/08/upnp的介绍和理解/"
-           data-title="UPnP的介绍和理解" data-url="http://yoursite.com/2016/11/08/upnp的介绍和理解/">
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/智能硬件/">智能硬件</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/upnp/">upnp</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://ww1.sinaimg.cn/large/0060lm7Tgw1f7ed8nzx6lj30hs0hs3zh.jpg"
-               alt="ervin li" />
-          <p class="site-author-name" itemprop="name">ervin li</p>
-          <p class="site-description motion-element" itemprop="description">一只喜马拉雅山上的野生猿</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">21</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/callmeli" target="_blank">
-                  
-                    <i class="fa fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/3244542390/profile?topnav=1&wvr=6&is_all=1" target="_blank">
-                  
-                    <i class="fa fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://blog.csdn.net/be_happy_mr_li" target="_blank">
-                  
-                    <i class="fa fa-csdn"></i>
-                  
-                  Csdn
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        <div class="links-of-blogroll motion-element">
-          
-            <div class="links-of-blogroll-title">友情链接</div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://gongyi.qq.com/" target="_blank">腾讯公益</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.ituring.com.cn/" target="_blank">图灵社区</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://eliyar.biz/" target="_blank">Eliya's Blog</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://lakeshire.github.io/" target="_blank">Lakeshire's Blog</a>
-                </li>
-              
-            </ul>
-          
-        </div>
-
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP简介"><span class="nav-number">2.</span> <span class="nav-text">UPnP简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP工作步骤"><span class="nav-number">3.</span> <span class="nav-text">UPnP工作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0、寻址-Addressing"><span class="nav-number">3.1.</span> <span class="nav-text">0、寻址-Addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、发现-Discovery"><span class="nav-number">3.2.</span> <span class="nav-text">1、发现-Discovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、描述-Description"><span class="nav-number">3.3.</span> <span class="nav-text">2、描述-Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、控制-Control"><span class="nav-number">3.4.</span> <span class="nav-text">3、控制-Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、事件-Eventing"><span class="nav-number">3.5.</span> <span class="nav-text">4、事件-Eventing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、展示-Presentation"><span class="nav-number">3.6.</span> <span class="nav-text">5、展示-Presentation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPnP总结"><span class="nav-number">4.</span> <span class="nav-text">UPnP总结</span></a></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ervin li</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2016 ervin li
+    
+  </p>
+</footer>
+    
   </div>
-
-  
-
-
-  
-
-
-
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"callmeli"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-  
-
-
-
-
-
-  
-  
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("TFcLIBHC0vprDDlMV0mxdUqK-gzGzoHsz", "Y225wDwPr0kmCtMFLey2WNjS");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
+</div>
 </body>
 </html>

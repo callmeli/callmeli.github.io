@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException | Ervin&#39;s Blog | 生于忧患，死于安乐</title>
+
+  
+  <meta name="author" content="ervin li">
+  
+
+  
+  <meta name="description" content="一只喜马拉雅山上的野生猿">
+  
+
+  
+  
+  <meta name="keywords" content="ArrayList">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException"/>
+
+  <meta property="og:site_name" content="Ervin&#39;s Blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Ervin&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Ervin&#39;s Blog</a>
+    </h1>
+    <p class="site-description">生于忧患，死于安乐</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/23/ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-23T03:40:59.000Z">
+          2016-11-23
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>从实际问题中，去细节了解ArrayList实现的细节。<br><a id="more"></a></p>
+<p>##问题</p>
+<ul>
+<li>直接使用arrayList通过add(int index,E e)添加指定位置的元素</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;String&gt; array = new ArrayList&lt;String&gt;();</div><div class="line">array.add(1,&quot;hello world&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>arraylist 调用clear()方法后通过set()指定位置的元素<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;String&gt; array = new ArrayList&lt;String&gt;();</div><div class="line">array.add(&quot;hello&quot;);</div><div class="line">array.add(&quot;world&quot;);</div><div class="line">array.clear();</div><div class="line">array.set(2,&quot;mitty&quot;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述两种情况都会出现IndexOutOfBoundsException，其实不单单是这两种情况，只要涉及到ArrayList中对index元素操作的方法都需要注意，下面就通过源码来分析原因。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>ArrayList生成对象如果不是集合copy，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public ArrayList(Collection&lt;? extends E&gt; collection)</div><div class="line">&#123;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也没有通过add按顺序添加元素或元素集合，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public boolean add(E object);</div><div class="line"></div><div class="line">public boolean addAll(Collection&lt;? extends E&gt; collection) ;</div></pre></td></tr></table></figure>
+<p>ArrayList中的size是不会发生变化的，所以在指定index的时候一般会先判断数组下标是否越界，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public void add(int index, E object) &#123;</div><div class="line">		//ArrayList中真正存取元素的数组，所以本质上说，ArrayList是数组的包装类。</div><div class="line">        Object[] a = array;</div><div class="line">        //index反应数组真实元素个数，数组的大小比元素个数多。</div><div class="line">        int s = size;</div><div class="line">        //这里会判断数组的大小是否越界</div><div class="line">        if (index &gt; s || index &lt; 0) &#123;</div><div class="line">            throwIndexOutOfBoundsException(index, s);</div><div class="line">        &#125;</div><div class="line">		//小于size直接添加，大于则扩展数组的大小</div><div class="line">        if (s &lt; a.length) &#123;</div><div class="line">            System.arraycopy(a, index, a, index + 1, s - index);</div><div class="line">        &#125; else &#123;</div><div class="line">            // assert s == a.length;</div><div class="line">            Object[] newArray = new Object[newCapacity(s)];</div><div class="line">            System.arraycopy(a, 0, newArray, 0, index);</div><div class="line">            System.arraycopy(a, index, newArray, index + 1, s - index);</div><div class="line">            array = a = newArray;</div><div class="line">        &#125;</div><div class="line">        a[index] = object;</div><div class="line">        size = s + 1;</div><div class="line">        modCount++;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>同样set(int index,E e)也会判断，但是开始添加了两个元素，那为什么第二种情况会发生呢？因为调用了clear()方法，clear方法会清空元素，并将size置为0，所以比较的时候就会；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void clear() &#123;</div><div class="line">       if (size != 0) &#123;</div><div class="line">           Arrays.fill(array, 0, size, null);</div><div class="line">           size = 0;</div><div class="line">           modCount++;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>扩容的规则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private static final int MIN_CAPACITY_INCREMENT = 12;</div><div class="line"></div><div class="line">private static int newCapacity(int currentCapacity) &#123;</div><div class="line">        int increment = (currentCapacity &lt; (MIN_CAPACITY_INCREMENT / 2) ?</div><div class="line">                MIN_CAPACITY_INCREMENT : currentCapacity &gt;&gt; 1);</div><div class="line">        return currentCapacity + increment;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>##结论<br>ArrayList实际上是数组的封装，而元素大小size是真实的反应ArrayList中元素的真实个数，元素的增加是按顺序增长的，size并不是数组的长度，所以在不确定ArrayList元素个数的情况下，需要先确定ArrayList的元素大小在去考虑对ArrayList指定元素的操作。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/java/">java</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/ArrayList/">ArrayList</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2016 ervin li
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

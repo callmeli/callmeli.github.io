@@ -42,7 +42,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="混淆," />
+  <meta name="keywords" content="bitmap," />
 
 
 
@@ -58,34 +58,18 @@
 
 
 
-<meta name="description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="description" content="前言出来混，迟早是要还的。前段时间项目多，时间紧，博客就搁置。有时候自己很奇怪，做android开发也有几个年头了。为什么还在写这些基础的东西，为什么不去研究当前很热的技术？首先可能是以前自己给自己留了很多坑，其次，在叼在复杂的框架其根本原理还是离不开基础的，就像程序无非是数据+算法。当然新的技术也肯定是不能落下的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android混淆的使用">
-<meta property="og:url" content="http://yoursite.com/2016/08/22/Android中混淆的使用/index.html">
+<meta property="og:title" content="android通过相册获取图片oom的问题">
+<meta property="og:url" content="http://yoursite.com/2016/12/05/android通过相册获取图片oom的问题/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
-<meta property="og:updated_time" content="2016-08-22T06:21:17.699Z">
+<meta property="og:description" content="前言出来混，迟早是要还的。前段时间项目多，时间紧，博客就搁置。有时候自己很奇怪，做android开发也有几个年头了。为什么还在写这些基础的东西，为什么不去研究当前很热的技术？首先可能是以前自己给自己留了很多坑，其次，在叼在复杂的框架其根本原理还是离不开基础的，就像程序无非是数据+算法。当然新的技术也肯定是不能落下的。">
+<meta property="og:image" content="http://img.blog.csdn.net/20161205173257717">
+<meta property="og:updated_time" content="2016-12-05T10:37:42.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android混淆的使用">
-<meta name="twitter:description" content="一、前言一个apk从开始到发布一般过程：
-
-搭建框架（选择使用的框架，分配包名）
-开始编码（编写布局，逻辑，自测）
-编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）
-测试优化（测试crash和优化性能）
-上线发布">
+<meta name="twitter:title" content="android通过相册获取图片oom的问题">
+<meta name="twitter:description" content="前言出来混，迟早是要还的。前段时间项目多，时间紧，博客就搁置。有时候自己很奇怪，做android开发也有几个年头了。为什么还在写这些基础的东西，为什么不去研究当前很热的技术？首先可能是以前自己给自己留了很多坑，其次，在叼在复杂的框架其根本原理还是离不开基础的，就像程序无非是数据+算法。当然新的技术也肯定是不能落下的。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161205173257717">
 
 
 
@@ -103,7 +87,7 @@
   };
 </script>
 
-  <title> Android混淆的使用 | Ervin's Blog </title>
+  <title> android通过相册获取图片oom的问题 | Ervin's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +233,7 @@
             
             
               
-                Android混淆的使用
+                android通过相册获取图片oom的问题
               
             
           </h1>
@@ -261,8 +245,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T14:21:17+08:00" content="2016-08-22">
-              2016-08-22
+            <time itemprop="dateCreated" datetime="2016-12-05T18:40:59+08:00" content="2016-12-05">
+              2016-12-05
             </time>
           </span>
 
@@ -291,8 +275,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/Android中混淆的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Android中混淆的使用/" itemprop="commentsCount"></span>
+                <a href="/2016/12/05/android通过相册获取图片oom的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/android通过相册获取图片oom的问题/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -302,7 +286,7 @@
 
           
           
-             <span id="/2016/08/22/Android中混淆的使用/" class="leancloud_visitors" data-flag-title="Android混淆的使用">
+             <span id="/2016/12/05/android通过相册获取图片oom的问题/" class="leancloud_visitors" data-flag-title="android通过相册获取图片oom的问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -324,43 +308,31 @@
       
 
       
-        <p>一、前言<br>一个apk从开始到发布一般过程：</p>
-<ul>
-<li>搭建框架（选择使用的框架，分配包名）</li>
-<li>开始编码（编写布局，逻辑，自测）</li>
-<li>编码完成，混淆签名打包（混淆保证apk的代码安全，签名打包可以保证开发的应用在应用市场的唯一性）</li>
-<li>测试优化（测试crash和优化性能）</li>
-<li>上线发布<a id="more"></a>
-从蜻蜓fm没有加混淆，导致宙斯和普罗米修斯的代码泄露，就可以看出一个应用混淆的重要性。因此我们为了保证自己的开发成果不会被别人窃取，添加混淆必须的。 所以下面记录一些常用的混淆。<br>二、 使用混淆<br>混淆一般是在项目工程的project.properties中来配置混淆文件的路径，默认的路径是<br>\${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt，${sdk.dir}代表的是sdk所在路径。但是默认混淆是被注销的，如果需要启用默认的混淆就需要把#号去掉。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># This file is automatically generated by Android Tools.</div><div class="line"># Do not modify this file -- YOUR CHANGES WILL BE ERASED!</div><div class="line">#</div><div class="line"># This file must be checked in Version Control Systems.</div><div class="line">#</div><div class="line"># To customize properties used by the Ant build system edit</div><div class="line"># &quot;ant.properties&quot;, and override values to adapt the script to your</div><div class="line"># project structure.</div><div class="line">#</div><div class="line"># To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):</div><div class="line">//也就是这里如果需要启用默认的混淆文件就需要去掉行首的#号</div><div class="line">#proguard.config=$&#123;sdk.dir&#125;/tools/proguard/proguard-android.txt:proguard-project.txt</div><div class="line"># Project target.</div><div class="line">target=android-20</div></pre></td></tr></table></figure>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>出来混，迟早是要还的。前段时间项目多，时间紧，博客就搁置。有时候自己很奇怪，做android开发也有几个年头了。为什么还在写这些基础的东西，为什么不去研究当前很热的技术？首先可能是以前自己给自己留了很多坑，其次，在叼在复杂的框架其根本原理还是离不开基础的，就像程序无非是数据+算法。当然新的技术也肯定是不能落下的。<br><a id="more"></a></p>
+<h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><p>一般app都会有上传图片业务，而上传图像的途径无非是从相册选取，或直接拍照。然而选取或拍照的图片尺寸过大，是很容易造成内存溢出的，即使没有溢出，也需要优化，当然是内存占用越小越好。官方文档推荐的是尽可能不超过16m。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Mobile devices typically have constrained system resources. Android devices can have as little as 16MB of memory available to a single application.</div></pre></td></tr></table></figure></p>
+<p>当然近几年手机硬件发展快，国内的手机厂商分配的内存可能会有所增加，但是app的业务量和内存占用也相对增加。所以节省内存成为app优化的关键。关于图片上传的优化例子大多千篇一律，含糊不清。因此，所以就有了这篇帖子。</p>
+<h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><ul>
+<li><p>相册<br>通过<a href="https://my.oschina.net/ryanhoo/blog/86843" target="_blank" rel="external">Android MediaStore裁剪大图片</a> 相关Intent putExtra相关选项描述</p>
+<p>  <img src="http://img.blog.csdn.net/20161205173257717" alt="这里写图片描述"><br>  跳转的代码：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Intent albumIntent = new Intent(Intent.ACTION_PICK);</div><div class="line">albumIntent.setType(&quot;image/*&quot;);</div><div class="line">albumIntent.putExtra(&quot;return-data&quot;, false);</div><div class="line">albumIntent.putExtra(&quot;noFaceDetection&quot;, true);</div><div class="line">albumIntent.putExtra(&quot;outputFormat&quot;, Bitmap.CompressFormat.JPEG);</div><div class="line">startActivityForResult(albumIntent, REQUEST_IMAGE_PICK);</div></pre></td></tr></table></figure>
+<p>  接收响应代码：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">private static final int REQUEST_IMAGE_PICK = 1;</div><div class="line"></div><div class="line">@Override</div><div class="line">   public void onActivityResult(int requestCode, int resultCode, Intent data) &#123;</div><div class="line">       super.onActivityResult(requestCode, resultCode, data);</div><div class="line">       if (resultCode == Activity.RESULT_OK) &#123;</div><div class="line">           switch (requestCode) &#123;</div><div class="line">               case REQUEST_IMAGE_PICK:</div><div class="line">                   if (data != null) &#123;</div><div class="line">                       Uri uri = data.getData();</div><div class="line">                       if (uri != null) &#123;</div><div class="line">                           setPic(mHeadImageIv, uri);</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">                   break;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">private void setPic(ImageView imageView, Uri uri) &#123;</div><div class="line">      if (getActivity() != null) &#123;</div><div class="line">          //获取目标控件的大小</div><div class="line">          int targetW = imageView.getWidth();</div><div class="line">          int targetH = imageView.getHeight();</div><div class="line"></div><div class="line">          BitmapFactory.Options bmOptions = new BitmapFactory.Options();</div><div class="line">          try &#123;</div><div class="line">           //inJustDecodeBounds为true，可以加载源图片的尺寸大小，decodeStream方法返回的bitmap为null</div><div class="line">              bmOptions.inJustDecodeBounds = true;                BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri), null, bmOptions);</div><div class="line">              // 得到源图片的尺寸</div><div class="line">              int photoW = bmOptions.outWidth;</div><div class="line">              int photoH = bmOptions.outHeight;</div><div class="line">              //通过比较获取较小的缩放比列</div><div class="line">              int scaleFactor = Math.min(photoW / targetW, photoH / targetH);</div><div class="line">              // 将inJustDecodeBounds置为false，设置bitmap的缩放比列</div><div class="line">              bmOptions.inJustDecodeBounds = false;</div><div class="line">              bmOptions.inSampleSize = scaleFactor;</div><div class="line">              bmOptions.inPurgeable = true;</div><div class="line">              //再次decode获取bitmap</div><div class="line">              Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri), null, bmOptions);</div><div class="line">              imageView.setImageBitmap(bitmap);</div><div class="line">          &#125; catch (FileNotFoundException e) &#123;</div><div class="line">              e.printStackTrace();</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>  亲测通过上述方法，bitmap的大小为225k，而通过下面的方法获取的bitmap大小为3.2m。所以内存是很大的节省。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> if (data != null) &#123;</div><div class="line">    Uri uri = data.getData();</div><div class="line">    if (uri != null) &#123;</div><div class="line">       Bitmap bitmap = null;</div><div class="line">       try &#123;</div><div class="line">        bitmap = (Bitmap) MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);</div><div class="line">       if (bitmap != null) &#123;</div><div class="line">             mHeadImageIv.setImageBitmap(bitmap);</div><div class="line">           &#125;</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">          &#125;</div><div class="line"></div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>拍照</p>
+<p>  权限</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;uses-feature android:name=&quot;android.hardware.camera&quot;</div><div class="line">                android:required=&quot;true&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>  调用相机代码</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);</div><div class="line">if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) &#123;</div><div class="line">      startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>  接受相机返回代码</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">private static final int REQUEST_IMAGE_CAPTURE= 2;</div><div class="line"></div><div class="line">@Override</div><div class="line">   public void onActivityResult(int requestCode, int resultCode, Intent data) &#123;</div><div class="line">       super.onActivityResult(requestCode, resultCode, data);</div><div class="line">       if (resultCode == Activity.RESULT_OK) &#123;</div><div class="line">           switch (requestCode) &#123;</div><div class="line">               case REQUEST_IMAGE_CAPTURE:</div><div class="line">                   if (data != null) &#123;</div><div class="line">                       Bundle bundle = data.getExtras();</div><div class="line">                       if (bundle.containsKey(&quot;data&quot;)) &#123;</div><div class="line">                           Bitmap bitmap = (Bitmap) bundle.get(&quot;data&quot;);</div><div class="line">                           if (bitmap != null) &#123;</div><div class="line">                               mHeadImageIv.setImageBitmap(bitmap);</div><div class="line">                           &#125;</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">                   break;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>  通过调试发现返回的bitmap大小只有121.9k，测试的手机是红米2，图片的尺寸是153*204，可以看出拍照返回的bitmap只能算是缩略图。如果返回的尺寸很大，也可以通过BitmapFactory.Options来优化。</p>
 </li>
 </ul>
-<p>三、 自定义混淆文件<br>一般我们在开发中，可能会添加或引用到第三方的开发包或库，所以有些文件是不需要混淆的，这时候可能就需要自定义混淆文件，添加我们自己开发中不需要混淆的部分。一般的做法是使用项目目录中的proguard-project.txt文件</p>
-<p>1、修改项目工程的project.properties中混淆文件配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proguard.config = proguard-project.txt</div></pre></td></tr></table></figure>
-<p>2、在proguard-project.txt中编写混淆</p>
-<h2 id="常用混淆指令"><a href="#常用混淆指令" class="headerlink" title="常用混淆指令"></a>常用混淆指令</h2><p>如果需要自己定义混淆文件，那么常用的一些混淆指令就需要有所了解。</p>
-<ul>
-<li>基本配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># 是否使用大小写混合 </div><div class="line">-dontusemixedcaseclassnames  </div><div class="line"></div><div class="line">#如果应用程序引入的有jar包,并且混淆jar包里面的类dont skip nonpublic library classes </div><div class="line">-dontskipnonpubliclibraryclasses class </div><div class="line"></div><div class="line">#混淆时不做预校验  dont preverify </div><div class="line">-dontpreverify </div><div class="line"></div><div class="line">#混淆采用的算法.</div><div class="line">-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* </div><div class="line"></div><div class="line"># 屏蔽警告 ignore warnings </div><div class="line">-ignorewarnings </div><div class="line"></div><div class="line">#设置混淆的压缩比率 0 ~ 7 optimization passes </div><div class="line">-optimizationpasses 5 </div><div class="line"></div><div class="line">#混淆后生产映射文件 map 类名-&gt;转化后类名的映射</div><div class="line">-verbose</div></pre></td></tr></table></figure>
-<ul>
-<li>可选配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#应用的依赖包，如android-support-v4</div><div class="line">-libraryjars class_path </div><div class="line"></div><div class="line">#不混淆某些类</div><div class="line">-keep [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类的成员</div><div class="line">-keepclassmembers [,modifier,...] </div><div class="line"></div><div class="line">#不混淆类及其成员</div><div class="line">-keepclasseswithmembers [,modifier,...]</div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepnames class_specification </div><div class="line"></div><div class="line">#不混淆类的成员名</div><div class="line">-keepclassmembernames class_specification </div><div class="line"></div><div class="line">#不混淆类及其成员名</div><div class="line">-keepclasseswithmembernames class_specification </div><div class="line"></div><div class="line">#假设调用不产生任何影响，在proguard代码优化时会将该调用remove掉。如system.out.println#和Log.v等等</div><div class="line">-assumenosideeffects class_specification </div><div class="line"></div><div class="line">#不提示warnning</div><div class="line">-dontwarn [class_filter]</div></pre></td></tr></table></figure>
-<blockquote>
-<p>详细的可选内容：<a href="http://blog.isming.me/2014/05/31/use-proguard/" target="_blank" rel="external">http://blog.isming.me/2014/05/31/use-proguard/</a></p>
-</blockquote>
-<p>四、混淆产生的文件<br>一旦混淆生成，打包发布，可能会遇到一些混淆过的代码报出的异常，那么可能代码报错分析可能就需要用到下面的文件。</p>
-<ol>
-<li><p>mapping.txt<br>表示混淆前后代码的对照表，这个文件非常重要。如果你的代码混淆后会产生bug的话，log提示中是混淆后的代码，希望定位到源代码的话就可以根据mapping.txt反推。<br>每次发布都要保留它方便该版本出现问题时调出日志进行排查，它可以根据版本号或是发布时间命名来保存或是放进代码版本控制中。</p>
-</li>
-<li><p>dump.txt<br>描述apk内所有class文件的内部结构。</p>
-</li>
-<li><p>seeds.txt<br>列出了没有被混淆的类和成员。</p>
-</li>
-<li><p>usage.txt<br>列出了源代码中被删除在apk中不存在的代码。</p>
-</li>
-</ol>
+<p><code>注</code>在Android2.3中，默认的Bitmap为32位，类型是ARGB_8888，也就意味着一个像素点占用4个字节的内存。所以一个bitmap的内存计算为：3200<em>2400</em>4 bytes =   30M</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实，关于bitmap的操作，只要注意在不能确定bitmap的尺寸的时候别轻易的实例化一个bitmap，用完bitmap及时回收。图片就让它安静的呆在存储上，就算是需要显示也显示BitmapFactory.Option优化过的图片。上传后台的直接走Io流操作。</p>
 
       
     </div>
@@ -382,7 +354,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/混淆/" rel="tag">#混淆</a>
+            <a href="/tags/bitmap/" rel="tag">#bitmap</a>
           
         </div>
       
@@ -391,17 +363,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/22/handler机制的深入理解/" rel="next" title="handler机制的深入理解">
-                <i class="fa fa-chevron-left"></i> handler机制的深入理解
+              <a href="/2016/11/23/ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException/" rel="next" title="ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException">
+                <i class="fa fa-chevron-left"></i> ArrayList使用set或add方法添加指定元素抛出IndexOutOfBoundsException
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/Java虚拟机/" rel="prev" title="Java虚拟机简介">
-                Java虚拟机简介 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -416,10 +384,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/Android中混淆的使用/"
-     data-title="Android混淆的使用"
+        <div class="ds-share flat" data-thread-key="2016/12/05/android通过相册获取图片oom的问题/"
+     data-title="android通过相册获取图片oom的问题"
      data-content=""
-     data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+     data-url="http://yoursite.com/2016/12/05/android通过相册获取图片oom的问题/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -446,8 +414,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/Android中混淆的使用/"
-           data-title="Android混淆的使用" data-url="http://yoursite.com/2016/08/22/Android中混淆的使用/">
+      <div class="ds-thread" data-thread-key="2016/12/05/android通过相册获取图片oom的问题/"
+           data-title="android通过相册获取图片oom的问题" data-url="http://yoursite.com/2016/12/05/android通过相册获取图片oom的问题/">
       </div>
     
   </div>
@@ -589,7 +557,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用混淆指令"><span class="nav-number">1.</span> <span class="nav-text">常用混淆指令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现问题"><span class="nav-number">2.</span> <span class="nav-text">发现问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决问题"><span class="nav-number">3.</span> <span class="nav-text">解决问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
         </section>

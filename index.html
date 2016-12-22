@@ -233,6 +233,131 @@
             
               
                 
+                <a class="post-title-link" href="/2016/12/22/AndroidStudio的那些奇技淫巧/" itemprop="url">
+                  未命名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-22T12:06:57+08:00" content="2016-12-22">
+              2016-12-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/22/AndroidStudio的那些奇技淫巧/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/AndroidStudio的那些奇技淫巧/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/22/AndroidStudio的那些奇技淫巧/" class="leancloud_visitors" data-flag-title="">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很多时候使用ide的功能可能常用的几个功能点，但是有很多实用的功能没有接触到，这里就记录几个androidstudio中几个比较好用的点。可能这些技巧能事半功倍。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>###1、 使用project structure配置工程<br>对module的编译控制，如果对gradle文件的配置不是很熟悉，或者gradle里面的内容过多，找起来不方便，那么使用图形化界面可能会更简单清晰。<br><img src="http://img.blog.csdn.net/20161209145332047?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>###2、 添加依赖库<br>添加工程依赖库的方式有几种，但类型无非是添加jar包和工程。可以使用上面project structure配置中的Dependencies,即方便有快捷，而且还可以直接查询网络中的库工程，直接添加到加以引用。如：<br><img src="http://img.blog.csdn.net/20161209150831239?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>然而这仅仅只是基本的，很多时候我们一个工程，需要有多个module，而不同的module对应的单独的版本管理，如果直接将module导入项目，那么androidstudio会复制一个副本到当前目录下，这样module的修改同步就会很麻烦。如：</p>
+<p><img src="http://img.blog.csdn.net/20161209151656525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>所以可以通过groovy脚本，来指定导入项目的路径，这样的话就不会拷贝到这个当前app module的项目中了。如：<br><img src="http://img.blog.csdn.net/20161209200705611?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>###3、使用Preview<br>在编写布局的时候，想一边更改一边能够及时看到更改后的效果，那么preview就是一个很方便的工具。默认是design和text来回切换。<br><img src="http://img.blog.csdn.net/20161209201351707?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>###4、使用GradleProjects<br>有时候需要打包一个apk给其他人使用，但是又不需要run在手机上，或者只需要对项目进行build的操作，除了直接在Terminal中敲gradle的相关命令以外，可以直接通过图形化操作。如： 打包apk</p>
+<p><img src="http://img.blog.csdn.net/20161209201957616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>###5、使用本地缓存的gradle版本构建工程</p>
+<p>androidstudio使用gradle来管理项目，而as导入项目时会默认使用项目中依赖的gradle的版本，如果本地没有这个版本的gradle就会去下载，所以有些项目需要加载很久。加上如果机器没有网络的情况下如果不切换gradle就没有办法编译。所以使用本地缓存的gradle可能是一种不错的选择方式。<br>首先要找到本地gradle版本 如图：<br><img src="http://img.blog.csdn.net/20161209205807759?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>如果路径下没有gradle版本，就尝试在这个路径下找</p>
+<p><img src="http://img.blog.csdn.net/20161209205753594?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>然后在as中配置本地gradle，如图：</p>
+<p><img src="http://img.blog.csdn.net/20161209205931681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYmVfaGFwcHlfbXJfbGk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>其实还有一种更直接了解使用本地gradle版本的方式，那就直接新建一个项目，然后把项目路径下的gradle文件夹内容和项目gradle的androidstudio的gradle插件版本都复制替换一下，然后再编译目标工程。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/12/05/android通过相册获取图片oom的问题/" itemprop="url">
                   android通过相册获取图片oom的问题
                 </a>
@@ -1392,137 +1517,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/24/常用的git命令/" itemprop="url">
-                  常用的git命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-24T20:31:43+08:00" content="2016-08-24">
-              2016-08-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/版本控制/" itemprop="url" rel="index">
-                    <span itemprop="name">版本控制</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/24/常用的git命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/24/常用的git命令/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/24/常用的git命令/" class="leancloud_visitors" data-flag-title="常用的git命令">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>对于开发来说，不想频繁的手动备份代码的话，版本控制是必须的。现阶段了解并使用的版本控制工具有2种。其一是Svn,其二是Git。而二者最大的不同是svn是集中式版本控制系，git是分布式版本控制系统。git版本控制中有三个重要的概念：工作区（working tree）、暂存区（index或stage）、版本库（repository）<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/24/常用的git命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1568,7 +1562,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

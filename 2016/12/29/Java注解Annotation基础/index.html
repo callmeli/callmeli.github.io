@@ -58,20 +58,17 @@
 
 
 
-<meta name="description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。
-Annotation提供了一种为程序元素（包、类、构造器、方">
+<meta name="description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java注解Annotation基础">
 <meta property="og:url" content="http://yoursite.com/2016/12/29/Java注解Annotation基础/index.html">
 <meta property="og:site_name" content="Ervin's Blog">
-<meta property="og:description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。
-Annotation提供了一种为程序元素（包、类、构造器、方">
+<meta property="og:description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。">
 <meta property="og:image" content="http://static.oschina.net/uploads/space/2015/0209/131810_8dMx_820500.png">
-<meta property="og:updated_time" content="2016-12-29T07:50:58.041Z">
+<meta property="og:updated_time" content="2016-12-29T08:03:24.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java注解Annotation基础">
-<meta name="twitter:description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。
-Annotation提供了一种为程序元素（包、类、构造器、方">
+<meta name="twitter:description" content="从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。">
 <meta name="twitter:image" content="http://static.oschina.net/uploads/space/2015/0209/131810_8dMx_820500.png">
 
 
@@ -248,7 +245,7 @@ Annotation提供了一种为程序元素（包、类、构造器、方">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-29T15:50:57+08:00" content="2016-12-29">
+            <time itemprop="dateCreated" datetime="2016-12-29T16:03:24+08:00" content="2016-12-29">
               2016-12-29
             </time>
           </span>
@@ -311,8 +308,7 @@ Annotation提供了一种为程序元素（包、类、构造器、方">
       
 
       
-        <p>从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。</p>
-<p>Annotation提供了一种为程序元素（包、类、构造器、方法、成员变量、参数、局域变量）设置元数据的方法。Annotation不能运行，它只有成员变量，没有方法。Annotation跟public、final等修饰符的地位一样，都是程序元素的一部分，Annotation不能作为一个程序元素使用。<br><a id="more"></a></p>
+        <p>从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。<br><a id="more"></a><br>Annotation提供了一种为程序元素（包、类、构造器、方法、成员变量、参数、局域变量）设置元数据的方法。Annotation不能运行，它只有成员变量，没有方法。Annotation跟public、final等修饰符的地位一样，都是程序元素的一部分，Annotation不能作为一个程序元素使用。</p>
 <h3 id="1-定义Annotation"><a href="#1-定义Annotation" class="headerlink" title="1 定义Annotation"></a>1 定义Annotation</h3><p>定义新的Annotation类型使用@interface关键字（在原有interface关键字前增加@符号）。定义一个新的Annotation类型与定义一个接口很像，例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public @interface Test&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test</div><div class="line">public class MyClass&#123;</div><div class="line">....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>定义完该Annotation后，就可以在程序中使用该Annotation。使用Annotation，非常类似于public、final这样的修饰符，通常，会把Annotation另放一行，并且放在所有修饰符之前。例如：</p>
@@ -479,16 +475,16 @@ Annotation提供了一种为程序元素（包、类、构造器、方">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/22/猎豹面试反省/" rel="next" title="猎豹面试反省">
-                <i class="fa fa-chevron-left"></i> 猎豹面试反省
+              <a href="/2016/12/29/Picasso中LRU缓存的设计分析/" rel="next" title="Picasso中LRU缓存的设计分析">
+                <i class="fa fa-chevron-left"></i> Picasso中LRU缓存的设计分析
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/29/Thread线程join方法源码分析/" rel="prev" title="Thread线程join方法源码分析">
-                Thread线程join方法源码分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/29/HTTPS详解/" rel="prev" title="HTTPS详解">
+                HTTPS详解 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

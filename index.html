@@ -247,7 +247,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-29T15:55:26+08:00" content="2016-12-29">
+            <time itemprop="dateCreated" datetime="2016-12-29T16:03:35+08:00" content="2016-12-29">
               2016-12-29
             </time>
           </span>
@@ -311,38 +311,143 @@
 
       
         
-          
-            <p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。</p>
-<p>为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS，为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。</p>
-<h2 id="一、HTTP和HTTPS的基本概念"><a href="#一、HTTP和HTTPS的基本概念" class="headerlink" title="一、HTTP和HTTPS的基本概念"></a>一、HTTP和HTTPS的基本概念</h2><p>HTTP：是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。<br>HTTPS：是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。<br>HTTPS协议的主要作用可以分为两种：一种是建立一个信息安全通道，来保证数据传输的安全；另一种就是确认网站的真实性。</p>
-<h2 id="二、HTTP与HTTPS有什么区别？"><a href="#二、HTTP与HTTPS有什么区别？" class="headerlink" title="二、HTTP与HTTPS有什么区别？"></a>二、HTTP与HTTPS有什么区别？</h2><p>HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全，为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS。<br>HTTPS加密、加密、及验证过程，如下图所示：<br><img src="http://www.mahaixiang.cn/uploads/allimg/1507/1-150H1203123303.jpg" alt="这里写图片描述"></p>
-<p>简单来说，HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全。<br>HTTPS和HTTP的区别主要如下：<br>1、https协议需要到ca申请证书，一般免费证书较少，因而需要一定费用。<br>2、http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl加密传输协议。<br>3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。<br>4、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</p>
-<h2 id="三、HTTPS的工作原理"><a href="#三、HTTPS的工作原理" class="headerlink" title="三、HTTPS的工作原理"></a>三、HTTPS的工作原理</h2><p>我们都知道HTTPS能够加密信息，以免敏感信息被第三方获取，所以很多银行网站或电子邮箱等等安全级别较高的服务都会采用HTTPS协议。<br><img src="http://www.mahaixiang.cn/uploads/allimg/1507/1-150H120343I41.jpg" alt="这里写图片描述"></p>
-<h3 id="1、客户端发起HTTPS请求"><a href="#1、客户端发起HTTPS请求" class="headerlink" title="1、客户端发起HTTPS请求"></a>1、客户端发起HTTPS请求</h3><p>这个没什么好说的，就是用户在浏览器里输入一个https网址，然后连接到server的443端口。</p>
-<h3 id="2、服务端的配置"><a href="#2、服务端的配置" class="headerlink" title="2、服务端的配置"></a>2、服务端的配置</h3><p>采用HTTPS协议的服务器必须要有一套数字证书，可以自己制作，也可以向组织申请，区别就是自己颁发的证书需要客户端验证通过，才可以继续访问，而使用受信任的公司申请的证书则不会弹出提示页面(startssl就是个不错的选择，有1年的免费服务)。<br>这套证书其实就是一对公钥和私钥，如果对公钥和私钥不太理解，可以想象成一把钥匙和一个锁头，只是全世界只有你一个人有这把钥匙，你可以把锁头给别人，别人可以用这个锁把重要的东西锁起来，然后发给你，因为只有你一个人有这把钥匙，所以只有你才能看到被这把锁锁起来的东西。</p>
-<h3 id="3、传送证书"><a href="#3、传送证书" class="headerlink" title="3、传送证书"></a>3、传送证书</h3><p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。</p>
-<h3 id="4、客户端解析证书"><a href="#4、客户端解析证书" class="headerlink" title="4、客户端解析证书"></a>4、客户端解析证书</h3><p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。<br>如果证书没有问题，那么就生成一个随机值，然后用证书对该随机值进行加密，就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。</p>
-<h3 id="5、传送加密信息"><a href="#5、传送加密信息" class="headerlink" title="5、传送加密信息"></a>5、传送加密信息</h3><p>这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。</p>
-<h3 id="6、服务段解密信息"><a href="#6、服务段解密信息" class="headerlink" title="6、服务段解密信息"></a>6、服务段解密信息</h3><p>服务端用私钥解密后，得到了客户端传过来的随机值(私钥)，然后把内容通过该值进行对称加密，所谓对称加密就是，将信息和私钥通过某种算法混合在一起，这样除非知道私钥，不然无法获取内容，而正好客户端和服务端都知道这个私钥，所以只要加密算法够彪悍，私钥够复杂，数据就够安全。</p>
-<h3 id="7、传输加密后的信息"><a href="#7、传输加密后的信息" class="headerlink" title="7、传输加密后的信息"></a>7、传输加密后的信息</h3><p>这部分信息是服务段用私钥加密后的信息，可以在客户端被还原。</p>
-<h3 id="8、客户端解密信息"><a href="#8、客户端解密信息" class="headerlink" title="8、客户端解密信息"></a>8、客户端解密信息</h3><p>客户端用之前生成的私钥解密服务段传过来的信息，于是获取了解密后的内容，整个过程第三方即使监听到了数据，也束手无策。</p>
-<h2 id="四、HTTPS要比HTTP多用多少服务器资源？"><a href="#四、HTTPS要比HTTP多用多少服务器资源？" class="headerlink" title="四、HTTPS要比HTTP多用多少服务器资源？"></a>四、HTTPS要比HTTP多用多少服务器资源？</h2><p>HTTPS其实就是建构在SSL/TLS之上的 HTTP协议，所以，要比较HTTPS比HTTP多用多少服务器资源，马海祥认为主要看SSL/TLS本身消耗多少服务器资源。</p>
-<ul>
-<li>HTTP与HTTPS的区别<br>HTTP使用TCP三次握手建立连接，客户端和服务器需要交换3个包（具体可查看马海祥博客《HTTP服务的七层架构技术解析及运用》的相关介绍）；HTTPS除了TCP的三个包，还要加上ssl握手需要的9个包，所以一共是12个包。</li>
-</ul>
-<p>HTTP建立连接，按照下面链接中针对Computer Science House的测试，是114毫秒；HTTPS建立连接，耗费436毫秒，ssl部分花费322毫秒，包括网络延时和ssl本身加解密的开销（服务器根据客户端的信息确定是否需要生成新的主密钥；服务器回复该主密钥，并返回给客户端一个用主密钥认证的信息；服务器向客户端请求数字签名和公开密钥）。</p>
-<p>当SSL连接建立后，之后的加密方式就变成了3DES等对于CPU负荷较轻的对称加密方式，相对前面SSL建立连接时的非对称加密方式，对称加密方式对CPU的负荷基本可以忽略不记，所以问题就来了，如果频繁的重建ssl的session，对于服务器性能的影响将会是致命的，尽管打开HTTPS保活可以缓解单个连接的性能问题，但是对于并发访问用户数极多的大型网站，基于负荷分担的独立的SSL termination proxy就显得必不可少了，Web服务放在SSL termination proxy之后，SSL termination proxy既可以是基于硬件的，譬如F5；也可以是基于软件的，譬如维基百科用到的就是Nginx。</p>
-<p>那采用HTTPS后，到底会多用多少服务器资源，2010年1月Gmail切换到完全使用HTTPS， 前端处理SSL机器的CPU负荷增加不超过1%，每个连接的内存消耗少于20KB，网络流量增加少于2%，由于Gmail应该是使用N台服务器分布式处理，所以CPU负荷的数据并不具有太多的参考意义，每个连接内存消耗和网络流量数据有参考意义，这篇文章中还列出了单核每秒大概处理1500次握手（针对1024-bit 的 RSA），这个数据很有参考意义。</p>
-<p>Heartbleed这个被称作史上最大的网络安全漏洞，想必很多人都有所耳闻，Heartbleed之所以能够出现，其实和我们这个问题关系还不小，前面我们谈到了频繁重建SSL/TLS的session对于服务器影响是致命的，所以，聪明的RFC在2012年提出了RFC6520 TLS的心跳扩展，这个协议本身是简单和完美的，通过在客户端和服务器之间来回发送心跳的请求和应答，保活TLS session，减少重建TLS的session的性能开销，令人遗憾的是，openssl在实现这个心跳扩展时，犯了一个低级的错误，没有对收到的心跳请求进行长度检查，直接根据心跳请求长度拷贝数据区，导致简单的心跳应答中可能包含了服务器端的核心数据区内容，用户名，密码，信用卡信息，甚至服务器的私有密钥都有可能泄露。</p>
-<h2 id="五、HTTPS的优点"><a href="#五、HTTPS的优点" class="headerlink" title="五、HTTPS的优点"></a>五、HTTPS的优点</h2><p>正是由于HTTPS非常的安全，攻击者无法从中找到下手的地方，从站长的角度来说，HTTPS的优点有以下2点：</p>
-<p>1、SEO方面<br>谷歌曾在2014年8月份调整搜索引擎算法，并称“比起同等HTTP网站，采用HTTPS加密的网站在搜索结果中的排名将会更高”。</p>
-<p>2、安全性<br>尽管HTTPS并非绝对安全，掌握根证书的机构、掌握加密算法的组织同样可以进行中间人形式的攻击，但HTTPS仍是现行架构下最安全的解决方案，主要有以下几个好处：<br>（1）、使用HTTPS协议可认证用户和服务器，确保数据发送到正确的客户机和服务器；<br>（2）、HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全，可防止数据在传输过程中不被窃取、改变，确保数据的完整性。<br>（3）、HTTPS是现行架构下最安全的解决方案，虽然不是绝对安全，但它大幅增加了中间人攻击的成本。</p>
-<h2 id="六、HTTPS的缺点"><a href="#六、HTTPS的缺点" class="headerlink" title="六、HTTPS的缺点"></a>六、HTTPS的缺点</h2><p>虽然说HTTPS有很大的优势，但其相对来说，还是有些不足之处的，具体来说，有以下2点：</p>
-<p>1、SEO方面<br>据ACM CoNEXT数据显示，使用HTTPS协议会使页面的加载时间延长近50%，增加10%到20%的耗电，此外，HTTPS协议还会影响缓存，增加数据开销和功耗，甚至已有安全措施也会受到影响也会因此而受到影响。<br>而且HTTPS协议的加密范围也比较有限，在黑客攻击、拒绝服务攻击、服务器劫持等方面几乎起不到什么作用。<br>最关键的，SSL证书的信用链体系并不安全，特别是在某些国家可以控制CA根证书的情况下，中间人攻击一样可行。</p>
-<p>2、经济方面<br>（1）、SSL证书需要钱，功能越强大的证书费用越高，个人网站、小网站没有必要一般不会用。<br>（2）、SSL证书通常需要绑定IP，不能在同一IP上绑定多个域名，IPv4资源不可能支撑这个消耗（SSL有扩展可以部分解决这个问题，但是比较麻烦，而且要求浏览器、操作系统支持，Windows XP就不支持这个扩展，考虑到XP的装机量，这个特性几乎没用）。<br>（3）、HTTPS连接缓存不如HTTP高效，大流量网站如非必要也不会采用，流量成本太高。<br>（4）、HTTPS连接服务器端资源占用高很多，支持访客稍多的网站需要投入更大的成本，如果全部采用HTTPS，基于大部分计算资源闲置的假设的VPS的平均成本会上去。<br>（5）、HTTPS协议握手阶段比较费时，对网站的相应速度有负面影响，如非必要，没有理由牺牲用户体验。</p>
-<p> <code>注</code>本文为转载文章，原文链接 <a href="http://www.mahaixiang.cn/internet/1233.html" target="_blank" rel="external">http://www.mahaixiang.cn/internet/1233.html</a></p>
+          <p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/29/HTTPS详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/29/Java注解Annotation基础/" itemprop="url">
+                  Java注解Annotation基础
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-29T16:03:24+08:00" content="2016-12-29">
+              2016-12-29
+            </time>
+          </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/29/Java注解Annotation基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/29/Java注解Annotation基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/29/Java注解Annotation基础/" class="leancloud_visitors" data-flag-title="Java注解Annotation基础">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/29/Java注解Annotation基础/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -733,138 +838,6 @@
           <p>最近在复习线程的基础知识，算是查漏补缺，温故知新吧。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/12/29/Thread线程join方法源码分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/29/Java注解Annotation基础/" itemprop="url">
-                  Java注解Annotation基础
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-29T15:50:57+08:00" content="2016-12-29">
-              2016-12-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/29/Java注解Annotation基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/29/Java注解Annotation基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/12/29/Java注解Annotation基础/" class="leancloud_visitors" data-flag-title="Java注解Annotation基础">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>从JDK5开始，Java增加了Annotation(注解)，Annotation是代码里的特殊标记，这些标记可以在编译、类加载、运行时被读取，并执行相应的处理。通过使用Annotation，开发人员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充的信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证、处理或者进行部署。</p>
-<p>Annotation提供了一种为程序元素（包、类、构造器、方法、成员变量、参数、局域变量）设置元数据的方法。Annotation不能运行，它只有成员变量，没有方法。Annotation跟public、final等修饰符的地位一样，都是程序元素的一部分，Annotation不能作为一个程序元素使用。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/29/Java注解Annotation基础/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

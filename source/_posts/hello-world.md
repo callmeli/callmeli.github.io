@@ -1,38 +1,19 @@
 ---
-title: Hello World
+title: Hello, I'm back
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+又见面了～
 
-### Create a new post
+## 目的
+上次博客记录还是16年，时间好快。
+重开博客目的有三：
+1. 记录点滴生活
+2. 认识新的朋友
+3. 归档总结，温故知新
 
-``` bash
-$ hexo new "My New Post"
-```
+## 内容
+1. 对生活中的事情的思考和总结
+2. 专业技术内容
+3. 横向拓展内容
 
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+都2022年了还写博客不选择音视频是不是有点Low？哈哈～
